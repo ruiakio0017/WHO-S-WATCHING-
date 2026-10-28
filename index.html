@@ -2,17 +2,17 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-
-<title>WHO'S WATCHING?</title>
-
-<meta name="theme-color" content="#050507">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#030304">
+<meta name="description" content="WHO'S WATCHING? — Virtual Cinema. Made by Kush Kumar.">
+<title>WHO'S WATCHING? • MADE BY KUSH KUMAR</title>
 
 <style>
 /* =========================================================
    WHO'S WATCHING?
-   V1 → V6 ALL-IN-ONE
+   FAST V7
+   V1 → V6 FEATURES + PERFORMANCE OPTIMIZATION
+   MADE BY KUSH KUMAR
 ========================================================= */
 
 *{
@@ -27,17 +27,10 @@ html,body{
     overflow:hidden;
     background:#030304;
     color:#fff;
-    font-family:
-        Inter,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
+    font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
 
-button,
-input{
+button,input{
     font:inherit;
 }
 
@@ -55,9 +48,8 @@ input:focus-visible{
     display:none!important;
 }
 
-
 /* =========================================================
-   LOADING
+   FAST LOADER
 ========================================================= */
 
 #loading{
@@ -70,27 +62,23 @@ input:focus-visible{
     justify-content:center;
     flex-direction:column;
 
-    background:
-        radial-gradient(
-            circle at 50% 40%,
-            rgba(255,70,150,.16),
-            transparent 35%
-        ),
-        #030304;
+    background:#030304;
 
     transition:
-        opacity .7s ease,
-        visibility .7s ease;
+        opacity .3s ease,
+        visibility .3s ease;
 }
 
 #loading.hide{
     opacity:0;
     visibility:hidden;
+    pointer-events:none;
 }
 
 .loading-logo{
-    font-size:clamp(32px,8vw,72px);
+    font-size:clamp(34px,8vw,72px);
     font-weight:1000;
+    line-height:.88;
     letter-spacing:-4px;
     text-align:center;
 }
@@ -99,13 +87,21 @@ input:focus-visible{
     color:#ff70b0;
 }
 
+.loading-made{
+    margin-top:20px;
+    color:#85808c;
+    font-size:11px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+}
+
 .loading-line{
-    width:180px;
+    width:170px;
     height:3px;
-    margin-top:25px;
+    margin-top:22px;
     overflow:hidden;
     border-radius:99px;
-    background:#1b171d;
+    background:#17151a;
 }
 
 .loading-line::after{
@@ -118,25 +114,20 @@ input:focus-visible{
 }
 
 @keyframes loading{
-    0%{
-        transform:translateX(-120%);
-    }
-    100%{
-        transform:translateX(300%);
-    }
+    0%{transform:translateX(-120%)}
+    100%{transform:translateX(300%)}
 }
 
-
 /* =========================================================
-   CANVAS
+   WORLD
 ========================================================= */
 
 #world{
     position:fixed;
     inset:0;
     z-index:1;
+    display:block;
 }
-
 
 /* =========================================================
    TOP HUD
@@ -146,40 +137,32 @@ input:focus-visible{
     position:fixed;
     inset:0 0 auto 0;
     z-index:100;
-
     pointer-events:none;
-
-    padding:
-        max(12px,env(safe-area-inset-top))
-        14px
-        0;
+    padding:max(12px,env(safe-area-inset-top)) 14px 0;
 }
 
 .hud-row{
     display:flex;
     align-items:center;
-    gap:9px;
+    gap:8px;
 }
 
 .brand{
     pointer-events:auto;
-
     padding:10px 14px;
-
     border-radius:17px;
 
-    background:rgba(10,9,13,.58);
+    background:rgba(10,9,13,.56);
     border:1px solid rgba(255,255,255,.12);
 
-    backdrop-filter:blur(20px);
-    -webkit-backdrop-filter:blur(20px);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
 
-    box-shadow:
-        0 10px 35px rgba(0,0,0,.35);
+    box-shadow:0 10px 35px rgba(0,0,0,.3);
 }
 
 .brand b{
-    font-size:15px;
+    font-size:14px;
     letter-spacing:-.4px;
 }
 
@@ -187,20 +170,26 @@ input:focus-visible{
     color:#ff72b2;
 }
 
+.made-mini{
+    display:block;
+    margin-top:3px;
+    color:#77727e;
+    font-size:7px;
+    letter-spacing:1.5px;
+}
+
 .room-pill{
     pointer-events:auto;
-
     padding:9px 13px;
-
     border-radius:15px;
 
-    background:rgba(10,9,13,.55);
+    background:rgba(10,9,13,.52);
     border:1px solid rgba(255,255,255,.1);
 
-    color:#bdb8c4;
-    font-size:12px;
+    color:#aaa5b0;
+    font-size:11px;
 
-    backdrop-filter:blur(18px);
+    backdrop-filter:blur(16px);
 }
 
 .room-pill strong{
@@ -218,25 +207,21 @@ input:focus-visible{
     height:42px;
 
     border-radius:15px;
-
     border:1px solid rgba(255,255,255,.12);
 
-    background:rgba(10,9,13,.55);
+    background:rgba(10,9,13,.52);
 
     cursor:pointer;
 
-    backdrop-filter:blur(18px);
+    backdrop-filter:blur(16px);
 
-    transition:
-        transform .2s,
-        background .2s;
+    transition:transform .15s,background .15s;
 }
 
 .hud-button:hover{
     transform:translateY(-2px);
-    background:rgba(255,255,255,.11);
+    background:rgba(255,255,255,.1);
 }
-
 
 /* =========================================================
    BOTTOM HUD
@@ -246,7 +231,6 @@ input:focus-visible{
     position:fixed;
     inset:auto 0 0 0;
     z-index:100;
-
     pointer-events:none;
 
     padding:
@@ -261,14 +245,13 @@ input:focus-visible{
     gap:12px;
 }
 
-
 /* =========================================================
    JOYSTICK
 ========================================================= */
 
 #joystick{
-    width:120px;
-    height:120px;
+    width:110px;
+    height:110px;
 
     pointer-events:auto;
 
@@ -277,18 +260,17 @@ input:focus-visible{
     background:
         radial-gradient(
             circle,
-            rgba(255,255,255,.08),
-            rgba(255,255,255,.025)
+            rgba(255,255,255,.07),
+            rgba(255,255,255,.02)
         );
 
     border:1px solid rgba(255,255,255,.1);
 
-    box-shadow:
-        inset 0 0 30px rgba(0,0,0,.25);
-
     position:relative;
 
     touch-action:none;
+
+    backdrop-filter:blur(10px);
 }
 
 #stick{
@@ -297,27 +279,24 @@ input:focus-visible{
     left:50%;
     top:50%;
 
-    width:48px;
-    height:48px;
+    width:45px;
+    height:45px;
 
-    transform:
-        translate(-50%,-50%);
+    transform:translate(-50%,-50%);
 
     border-radius:50%;
 
     background:
         linear-gradient(
             145deg,
-            rgba(255,255,255,.22),
-            rgba(255,255,255,.06)
+            rgba(255,255,255,.2),
+            rgba(255,255,255,.05)
         );
 
-    border:1px solid rgba(255,255,255,.2);
+    border:1px solid rgba(255,255,255,.18);
 
-    box-shadow:
-        0 10px 30px rgba(0,0,0,.35);
+    box-shadow:0 8px 25px rgba(0,0,0,.3);
 }
-
 
 /* =========================================================
    ACTION BUTTONS
@@ -327,14 +306,14 @@ input:focus-visible{
     margin-left:auto;
 
     display:flex;
-    gap:8px;
+    gap:7px;
 
     pointer-events:auto;
 }
 
 .action{
-    min-width:58px;
-    height:52px;
+    min-width:57px;
+    height:51px;
 
     padding:0 12px;
 
@@ -342,82 +321,79 @@ input:focus-visible{
 
     border:1px solid rgba(255,255,255,.12);
 
-    background:rgba(10,9,13,.6);
+    background:rgba(10,9,13,.58);
 
     cursor:pointer;
 
-    backdrop-filter:blur(18px);
+    backdrop-filter:blur(16px);
 
-    transition:.2s;
+    transition:
+        transform .15s,
+        background .15s;
 }
 
 .action:hover{
-    background:rgba(255,255,255,.11);
+    transform:translateY(-2px);
+    background:rgba(255,255,255,.1);
 }
 
 .action.main{
     background:
         linear-gradient(
             135deg,
-            rgba(255,93,166,.86),
-            rgba(128,91,255,.86)
+            rgba(255,93,166,.85),
+            rgba(128,91,255,.85)
         );
 
-    border-color:
-        rgba(255,255,255,.22);
+    border-color:rgba(255,255,255,.2);
 
     box-shadow:
-        0 10px 35px rgba(255,80,160,.2);
+        0 10px 30px rgba(255,80,160,.18);
 }
 
-
 /* =========================================================
-   INTERACTION MESSAGE
+   INTERACTION
 ========================================================= */
 
 #interaction{
     position:fixed;
 
     left:50%;
-    bottom:145px;
+    bottom:140px;
 
     z-index:120;
 
-    transform:
-        translateX(-50%)
-        translateY(15px);
+    transform:translateX(-50%) translateY(15px);
 
     opacity:0;
 
     pointer-events:none;
 
-    padding:12px 18px;
+    padding:11px 17px;
 
-    border-radius:17px;
+    border-radius:16px;
 
-    background:rgba(10,9,13,.75);
+    background:rgba(10,9,13,.72);
 
     border:1px solid rgba(255,255,255,.13);
 
-    backdrop-filter:blur(20px);
+    backdrop-filter:blur(18px);
 
-    transition:.25s;
+    transition:.2s;
 
     text-align:center;
+
+    white-space:nowrap;
 }
 
 #interaction.show{
     opacity:1;
-
-    transform:
-        translateX(-50%)
-        translateY(0);
+    transform:translateX(-50%) translateY(0);
 }
 
 #interaction b{
     color:#ff78b5;
 }
-
 
 /* =========================================================
    SIDE PANEL
@@ -443,20 +419,18 @@ input:focus-visible{
             rgba(7,7,10,.97)
         );
 
-    border-left:
-        1px solid
-        rgba(255,255,255,.1);
+    border-left:1px solid rgba(255,255,255,.1);
 
-    box-shadow:
-        -30px 0 80px rgba(0,0,0,.45);
+    box-shadow:-30px 0 80px rgba(0,0,0,.45);
 
-    transform:
-        translateX(105%);
+    transform:translateX(105%);
 
     transition:
-        transform .35s cubic-bezier(.2,.8,.2,1);
+        transform .3s cubic-bezier(.2,.8,.2,1);
 
     overflow:auto;
+
+    -webkit-overflow-scrolling:touch;
 }
 
 #panel.open{
@@ -467,7 +441,6 @@ input:focus-visible{
     display:flex;
     align-items:center;
     gap:10px;
-
     margin-bottom:18px;
 }
 
@@ -505,6 +478,19 @@ input:focus-visible{
     line-height:1.55;
 }
 
+.made-panel{
+    margin-top:25px;
+    padding-top:15px;
+
+    border-top:1px solid rgba(255,255,255,.07);
+
+    color:#5f5a65;
+    text-align:center;
+
+    font-size:9px;
+    letter-spacing:2px;
+}
+
 .field{
     width:100%;
 
@@ -540,7 +526,7 @@ input:focus-visible{
 
     cursor:pointer;
 
-    transition:.2s;
+    transition:.15s;
 }
 
 .panel-button:hover{
@@ -556,13 +542,12 @@ input:focus-visible{
         );
 }
 
-
 /* =========================================================
    CHAT
 ========================================================= */
 
 .chat{
-    height:260px;
+    height:250px;
 
     overflow:auto;
 
@@ -578,9 +563,7 @@ input:focus-visible{
 .msg{
     padding:8px 5px;
 
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.05);
+    border-bottom:1px solid rgba(255,255,255,.05);
 
     font-size:13px;
 }
@@ -609,14 +592,12 @@ input:focus-visible{
     flex:1;
 }
 
-
 /* =========================================================
-   MOVIE PANEL
+   MOVIE
 ========================================================= */
 
 .movie-preview{
     width:100%;
-
     aspect-ratio:16/9;
 
     border-radius:17px;
@@ -634,17 +615,13 @@ input:focus-visible{
     object-fit:contain;
 }
 
-
 /* =========================================================
-   SEAT UI
+   SEATS
 ========================================================= */
 
 .seat-grid{
     display:grid;
-
-    grid-template-columns:
-        repeat(5,1fr);
-
+    grid-template-columns:repeat(5,1fr);
     gap:7px;
 }
 
@@ -667,16 +644,21 @@ input:focus-visible{
     color:#fff;
 }
 
-.seat-ui.friend{
-    background:#597ee8;
-    color:#fff;
-}
-
 .seat-ui.taken{
     opacity:.35;
     cursor:not-allowed;
 }
 
+.seat-ui.accessible{
+    box-shadow:
+        inset 0 0 0 1px #62aaff;
+}
+
+.accessible-label{
+    margin-top:10px;
+    color:#7d7884;
+    font-size:11px;
+}
 
 /* =========================================================
    ROOM OVERLAY
@@ -688,16 +670,15 @@ input:focus-visible{
 
     z-index:700;
 
-    display:flex;
+    display:none;
     align-items:center;
     justify-content:center;
 
     padding:20px;
 
-    background:
-        rgba(2,2,4,.72);
+    background:rgba(2,2,4,.72);
 
-    backdrop-filter:blur(20px);
+    backdrop-filter:blur(18px);
 }
 
 .room-card{
@@ -716,8 +697,7 @@ input:focus-visible{
 
     border:1px solid rgba(255,255,255,.12);
 
-    box-shadow:
-        0 40px 100px rgba(0,0,0,.55);
+    box-shadow:0 40px 100px rgba(0,0,0,.55);
 }
 
 .room-card h1{
@@ -731,16 +711,13 @@ input:focus-visible{
 
 .room-card p{
     margin-top:9px;
-
     color:#8e8995;
-
     line-height:1.5;
 }
 
 .room-actions{
     display:grid;
     gap:9px;
-
     margin-top:20px;
 }
 
@@ -763,7 +740,6 @@ input:focus-visible{
     border:1px solid rgba(255,255,255,.1);
 }
 
-
 /* =========================================================
    TOAST
 ========================================================= */
@@ -776,8 +752,7 @@ input:focus-visible{
 
     z-index:1000;
 
-    transform:
-        translate(-50%,20px);
+    transform:translate(-50%,20px);
 
     opacity:0;
 
@@ -791,18 +766,15 @@ input:focus-visible{
 
     border:1px solid rgba(255,255,255,.12);
 
-    backdrop-filter:blur(18px);
+    backdrop-filter:blur(16px);
 
-    transition:.25s;
+    transition:.2s;
 }
 
 #toast.show{
     opacity:1;
-
-    transform:
-        translate(-50%,0);
+    transform:translate(-50%,0);
 }
-
 
 /* =========================================================
    REACTIONS
@@ -811,17 +783,13 @@ input:focus-visible{
 #reactions{
     position:fixed;
     inset:0;
-
     z-index:900;
-
     pointer-events:none;
 }
 
 .reaction{
     position:absolute;
-
     bottom:20%;
-
     font-size:38px;
 
     animation:
@@ -833,22 +801,15 @@ input:focus-visible{
 
 @keyframes reactionUp{
     0%{
-        transform:
-            translateY(0)
-            scale(.6)
-            rotate(-5deg);
+        transform:translateY(0) scale(.6) rotate(-5deg);
         opacity:1;
     }
 
     100%{
-        transform:
-            translateY(-65vh)
-            scale(1.35)
-            rotate(15deg);
+        transform:translateY(-65vh) scale(1.35) rotate(15deg);
         opacity:0;
     }
 }
-
 
 /* =========================================================
    MOBILE
@@ -857,25 +818,29 @@ input:focus-visible{
 @media(max-width:700px){
 
     .brand{
-        padding:9px 11px;
+        padding:8px 10px;
     }
 
     .brand b{
-        font-size:13px;
+        font-size:12px;
     }
 
     .room-pill{
         display:none;
     }
 
+    .made-mini{
+        display:none;
+    }
+
     #joystick{
-        width:105px;
-        height:105px;
+        width:100px;
+        height:100px;
     }
 
     .action{
-        min-width:50px;
-        height:48px;
+        min-width:49px;
+        height:47px;
         padding:0 9px;
     }
 
@@ -884,9 +849,8 @@ input:focus-visible{
     }
 
     #interaction{
-        bottom:135px;
+        bottom:130px;
     }
-
 }
 
 @media(max-width:430px){
@@ -896,29 +860,31 @@ input:focus-visible{
     }
 
     .action{
-        min-width:46px;
+        min-width:45px;
     }
 
     #joystick{
-        width:92px;
-        height:92px;
+        width:90px;
+        height:90px;
     }
 
     #stick{
-        width:40px;
-        height:40px;
+        width:39px;
+        height:39px;
     }
 
+    #bottomHUD{
+        padding-left:9px;
+        padding-right:9px;
+    }
 }
 </style>
 </head>
 
-
 <body>
 
-
 <!-- =======================================================
-     LOADING
+     FAST LOADING SCREEN
 ======================================================= -->
 
 <div id="loading">
@@ -926,6 +892,10 @@ input:focus-visible{
     <div class="loading-logo">
         WHO'S<br>
         <span>WATCHING?</span>
+    </div>
+
+    <div class="loading-made">
+        MADE BY KUSH KUMAR
     </div>
 
     <div class="loading-line"></div>
@@ -950,13 +920,12 @@ input:focus-visible{
 
         <div class="brand">
             🍿 <b>WHO'S <span>WATCHING?</span></b>
+            <small class="made-mini">MADE BY KUSH KUMAR</small>
         </div>
 
         <div class="room-pill">
             ROOM:
-            <strong id="roomCodeHUD">
-                OFFLINE
-            </strong>
+            <strong id="roomCodeHUD">OFFLINE</strong>
         </div>
 
         <div class="hud-spacer"></div>
@@ -964,16 +933,14 @@ input:focus-visible{
         <button
             class="hud-button"
             onclick="togglePanel('partyPanel')"
-            title="Party"
-        >
+            title="Party">
             👥
         </button>
 
         <button
             class="hud-button"
             onclick="togglePanel('settingsPanel')"
-            title="Settings"
-        >
+            title="Settings">
             ⚙️
         </button>
 
@@ -990,53 +957,36 @@ input:focus-visible{
 
     <div class="bottom-row">
 
-
-        <!-- MOBILE JOYSTICK -->
-
         <div id="joystick">
-
             <div id="stick"></div>
-
         </div>
-
 
         <div class="actions">
 
             <button
                 class="action main"
                 id="sitButton"
-                onclick="toggleSit()"
-            >
+                onclick="toggleSit()">
                 🪑
-                <span class="label">
-                    SIT
-                </span>
+                <span class="label">SIT</span>
             </button>
-
 
             <button
                 class="action"
-                onclick="openMoviePanel()"
-            >
+                onclick="openMoviePanel()">
                 🎬
-                <span class="label">
-                    MOVIE
-                </span>
+                <span class="label">MOVIE</span>
             </button>
-
 
             <button
                 class="action"
-                onclick="togglePanel('chatPanel')"
-            >
+                onclick="togglePanel('chatPanel')">
                 💬
             </button>
 
-
             <button
                 class="action"
-                onclick="toggleFullscreen()"
-            >
+                onclick="toggleFullscreen()">
                 ⛶
             </button>
 
@@ -1052,16 +1002,13 @@ input:focus-visible{
 ======================================================= -->
 
 <div id="interaction">
-
     <b>SEAT AVAILABLE</b><br>
-
     Tap SIT to take this seat.
-
 </div>
 
 
 <!-- =======================================================
-     PANEL
+     SIDE PANEL
 ======================================================= -->
 
 <aside id="panel">
@@ -1074,26 +1021,20 @@ input:focus-visible{
 
         <button
             class="panel-close"
-            onclick="closePanel()"
-        >
+            onclick="closePanel()">
             ✕
         </button>
 
     </div>
 
 
-    <!-- PARTY PANEL -->
+    <!-- PARTY -->
 
-    <div
-        id="partyPanel"
-        class="panel-view"
-    >
+    <div id="partyPanel" class="panel-view">
 
         <div class="panel-section">
 
-            <h3>
-                👥 Theatre Party
-            </h3>
+            <h3>👥 Theatre Party</h3>
 
             <p class="panel-text">
                 Create a private theatre room
@@ -1103,7 +1044,6 @@ input:focus-visible{
 
         </div>
 
-
         <div class="panel-section">
 
             <input
@@ -1111,18 +1051,15 @@ input:focus-visible{
                 class="field"
                 maxlength="18"
                 placeholder="Your name"
-                value="Player"
-            >
+                value="Kush">
 
             <button
                 class="panel-button primary"
-                onclick="createRoom()"
-            >
+                onclick="createRoom()">
                 ＋ Create Theatre
             </button>
 
         </div>
-
 
         <div class="panel-section">
 
@@ -1130,23 +1067,19 @@ input:focus-visible{
                 id="joinCode"
                 class="field"
                 maxlength="6"
-                placeholder="Room code"
-            >
+                placeholder="Room code">
 
             <button
                 class="panel-button"
-                onclick="joinRoom()"
-            >
+                onclick="joinRoom()">
                 👥 Join Theatre
             </button>
 
         </div>
 
-
         <div
             id="roomInfo"
-            class="panel-section hidden"
-        >
+            class="panel-section hidden">
 
             <div class="panel-text">
                 Your room code
@@ -1154,65 +1087,60 @@ input:focus-visible{
 
             <div
                 class="room-code"
-                id="roomCode"
-            >
+                id="roomCode">
                 ------
             </div>
 
             <button
                 class="panel-button"
-                onclick="copyRoomCode()"
-            >
+                onclick="copyRoomCode()">
                 Copy Room Code
             </button>
 
         </div>
 
-
         <div class="panel-section">
 
-            <h3>
-                Players
-            </h3>
+            <h3>Players</h3>
 
             <div
                 id="playerList"
-                class="panel-text"
-            >
+                class="panel-text">
                 Just you 🎬
             </div>
 
         </div>
 
+        <div class="made-panel">
+            MADE BY KUSH KUMAR
+        </div>
+
     </div>
 
 
-    <!-- MOVIE PANEL -->
+    <!-- MOVIE -->
 
     <div
         id="moviePanel"
-        class="panel-view hidden"
-    >
+        class="panel-view hidden">
 
         <div class="panel-section">
 
-            <h3>
-                🎬 Your Movie
-            </h3>
+            <h3>🎬 Your Movie</h3>
 
             <p class="panel-text">
-                Select a video stored on your
-                device. The file itself is never
+                Choose a video stored on your
+                device. The video file is not
                 uploaded by this page.
             </p>
 
         </div>
 
-
         <div class="panel-section">
 
-            <label class="panel-button primary"
-                   style="display:block;text-align:center">
+            <label
+                class="panel-button primary"
+                style="display:block;text-align:center">
 
                 Select Video
 
@@ -1220,36 +1148,40 @@ input:focus-visible{
                     id="movieInput"
                     type="file"
                     accept="video/*"
-                    style="display:none"
-                >
+                    style="display:none">
 
             </label>
 
         </div>
 
-
         <div
             id="movieInfo"
-            class="panel-section panel-text"
-        >
+            class="panel-section panel-text">
             No movie selected.
         </div>
-
 
         <div class="panel-section">
 
             <button
                 class="panel-button"
-                onclick="playMovie()"
-            >
+                onclick="playMovie()">
                 ▶ Play
             </button>
 
             <button
                 class="panel-button"
-                onclick="pauseMovie()"
-            >
+                onclick="pauseMovie()">
                 ⏸ Pause
+            </button>
+
+        </div>
+
+        <div class="panel-section">
+
+            <button
+                class="panel-button"
+                onclick="stopMovie()">
+                ⏹ Stop
             </button>
 
         </div>
@@ -1257,27 +1189,22 @@ input:focus-visible{
     </div>
 
 
-    <!-- CHAT PANEL -->
+    <!-- CHAT -->
 
     <div
         id="chatPanel"
-        class="panel-view hidden"
-    >
+        class="panel-view hidden">
 
         <div class="panel-section">
 
-            <h3>
-                💬 Theatre Chat
-            </h3>
+            <h3>💬 Theatre Chat</h3>
 
         </div>
 
-
         <div
             id="chatLog"
-            class="chat"
-        ></div>
-
+            class="chat">
+        </div>
 
         <div class="chat-row">
 
@@ -1285,59 +1212,26 @@ input:focus-visible{
                 id="chatInput"
                 class="field"
                 maxlength="150"
-                placeholder="Say something..."
-            >
+                placeholder="Say something...">
 
             <button
                 class="panel-button"
                 style="margin:0;width:auto"
-                onclick="sendChat()"
-            >
+                onclick="sendChat()">
                 Send
             </button>
 
         </div>
 
-
         <div
             class="panel-section"
-            style="display:flex;gap:6px;flex-wrap:wrap"
-        >
+            style="display:flex;gap:6px;flex-wrap:wrap">
 
-            <button
-                class="panel-button"
-                onclick="sendReaction('😂')"
-            >
-                😂
-            </button>
-
-            <button
-                class="panel-button"
-                onclick="sendReaction('🍿')"
-            >
-                🍿
-            </button>
-
-            <button
-                class="panel-button"
-                onclick="sendReaction('🔥')"
-            >
-                🔥
-            </button>
-
-            <button
-                class="panel-button"
-                onclick="sendReaction('😭')"
-            >
-                😭
-            </button>
-
-            <button
-                class="panel-button"
-                onclick="sendReaction('❤️')"
-            >
-                ❤️
-            </button>
+            <button class="panel-button" onclick="sendReaction('😂')">😂</button>
+            <button class="panel-button" onclick="sendReaction('🍿')">🍿</button>
+            <button class="panel-button" onclick="sendReaction('🔥')">🔥</button>
+            <button class="panel-button" onclick="sendReaction('😭')">😭</button>
+            <button class="panel-button" onclick="sendReaction('❤️')">❤️</button>
 
         </div>
 
@@ -1348,79 +1242,68 @@ input:focus-visible{
 
     <div
         id="settingsPanel"
-        class="panel-view hidden"
-    >
+        class="panel-view hidden">
 
         <div class="panel-section">
 
-            <h3>
-                🔦 Cinema
-            </h3>
+            <h3>🔦 Cinema</h3>
 
             <button
                 class="panel-button"
-                onclick="toggleLights()"
-            >
+                onclick="toggleLights()">
                 Toggle Cinema Lights
             </button>
 
             <button
                 class="panel-button"
-                onclick="changeTheme()"
-            >
+                onclick="changeTheme()">
                 Change Theatre Theme
             </button>
 
         </div>
 
-
         <div class="panel-section">
 
-            <h3>
-                🎥 Screen
-            </h3>
+            <h3>🎥 Screen</h3>
 
             <button
                 class="panel-button"
-                onclick="screenGlow()"
-            >
+                onclick="screenGlow()">
                 Toggle Screen Glow
             </button>
 
         </div>
 
-
         <div class="panel-section">
 
-            <h3>
-                🪑 Seats
-            </h3>
+            <h3>🪑 Seats</h3>
 
             <button
                 class="panel-button"
-                onclick="openSeatPanel()"
-            >
+                onclick="openSeatPanel()">
                 View Seat Map
             </button>
 
         </div>
 
-
         <div class="panel-section">
 
             <p class="panel-text">
-
-                WHO'S WATCHING? V1–V6<br><br>
+                WHO'S WATCHING? FAST V7<br><br>
 
                 V1 • Theatre<br>
                 V2 • Party<br>
                 V3 • Sync<br>
                 V4 • Social<br>
                 V5 • Luxury<br>
-                V6 • Virtual Cinema
-
+                V6 • Virtual Cinema<br>
+                V7 • Performance Edition
             </p>
 
+        </div>
+
+        <div class="made-panel">
+            MADE BY KUSH KUMAR
         </div>
 
     </div>
@@ -1430,26 +1313,26 @@ input:focus-visible{
 
     <div
         id="seatPanel"
-        class="panel-view hidden"
-    >
+        class="panel-view hidden">
 
         <div class="panel-section">
 
-            <h3>
-                💺 Choose Your Seat
-            </h3>
+            <h3>💺 Choose Your Seat</h3>
 
             <p class="panel-text">
                 20 seats • 4 rows × 5
             </p>
 
-        </div>
+            <div class="accessible-label">
+                ♿ Blue outline = accessible-designated seat
+            </div>
 
+        </div>
 
         <div
             id="seatGrid"
-            class="seat-grid"
-        ></div>
+            class="seat-grid">
+        </div>
 
     </div>
 
@@ -1471,29 +1354,30 @@ input:focus-visible{
 
 
 <!-- =======================================================
-     THREE.JS
+     THREE.JS ONLY
+     OrbitControls removed because it wasn't used.
 ======================================================= -->
 
-<script src="https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/three@0.170.0/examples/js/controls/OrbitControls.js"></script>
-
-<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.min.js"
+    defer>
+</script>
 
 
 <script>
 "use strict";
 
-
 /* =========================================================
-   GLOBAL STATE
+   PERFORMANCE NOTE
+   PeerJS is NOT downloaded on startup.
+   It loads only when Create/Join Theatre is pressed.
 ========================================================= */
 
 const APP = {
 
-    version:"V1–V6",
+    version:"V7",
 
-    playerName:"Player",
+    playerName:"Kush",
 
     room:"",
 
@@ -1519,7 +1403,7 @@ const APP = {
 
     screenGlow:true,
 
-    clock:new THREE.Clock(),
+    clock:null,
 
     move:{
         x:0,
@@ -1533,48 +1417,32 @@ const APP = {
         right:false
     },
 
-    nearbySeat:null
+    nearbySeat:null,
 
+    peerLoading:null
 };
 
 
-/* =========================================================
-   THREE VARIABLES
-========================================================= */
-
 let renderer;
-
 let scene;
-
 let camera;
-
 let player;
-
 let playerGroup;
 
 let screenMesh;
-
 let screenGlowMesh;
 
 let seatObjects=[];
 
 let roomLights=[];
-
 let aisleLights=[];
 
 let wallX;
 
 let movieTexture;
-
 let movieVideo;
 
-
-/* =========================================================
-   DOM
-========================================================= */
-
-const $ = id =>
-    document.getElementById(id);
+const $ = id => document.getElementById(id);
 
 
 /* =========================================================
@@ -1583,119 +1451,66 @@ const $ = id =>
 
 function toast(text){
 
-    const element =
-        $("toast");
+    const element=$("toast");
 
-    element.textContent =
-        text;
+    element.textContent=text;
 
     element.classList.add("show");
 
-    clearTimeout(
-        window.__toast
-    );
+    clearTimeout(window.__toast);
 
-    window.__toast =
-        setTimeout(
-            () => {
-
-                element.classList.remove(
-                    "show"
-                );
-
-            },
-            2300
-        );
-
+    window.__toast=setTimeout(()=>{
+        element.classList.remove("show");
+    },2200);
 }
 
 
 /* =========================================================
-   PANEL SYSTEM
+   PANEL
 ========================================================= */
 
 function togglePanel(id){
 
-    const panel =
-        $("panel");
+    const panel=$("panel");
 
     panel.classList.add("open");
 
     document
         .querySelectorAll(".panel-view")
-        .forEach(
-            view =>
-                view.classList.add("hidden")
-        );
+        .forEach(view=>view.classList.add("hidden"));
 
-    const target =
-        $(id);
+    const target=$(id);
 
     if(target){
-
-        target.classList.remove(
-            "hidden"
-        );
-
+        target.classList.remove("hidden");
     }
 
-    if(id==="partyPanel"){
+    const titles={
+        partyPanel:"THE PARTY",
+        moviePanel:"YOUR MOVIE",
+        chatPanel:"THEATRE CHAT",
+        settingsPanel:"SETTINGS",
+        seatPanel:"SEAT MAP"
+    };
 
-        $("panelTitle").textContent =
-            "THE PARTY";
-
-    }
-
-    else if(id==="moviePanel"){
-
-        $("panelTitle").textContent =
-            "YOUR MOVIE";
-
-    }
-
-    else if(id==="chatPanel"){
-
-        $("panelTitle").textContent =
-            "THEATRE CHAT";
-
-    }
-
-    else if(id==="settingsPanel"){
-
-        $("panelTitle").textContent =
-            "SETTINGS";
-
-    }
-
+    $("panelTitle").textContent=
+        titles[id]||"WHO'S WATCHING?";
 }
 
 
 function closePanel(){
-
-    $("panel")
-        .classList
-        .remove("open");
-
+    $("panel").classList.remove("open");
 }
 
 
 function openMoviePanel(){
-
-    togglePanel(
-        "moviePanel"
-    );
-
+    togglePanel("moviePanel");
 }
 
 
 function openSeatPanel(){
-
     renderSeatUI();
-
-    togglePanel(
-        "seatPanel"
-    );
-
+    togglePanel("seatPanel");
 }
 
 
@@ -1705,99 +1520,94 @@ function openSeatPanel(){
 
 function initThree(){
 
-    scene =
-        new THREE.Scene();
+    if(typeof THREE==="undefined"){
+        toast("3D engine is still loading...");
+        setTimeout(initThree,100);
+        return;
+    }
+
+    APP.clock=new THREE.Clock();
+
+    scene=new THREE.Scene();
+
+    scene.background=new THREE.Color(0x030304);
+
+    scene.fog=new THREE.FogExp2(
+        0x030304,
+        0.019
+    );
 
 
-    scene.background =
-        new THREE.Color(
-            0x030304
-        );
-
-
-    scene.fog =
-        new THREE.FogExp2(
-            0x030304,
-            0.018
-        );
-
-
-    camera =
-        new THREE.PerspectiveCamera(
-            65,
-            innerWidth / innerHeight,
-            0.1,
-            500
-        );
-
+    camera=new THREE.PerspectiveCamera(
+        65,
+        innerWidth/innerHeight,
+        .1,
+        500
+    );
 
     camera.position.set(
         0,
-        2.4,
-        12
+        4.3,
+        29
     );
 
 
-    renderer =
-        new THREE.WebGLRenderer({
+    renderer=new THREE.WebGLRenderer({
 
-            canvas:$("world"),
+        canvas:$("world"),
 
-            antialias:true,
+        antialias:false,
 
-            powerPreference:
-                "high-performance"
+        powerPreference:"high-performance"
 
-        });
+    });
 
+
+    /* IMPORTANT SPEED OPTIMIZATION */
 
     renderer.setPixelRatio(
         Math.min(
-            devicePixelRatio,
-            2
+            window.devicePixelRatio || 1,
+            1.35
         )
     );
 
-
     renderer.setSize(
         innerWidth,
-        innerHeight
+        innerHeight,
+        false
     );
 
 
-    renderer.shadowMap.enabled =
-        true;
+    /* Shadows disabled for faster mobile performance */
 
+    renderer.shadowMap.enabled=false;
 
-    renderer.shadowMap.type =
-        THREE.PCFSoftShadowMap;
-
-
-    renderer.outputColorSpace =
+    renderer.outputColorSpace=
         THREE.SRGBColorSpace;
 
-
-    renderer.toneMapping =
+    renderer.toneMapping=
         THREE.ACESFilmicToneMapping;
 
-
-    renderer.toneMappingExposure =
-        1.05;
+    renderer.toneMappingExposure=1;
 
 
     createTheatre();
-
     createPlayer();
-
     setupInput();
-
     animate();
+
+    renderSeatUI();
+
+    requestAnimationFrame(()=>{
+        $("loading").classList.add("hide");
+    });
 
 }
 
 
 /* =========================================================
-   MATERIAL HELPERS
+   MATERIALS
 ========================================================= */
 
 function mat(
@@ -1809,13 +1619,10 @@ function mat(
     return new THREE.MeshStandardMaterial({
 
         color,
-
         roughness,
-
         metalness
 
     });
-
 }
 
 
@@ -1827,114 +1634,66 @@ function emissiveMat(
     return new THREE.MeshStandardMaterial({
 
         color,
-
         emissive:color,
-
-        emissiveIntensity:
-            intensity,
-
-        roughness:.4,
-
-        metalness:.2
+        emissiveIntensity:intensity,
+        roughness:.45,
+        metalness:.15
 
     });
-
 }
 
 
 /* =========================================================
-   FLOOR
+   THEATRE
 ========================================================= */
 
 function createTheatre(){
 
-    const floor =
-        new THREE.Mesh(
+    const floor=new THREE.Mesh(
 
-            new THREE.PlaneGeometry(
-                42,
-                62
-            ),
+        new THREE.PlaneGeometry(42,62),
 
-            mat(
-                0x111014,
-                .85,
-                .05
-            )
+        mat(0x111014,.9,.02)
 
-        );
-
-
-    floor.rotation.x =
-        -Math.PI/2;
-
-
-    floor.receiveShadow =
-        true;
-
-
-    scene.add(
-        floor
     );
 
+    floor.rotation.x=-Math.PI/2;
 
-    /* FLOOR STEPS */
+    scene.add(floor);
 
-    for(
-        let i=0;
-        i<5;
-        i++
-    ){
 
-        const step =
-            new THREE.Mesh(
+    /* FIVE FLOOR STEPS */
 
-                new THREE.BoxGeometry(
-                    35,
-                    .35,
-                    3
-                ),
+    for(let i=0;i<5;i++){
 
-                mat(
-                    0x19151b,
-                    .9
-                )
+        const step=new THREE.Mesh(
 
-            );
+            new THREE.BoxGeometry(
+                35,
+                .35,
+                3
+            ),
 
+            mat(0x19151b,.9)
+
+        );
 
         step.position.set(
             0,
-            .18 +
-            i*.28,
-            9 -
-            i*4
+            .18+i*.28,
+            9-i*4
         );
 
-
-        step.receiveShadow =
-            true;
-
-
-        scene.add(
-            step
-        );
-
+        scene.add(step);
     }
 
 
     createWalls();
-
     createCeiling();
-
     createScreen();
-
     createSeats();
-
     createLights();
-
     createLuxuryX();
-
 }
 
 
@@ -1944,27 +1703,22 @@ function createTheatre(){
 
 function createWalls(){
 
-    const wallMaterial =
-        mat(
-            0x0d0b10,
-            .78,
-            .12
-        );
+    const wallMaterial=mat(
+        0x0d0b10,
+        .8,
+        .08
+    );
 
 
-    const left =
-        new THREE.Mesh(
+    const left=new THREE.Mesh(
 
-            new THREE.BoxGeometry(
-                1,
-                15,
-                62
-            ),
+        new THREE.BoxGeometry(
+            1,15,62
+        ),
 
-            wallMaterial
+        wallMaterial
 
-        );
-
+    );
 
     left.position.set(
         -21,
@@ -1972,56 +1726,36 @@ function createWalls(){
         -3
     );
 
-
-    left.receiveShadow =
-        true;
-
-
     scene.add(left);
 
 
-    const right =
-        left.clone();
+    const right=left.clone();
 
-
-    right.position.x =
-        21;
-
+    right.position.x=21;
 
     scene.add(right);
 
 
-    const back =
-        new THREE.Mesh(
+    const back=new THREE.Mesh(
 
-            new THREE.BoxGeometry(
-                42,
-                15,
-                1
-            ),
+        new THREE.BoxGeometry(
+            42,15,1
+        ),
 
-            wallMaterial
+        wallMaterial
 
-        );
-
+    );
 
     back.position.set(
-        0,
-        7,
-        28
+        0,7,28
     );
 
-
-    scene.add(
-        back
-    );
+    scene.add(back);
 
 
     /* WALL PANELS */
 
-    for(
-        let side of [-1,1]
-    ){
+    for(const side of [-1,1]){
 
         for(
             let z=-23;
@@ -2029,23 +1763,21 @@ function createWalls(){
             z+=7
         ){
 
-            const panel =
-                new THREE.Mesh(
+            const panel=new THREE.Mesh(
 
-                    new THREE.BoxGeometry(
-                        .15,
-                        6,
-                        5.5
-                    ),
+                new THREE.BoxGeometry(
+                    .15,
+                    6,
+                    5.5
+                ),
 
-                    mat(
-                        0x211923,
-                        .55,
-                        .15
-                    )
+                mat(
+                    0x211923,
+                    .58,
+                    .1
+                )
 
-                );
-
+            );
 
             panel.position.set(
                 side*20.45,
@@ -2053,15 +1785,9 @@ function createWalls(){
                 z
             );
 
-
-            scene.add(
-                panel
-            );
-
+            scene.add(panel);
         }
-
     }
-
 }
 
 
@@ -2071,36 +1797,25 @@ function createWalls(){
 
 function createCeiling(){
 
-    const ceiling =
-        new THREE.Mesh(
+    const ceiling=new THREE.Mesh(
 
-            new THREE.PlaneGeometry(
-                42,
-                62
-            ),
+        new THREE.PlaneGeometry(
+            42,62
+        ),
 
-            mat(
-                0x08070a,
-                .95
-            )
+        mat(
+            0x08070a,
+            1
+        )
 
-        );
-
-
-    ceiling.rotation.x =
-        Math.PI/2;
-
-
-    ceiling.position.y =
-        14;
-
-
-    scene.add(
-        ceiling
     );
 
+    ceiling.rotation.x=Math.PI/2;
 
-    /* CEILING STRIPS */
+    ceiling.position.y=14;
+
+    scene.add(ceiling);
+
 
     for(
         let x=-15;
@@ -2108,22 +1823,20 @@ function createCeiling(){
         x+=7.5
     ){
 
-        const strip =
-            new THREE.Mesh(
+        const strip=new THREE.Mesh(
 
-                new THREE.BoxGeometry(
-                    .35,
-                    .08,
-                    48
-                ),
+            new THREE.BoxGeometry(
+                .35,
+                .08,
+                48
+            ),
 
-                emissiveMat(
-                    0x34152a,
-                    .8
-                )
+            emissiveMat(
+                0x34152a,
+                .7
+            )
 
-            );
-
+        );
 
         strip.position.set(
             x,
@@ -2131,70 +1844,54 @@ function createCeiling(){
             -3
         );
 
-
-        scene.add(
-            strip
-        );
-
+        scene.add(strip);
     }
-
 }
 
 
 /* =========================================================
-   SCREEN
+   GIANT IMAX / PXL SCREEN
 ========================================================= */
 
 function createScreen(){
 
-    const screenFrame =
-        new THREE.Mesh(
+    const frame=new THREE.Mesh(
 
-            new THREE.BoxGeometry(
-                31,
-                15,
-                .65
-            ),
+        new THREE.BoxGeometry(
+            31,
+            15,
+            .65
+        ),
 
-            mat(
-                0x17151a,
-                .3,
-                .5
-            )
+        mat(
+            0x17151a,
+            .35,
+            .45
+        )
 
-        );
+    );
 
-
-    screenFrame.position.set(
+    frame.position.set(
         0,
         8,
         -27
     );
 
-
-    scene.add(
-        screenFrame
-    );
+    scene.add(frame);
 
 
-    const screenMaterial =
+    screenMesh=new THREE.Mesh(
+
+        new THREE.PlaneGeometry(
+            29,
+            13
+        ),
+
         new THREE.MeshBasicMaterial({
             color:0x111116
-        });
+        })
 
-
-    screenMesh =
-        new THREE.Mesh(
-
-            new THREE.PlaneGeometry(
-                29,
-                13
-            ),
-
-            screenMaterial
-
-        );
-
+    );
 
     screenMesh.position.set(
         0,
@@ -2202,36 +1899,29 @@ function createScreen(){
         -27.38
     );
 
+    screenMesh.rotation.y=Math.PI;
 
-    screenMesh.rotation.y =
-        Math.PI;
+    scene.add(screenMesh);
 
 
-    scene.add(
-        screenMesh
+    screenGlowMesh=new THREE.Mesh(
+
+        new THREE.PlaneGeometry(
+            32,
+            16
+        ),
+
+        new THREE.MeshBasicMaterial({
+
+            color:0xff5b9e,
+
+            transparent:true,
+
+            opacity:.065
+
+        })
+
     );
-
-
-    screenGlowMesh =
-        new THREE.Mesh(
-
-            new THREE.PlaneGeometry(
-                32,
-                16
-            ),
-
-            new THREE.MeshBasicMaterial({
-
-                color:0xff5b9e,
-
-                transparent:true,
-
-                opacity:.07
-
-            })
-
-        );
-
 
     screenGlowMesh.position.set(
         0,
@@ -2239,35 +1929,28 @@ function createScreen(){
         -27.7
     );
 
+    screenGlowMesh.rotation.y=Math.PI;
 
-    screenGlowMesh.rotation.y =
-        Math.PI;
+    scene.add(screenGlowMesh);
 
 
-    scene.add(
-        screenGlowMesh
+    const border=emissiveMat(
+        0x8f2f65,
+        1.15
     );
 
 
-    /* SCREEN BORDER */
+    const top=new THREE.Mesh(
 
-    const borderMaterial =
-        emissiveMat(
-            0x8f2f65,
-            1.2
-        );
+        new THREE.BoxGeometry(
+            31,
+            .22,
+            .25
+        ),
 
+        border
 
-    const top =
-        new THREE.Mesh(
-            new THREE.BoxGeometry(
-                31,
-                .22,
-                .25
-            ),
-            borderMaterial
-        );
-
+    );
 
     top.position.set(
         0,
@@ -2275,105 +1958,74 @@ function createScreen(){
         -27.3
     );
 
-
     scene.add(top);
 
 
-    const bottom =
-        top.clone();
+    const bottom=top.clone();
 
-
-    bottom.position.y =
-        .5;
-
+    bottom.position.y=.5;
 
     scene.add(bottom);
-
 }
 
 
 /* =========================================================
-   SEATS — EXACTLY 20
-   4 ROWS × 5
+   20 SEATS
 ========================================================= */
 
 function createSeats(){
 
-    const seatMaterial =
-        mat(
-            0x6d173e,
-            .72,
-            .05
-        );
+    const seatMaterial=mat(
+        0x6d173e,
+        .75,
+        .03
+    );
 
-
-    const seatBackMaterial =
-        mat(
-            0x48132f,
-            .75,
-            .04
-        );
+    const seatBackMaterial=mat(
+        0x48132f,
+        .78,
+        .03
+    );
 
 
     let number=1;
 
 
-    for(
-        let row=0;
-        row<4;
-        row++
-    ){
+    for(let row=0;row<4;row++){
 
-        for(
-            let col=0;
-            col<5;
-            col++
-        ){
+        for(let col=0;col<5;col++){
 
-            const group =
-                new THREE.Group();
+            const group=new THREE.Group();
 
 
-            const base =
-                new THREE.Mesh(
+            const base=new THREE.Mesh(
 
-                    new THREE.BoxGeometry(
-                        2.35,
-                        .45,
-                        2.15
-                    ),
+                new THREE.BoxGeometry(
+                    2.35,
+                    .45,
+                    2.15
+                ),
 
-                    seatMaterial
+                seatMaterial
 
-                );
-
-
-            base.position.y =
-                .45;
-
-
-            base.castShadow =
-                true;
-
-
-            group.add(
-                base
             );
 
+            base.position.y=.45;
 
-            const back =
-                new THREE.Mesh(
+            group.add(base);
 
-                    new THREE.BoxGeometry(
-                        2.35,
-                        2.5,
-                        .42
-                    ),
 
-                    seatBackMaterial
+            const back=new THREE.Mesh(
 
-                );
+                new THREE.BoxGeometry(
+                    2.35,
+                    2.5,
+                    .42
+                ),
 
+                seatBackMaterial
+
+            );
 
             back.position.set(
                 0,
@@ -2381,39 +2033,26 @@ function createSeats(){
                 .75
             );
 
-
-            back.castShadow =
-                true;
+            group.add(back);
 
 
-            group.add(
-                back
-            );
+            for(const side of [-1,1]){
 
+                const arm=new THREE.Mesh(
 
-            /* ARM RESTS */
+                    new THREE.BoxGeometry(
+                        .25,
+                        .65,
+                        1.5
+                    ),
 
-            for(
-                let side of [-1,1]
-            ){
+                    mat(
+                        0x211b23,
+                        .55,
+                        .4
+                    )
 
-                const arm =
-                    new THREE.Mesh(
-
-                        new THREE.BoxGeometry(
-                            .25,
-                            .65,
-                            1.5
-                        ),
-
-                        mat(
-                            0x211b23,
-                            .5,
-                            .5
-                        )
-
-                    );
-
+                );
 
                 arm.position.set(
                     side*1.1,
@@ -2421,21 +2060,13 @@ function createSeats(){
                     .05
                 );
 
-
-                group.add(
-                    arm
-                );
-
+                group.add(arm);
             }
 
 
-            const x =
-                (col-2)*3.1;
+            const x=(col-2)*3.1;
 
-
-            const z =
-                14 -
-                row*5.5;
+            const z=14-row*5.5;
 
 
             group.position.set(
@@ -2445,119 +2076,90 @@ function createSeats(){
             );
 
 
-            group.userData = {
+            group.userData={
 
                 seat:number,
 
-                row:
-                    String.fromCharCode(
-                        65+row
-                    ),
+                row:String.fromCharCode(65+row),
 
-                col:
-                    col+1
+                col:col+1,
+
+                accessible:
+                    row===3 &&
+                    (col===0 || col===4)
 
             };
 
 
-            scene.add(
-                group
-            );
+            scene.add(group);
 
-
-            seatObjects.push(
-                group
-            );
-
+            seatObjects.push(group);
 
             number++;
-
         }
-
     }
-
 }
 
 
 /* =========================================================
-   LUXURY X
+   LUXURY X WALL
 ========================================================= */
 
 function createLuxuryX(){
 
-    wallX =
-        new THREE.Group();
+    wallX=new THREE.Group();
 
 
-    const gold =
-        emissiveMat(
-            0xffb45c,
-            1.8
+    const gold=emissiveMat(
+        0xffb45c,
+        1.6
+    );
+
+
+    const darkGold=mat(
+        0x8f5527,
+        .38,
+        .75
+    );
+
+
+    function bar(rotation){
+
+        const mesh=new THREE.Mesh(
+
+            new THREE.BoxGeometry(
+                1.1,
+                9,
+                .55
+            ),
+
+            gold
+
         );
 
+        mesh.rotation.z=rotation;
 
-    const darkGold =
-        mat(
-            0x8f5527,
-            .35,
-            .8
-        );
-
-
-    function bar(
-        rotation
-    ){
-
-        const mesh =
-            new THREE.Mesh(
-
-                new THREE.BoxGeometry(
-                    1.1,
-                    9,
-                    .55
-                ),
-
-                gold
-            );
-
-
-        mesh.rotation.z =
-            rotation;
-
-
-        wallX.add(
-            mesh
-        );
-
+        wallX.add(mesh);
     }
 
 
-    bar(
-        -Math.PI/4
+    bar(-Math.PI/4);
+    bar(Math.PI/4);
+
+
+    const frame=new THREE.Mesh(
+
+        new THREE.BoxGeometry(
+            10,
+            10,
+            .35
+        ),
+
+        darkGold
+
     );
 
-    bar(
-        Math.PI/4
-    );
-
-
-    const frame =
-        new THREE.Mesh(
-
-            new THREE.BoxGeometry(
-                10,
-                10,
-                .35
-            ),
-
-            darkGold
-
-        );
-
-
-    wallX.add(
-        frame
-    );
+    wallX.add(frame);
 
 
     wallX.position.set(
@@ -2566,11 +2168,7 @@ function createLuxuryX(){
         27.35
     );
 
-
-    scene.add(
-        wallX
-    );
-
+    scene.add(wallX);
 }
 
 
@@ -2580,24 +2178,18 @@ function createLuxuryX(){
 
 function createLights(){
 
-    const ambient =
-        new THREE.AmbientLight(
-            0x443846,
-            .65
-        );
-
-
-    scene.add(
-        ambient
+    const ambient=new THREE.AmbientLight(
+        0x443846,
+        .72
     );
 
+    scene.add(ambient);
 
-    const key =
-        new THREE.DirectionalLight(
-            0xffe8df,
-            1.1
-        );
 
+    const key=new THREE.DirectionalLight(
+        0xffe8df,
+        .85
+    );
 
     key.position.set(
         0,
@@ -2605,36 +2197,16 @@ function createLights(){
         5
     );
 
+    scene.add(key);
 
-    key.castShadow =
-        true;
+    roomLights.push(key);
 
 
-    key.shadow.mapSize.set(
-        1024,
-        1024
+    const screenLight=new THREE.PointLight(
+        0xff4e9a,
+        13,
+        30
     );
-
-
-    scene.add(
-        key
-    );
-
-
-    roomLights.push(
-        key
-    );
-
-
-    /* SCREEN LIGHT */
-
-    const screenLight =
-        new THREE.PointLight(
-            0xff4e9a,
-            18,
-            32
-        );
-
 
     screenLight.position.set(
         0,
@@ -2642,30 +2214,20 @@ function createLights(){
         -22
     );
 
+    scene.add(screenLight);
 
-    scene.add(
-        screenLight
-    );
+    roomLights.push(screenLight);
 
-
-    roomLights.push(
-        screenLight
-    );
-
-
-    /* AISLE LIGHTS */
 
     for(
-        let x of [-10,-5,0,5,10]
+        const x of [-10,-5,0,5,10]
     ){
 
-        const light =
-            new THREE.PointLight(
-                0xff477f,
-                3,
-                8
-            );
-
+        const light=new THREE.PointLight(
+            0xff477f,
+            2.2,
+            7
+        );
 
         light.position.set(
             x,
@@ -2673,45 +2235,30 @@ function createLights(){
             24
         );
 
+        scene.add(light);
 
-        scene.add(
-            light
+        aisleLights.push(light);
+
+
+        const orb=new THREE.Mesh(
+
+            new THREE.SphereGeometry(
+                .12,
+                8,
+                8
+            ),
+
+            emissiveMat(
+                0xff3f80,
+                1.8
+            )
+
         );
 
+        orb.position.copy(light.position);
 
-        aisleLights.push(
-            light
-        );
-
-
-        const orb =
-            new THREE.Mesh(
-
-                new THREE.SphereGeometry(
-                    .12,
-                    12,
-                    12
-                ),
-
-                emissiveMat(
-                    0xff3f80,
-                    2
-                )
-
-            );
-
-
-        orb.position.copy(
-            light.position
-        );
-
-
-        scene.add(
-            orb
-        );
-
+        scene.add(orb);
     }
-
 }
 
 
@@ -2721,94 +2268,65 @@ function createLights(){
 
 function createPlayer(){
 
-    playerGroup =
-        new THREE.Group();
+    playerGroup=new THREE.Group();
 
 
-    /* BODY */
+    const body=new THREE.Mesh(
 
-    const body =
-        new THREE.Mesh(
+        new THREE.CapsuleGeometry(
+            .55,
+            1.2,
+            5,
+            8
+        ),
 
-            new THREE.CapsuleGeometry(
-                .55,
-                1.2,
-                6,
-                12
-            ),
+        mat(
+            0x8f3970,
+            .72,
+            .03
+        )
 
-            mat(
-                0x8f3970,
-                .7,
-                .05
-            )
-
-        );
-
-
-    body.position.y =
-        1.15;
-
-
-    body.castShadow =
-        true;
-
-
-    playerGroup.add(
-        body
     );
 
+    body.position.y=1.15;
 
-    /* HEAD */
-
-    const head =
-        new THREE.Mesh(
-
-            new THREE.SphereGeometry(
-                .46,
-                20,
-                20
-            ),
-
-            mat(
-                0xffd4c5,
-                .7
-            )
-
-        );
+    playerGroup.add(body);
 
 
-    head.position.y =
-        2.25;
+    const head=new THREE.Mesh(
 
+        new THREE.SphereGeometry(
+            .46,
+            12,
+            12
+        ),
 
-    head.castShadow =
-        true;
+        mat(
+            0xffd4c5,
+            .72
+        )
 
-
-    playerGroup.add(
-        head
     );
 
+    head.position.y=2.25;
 
-    /* HAIR */
+    playerGroup.add(head);
 
-    const hair =
-        new THREE.Mesh(
 
-            new THREE.SphereGeometry(
-                .52,
-                20,
-                20
-            ),
+    const hair=new THREE.Mesh(
 
-            mat(
-                0x3b163f,
-                .65
-            )
+        new THREE.SphereGeometry(
+            .52,
+            12,
+            12
+        ),
 
-        );
+        mat(
+            0x3b163f,
+            .68
+        )
 
+    );
 
     hair.scale.set(
         1.03,
@@ -2816,37 +2334,29 @@ function createPlayer(){
         .95
     );
 
-
     hair.position.set(
         0,
         2.42,
         -.02
     );
 
+    playerGroup.add(hair);
 
-    playerGroup.add(
-        hair
+
+    const faceGlow=new THREE.Mesh(
+
+        new THREE.SphereGeometry(
+            .035,
+            6,
+            6
+        ),
+
+        emissiveMat(
+            0xff7bb8,
+            1
+        )
+
     );
-
-
-    /* FACE FRONT */
-
-    const faceGlow =
-        new THREE.Mesh(
-
-            new THREE.SphereGeometry(
-                .035,
-                8,
-                8
-            ),
-
-            emissiveMat(
-                0xff7bb8,
-                1
-            )
-
-        );
-
 
     faceGlow.position.set(
         -.17,
@@ -2854,35 +2364,26 @@ function createPlayer(){
         -.44
     );
 
-
-    playerGroup.add(
-        faceGlow
-    );
+    playerGroup.add(faceGlow);
 
 
-    /* LEGS */
+    for(const side of [-1,1]){
 
-    for(
-        let side of [-1,1]
-    ){
+        const leg=new THREE.Mesh(
 
-        const leg =
-            new THREE.Mesh(
+            new THREE.CapsuleGeometry(
+                .18,
+                .75,
+                3,
+                6
+            ),
 
-                new THREE.CapsuleGeometry(
-                    .18,
-                    .75,
-                    4,
-                    8
-                ),
+            mat(
+                0x15131b,
+                .72
+            )
 
-                mat(
-                    0x15131b,
-                    .7
-                )
-
-            );
-
+        );
 
         leg.position.set(
             side*.22,
@@ -2890,15 +2391,7 @@ function createPlayer(){
             0
         );
 
-
-        leg.castShadow =
-            true;
-
-
-        playerGroup.add(
-            leg
-        );
-
+        playerGroup.add(leg);
     }
 
 
@@ -2909,121 +2402,89 @@ function createPlayer(){
     );
 
 
-    scene.add(
-        playerGroup
-    );
+    scene.add(playerGroup);
 
-
-    player =
-        playerGroup;
-
+    player=playerGroup;
 }
 
 
 /* =========================================================
-   KEYBOARD INPUT
+   INPUT
 ========================================================= */
 
 function setupInput(){
 
-    addEventListener(
-        "keydown",
-        event => {
+    addEventListener("keydown",event=>{
 
-            if(
-                event.code==="KeyW" ||
-                event.code==="ArrowUp"
-            ){
-
-                APP.keys.forward=true;
-
-            }
-
-            if(
-                event.code==="KeyS" ||
-                event.code==="ArrowDown"
-            ){
-
-                APP.keys.backward=true;
-
-            }
-
-            if(
-                event.code==="KeyA" ||
-                event.code==="ArrowLeft"
-            ){
-
-                APP.keys.left=true;
-
-            }
-
-            if(
-                event.code==="KeyD" ||
-                event.code==="ArrowRight"
-            ){
-
-                APP.keys.right=true;
-
-            }
-
-            if(
-                event.code==="KeyE"
-            ){
-
-                toggleSit();
-
-            }
-
+        if(
+            event.code==="KeyW" ||
+            event.code==="ArrowUp"
+        ){
+            APP.keys.forward=true;
         }
-    );
 
-
-    addEventListener(
-        "keyup",
-        event => {
-
-            if(
-                event.code==="KeyW" ||
-                event.code==="ArrowUp"
-            ){
-
-                APP.keys.forward=false;
-
-            }
-
-            if(
-                event.code==="KeyS" ||
-                event.code==="ArrowDown"
-            ){
-
-                APP.keys.backward=false;
-
-            }
-
-            if(
-                event.code==="KeyA" ||
-                event.code==="ArrowLeft"
-            ){
-
-                APP.keys.left=false;
-
-            }
-
-            if(
-                event.code==="KeyD" ||
-                event.code==="ArrowRight"
-            ){
-
-                APP.keys.right=false;
-
-            }
-
+        if(
+            event.code==="KeyS" ||
+            event.code==="ArrowDown"
+        ){
+            APP.keys.backward=true;
         }
-    );
+
+        if(
+            event.code==="KeyA" ||
+            event.code==="ArrowLeft"
+        ){
+            APP.keys.left=true;
+        }
+
+        if(
+            event.code==="KeyD" ||
+            event.code==="ArrowRight"
+        ){
+            APP.keys.right=true;
+        }
+
+        if(event.code==="KeyE"){
+            toggleSit();
+        }
+
+    });
+
+
+    addEventListener("keyup",event=>{
+
+        if(
+            event.code==="KeyW" ||
+            event.code==="ArrowUp"
+        ){
+            APP.keys.forward=false;
+        }
+
+        if(
+            event.code==="KeyS" ||
+            event.code==="ArrowDown"
+        ){
+            APP.keys.backward=false;
+        }
+
+        if(
+            event.code==="KeyA" ||
+            event.code==="ArrowLeft"
+        ){
+            APP.keys.left=false;
+        }
+
+        if(
+            event.code==="KeyD" ||
+            event.code==="ArrowRight"
+        ){
+            APP.keys.right=false;
+        }
+
+    });
 
 
     setupJoystick();
-
 }
 
 
@@ -3033,84 +2494,43 @@ function setupInput(){
 
 function setupJoystick(){
 
-    const joystick =
-        $("joystick");
-
-    const stick =
-        $("stick");
-
+    const joystick=$("joystick");
+    const stick=$("stick");
 
     let active=false;
 
 
-    function move(
-        clientX,
-        clientY
-    ){
+    function move(clientX,clientY){
 
-        const rect =
-            joystick.getBoundingClientRect();
+        const rect=joystick.getBoundingClientRect();
 
+        const centerX=rect.left+rect.width/2;
+        const centerY=rect.top+rect.height/2;
 
-        const centerX =
-            rect.left +
-            rect.width/2;
+        let dx=clientX-centerX;
+        let dy=clientY-centerY;
 
+        const max=rect.width*.32;
 
-        const centerY =
-            rect.top +
-            rect.height/2;
-
-
-        let dx =
-            clientX-centerX;
-
-
-        let dy =
-            clientY-centerY;
-
-
-        const max =
-            rect.width*.32;
-
-
-        const distance =
-            Math.sqrt(
-                dx*dx+
-                dy*dy
-            );
+        const distance=Math.sqrt(
+            dx*dx+dy*dy
+        );
 
 
         if(distance>max){
 
-            dx =
-                dx/distance*
-                max;
-
-            dy =
-                dy/distance*
-                max;
+            dx=dx/distance*max;
+            dy=dy/distance*max;
 
         }
 
 
-        stick.style.transform =
-            `
-            translate(
-                ${dx}px,
-                ${dy}px
-            )
-            translate(-50%,-50%)
-            `;
+        stick.style.transform=
+            `translate(${dx}px,${dy}px) translate(-50%,-50%)`;
 
 
-        APP.move.x =
-            dx/max;
-
-
-        APP.move.z =
-            dy/max;
-
+        APP.move.x=dx/max;
+        APP.move.z=dy/max;
     }
 
 
@@ -3121,16 +2541,14 @@ function setupJoystick(){
         APP.move.x=0;
         APP.move.z=0;
 
-
-        stick.style.transform =
+        stick.style.transform=
             "translate(-50%,-50%)";
-
     }
 
 
     joystick.addEventListener(
         "pointerdown",
-        event => {
+        event=>{
 
             active=true;
 
@@ -3149,7 +2567,7 @@ function setupJoystick(){
 
     joystick.addEventListener(
         "pointermove",
-        event => {
+        event=>{
 
             if(!active)return;
 
@@ -3172,7 +2590,6 @@ function setupJoystick(){
         "pointercancel",
         reset
     );
-
 }
 
 
@@ -3182,42 +2599,23 @@ function setupJoystick(){
 
 function updateMovement(delta){
 
-    if(
-        !player ||
-        APP.sitting
-    ){
-
-        return;
-
-    }
+    if(!player || APP.sitting)return;
 
 
-    let x =
-        APP.move.x;
+    let x=APP.move.x;
+    let z=APP.move.z;
 
 
-    let z =
-        APP.move.z;
+    if(APP.keys.left)x-=1;
+    if(APP.keys.right)x+=1;
+
+    if(APP.keys.forward)z-=1;
+    if(APP.keys.backward)z+=1;
 
 
-    if(APP.keys.left)
-        x-=1;
-
-    if(APP.keys.right)
-        x+=1;
-
-    if(APP.keys.forward)
-        z-=1;
-
-    if(APP.keys.backward)
-        z+=1;
-
-
-    const length =
-        Math.sqrt(
-            x*x+
-            z*z
-        );
+    const length=Math.sqrt(
+        x*x+z*z
+    );
 
 
     if(length>1){
@@ -3228,21 +2626,14 @@ function updateMovement(delta){
     }
 
 
-    const speed =
-        8*delta;
+    const speed=8*delta;
 
 
-    player.position.x +=
-        x*speed;
+    player.position.x+=x*speed;
+    player.position.z+=z*speed;
 
 
-    player.position.z +=
-        z*speed;
-
-
-    /* KEEP INSIDE THEATRE */
-
-    player.position.x =
+    player.position.x=
         THREE.MathUtils.clamp(
             player.position.x,
             -17,
@@ -3250,7 +2641,7 @@ function updateMovement(delta){
         );
 
 
-    player.position.z =
+    player.position.z=
         THREE.MathUtils.clamp(
             player.position.z,
             -21,
@@ -3259,23 +2650,17 @@ function updateMovement(delta){
 
 
     if(
-        Math.abs(x)+
-        Math.abs(z)>0.05
+        Math.abs(x)+Math.abs(z)>.05
     ){
 
-        player.rotation.y =
-            Math.atan2(
-                x,
-                z
-            );
+        player.rotation.y=
+            Math.atan2(x,z);
 
     }
 
 
     updateCamera();
-
     findNearbySeat();
-
 }
 
 
@@ -3285,32 +2670,30 @@ function updateMovement(delta){
 
 function updateCamera(){
 
-    const target =
-        new THREE.Vector3(
-            player.position.x,
-            player.position.y+2.8,
-            player.position.z+7
-        );
+    if(!player)return;
 
 
-    const desired =
-        new THREE.Vector3(
-            player.position.x,
-            player.position.y+4.3,
-            player.position.z+8
-        );
+    const target=new THREE.Vector3(
+        player.position.x,
+        player.position.y+2.8,
+        player.position.z+7
+    );
+
+
+    const desired=new THREE.Vector3(
+        player.position.x,
+        player.position.y+4.3,
+        player.position.z+8
+    );
 
 
     camera.position.lerp(
         desired,
-        .09
+        .1
     );
 
 
-    camera.lookAt(
-        target
-    );
-
+    camera.lookAt(target);
 }
 
 
@@ -3320,82 +2703,64 @@ function updateCamera(){
 
 function findNearbySeat(){
 
-    let closest=null;
+    if(!player)return;
 
+
+    let closest=null;
     let distance=Infinity;
 
 
-    seatObjects.forEach(
-        seat => {
+    for(const seat of seatObjects){
 
-            const d =
-                player.position.distanceTo(
-                    seat.position
-                );
+        const d=player.position.distanceTo(
+            seat.position
+        );
 
 
-            if(
-                d<3 &&
-                d<distance
-            ){
+        if(
+            d<3 &&
+            d<distance
+        ){
 
-                closest=seat;
-
-                distance=d;
-
-            }
+            closest=seat;
+            distance=d;
 
         }
-    );
+    }
 
 
-    APP.nearbySeat =
-        closest;
+    APP.nearbySeat=closest;
 
 
-    const interaction =
-        $("interaction");
+    const interaction=$("interaction");
 
 
     if(
         closest &&
-        !APP.sitting
+        !APP.sitting &&
+        !isSeatOccupied(
+            closest.userData.seat
+        )
     ){
 
-        const occupied =
-            isSeatOccupied(
-                closest.userData.seat
-            );
+        interaction.innerHTML=
+            `
+            <b>
+            ${closest.userData.row}
+            • SEAT
+            ${closest.userData.col}
+            </b>
+            <br>
+            Tap SIT to take this seat.
+            `;
 
+        interaction.classList.add("show");
 
-        if(!occupied){
-
-            interaction.innerHTML =
-                `
-                <b>
-                ${closest.userData.row}
-                • SEAT
-                ${closest.userData.col}
-                </b>
-                <br>
-                Tap SIT to take this seat.
-                `;
-
-            interaction.classList.add(
-                "show"
-            );
-
-            return;
-
-        }
-
+        return;
     }
 
 
-    interaction.classList.remove(
-        "show"
-    );
-
+    interaction.classList.remove("show");
 }
 
 
@@ -3403,44 +2768,27 @@ function findNearbySeat(){
    SEAT OCCUPANCY
 ========================================================= */
 
-function isSeatOccupied(
-    number
-){
+function isSeatOccupied(number){
 
-    if(
-        APP.seat ===
-        number
-    ){
-
-        return true;
-
-    }
+    if(APP.seat===number)return true;
 
 
     for(
-        const person
-        of APP.players.values()
+        const person of APP.players.values()
     ){
 
-        if(
-            person.seat ===
-            number
-        ){
-
+        if(person.seat===number){
             return true;
-
         }
 
     }
 
-
     return false;
-
 }
 
 
 /* =========================================================
-   SIT / STAND
+   SIT
 ========================================================= */
 
 function toggleSit(){
@@ -3448,7 +2796,6 @@ function toggleSit(){
     if(APP.sitting){
 
         standUp();
-
         return;
 
     }
@@ -3456,17 +2803,13 @@ function toggleSit(){
 
     if(!APP.nearbySeat){
 
-        toast(
-            "Walk closer to a seat."
-        );
-
+        toast("Walk closer to a seat.");
         return;
 
     }
 
 
-    const seat =
-        APP.nearbySeat;
+    const seat=APP.nearbySeat;
 
 
     if(
@@ -3475,19 +2818,13 @@ function toggleSit(){
         )
     ){
 
-        toast(
-            "That seat is occupied."
-        );
-
+        toast("That seat is occupied.");
         return;
 
     }
 
 
-    APP.seat =
-        seat.userData.seat;
-
-
+    APP.seat=seat.userData.seat;
     APP.sitting=true;
 
 
@@ -3495,33 +2832,25 @@ function toggleSit(){
         seat.position
     );
 
+    player.position.y=.02;
 
-    player.position.y =
-        .02;
-
-
-    player.rotation.y =
-        Math.PI;
+    player.rotation.y=Math.PI;
 
 
-    $("sitButton").innerHTML =
+    $("sitButton").innerHTML=
         "🚶 <span class='label'>STAND</span>";
 
 
-    $("interaction").classList.remove(
-        "show"
-    );
+    $("interaction").classList.remove("show");
 
 
     broadcast({
 
         type:"seat",
 
-        name:
-            APP.playerName,
+        name:APP.playerName,
 
-        seat:
-            APP.seat
+        seat:APP.seat
 
     });
 
@@ -3530,28 +2859,23 @@ function toggleSit(){
 
 
     toast(
-        "You took " +
-        seat.userData.row +
-        " • Seat " +
+        "You took "+
+        seat.userData.row+
+        " • Seat "+
         seat.userData.col
     );
-
 }
 
 
 function standUp(){
 
     APP.sitting=false;
-
-
     APP.seat=null;
 
-
-    player.position.y =
-        0;
+    player.position.y=0;
 
 
-    $("sitButton").innerHTML =
+    $("sitButton").innerHTML=
         "🪑 <span class='label'>SIT</span>";
 
 
@@ -3559,8 +2883,7 @@ function standUp(){
 
         type:"seat",
 
-        name:
-            APP.playerName,
+        name:APP.playerName,
 
         seat:null
 
@@ -3568,118 +2891,95 @@ function standUp(){
 
 
     renderSeatUI();
-
 }
 
 
 /* =========================================================
-   SEAT UI
+   SEAT MAP
 ========================================================= */
 
 function renderSeatUI(){
 
-    const grid =
-        $("seatGrid");
+    const grid=$("seatGrid");
+
+    if(!grid)return;
 
 
-    grid.innerHTML =
-        "";
+    grid.innerHTML="";
 
 
-    seatObjects.forEach(
-        seat => {
+    seatObjects.forEach(seat=>{
 
-            const button =
-                document.createElement(
-                    "button"
-                );
+        const button=document.createElement("button");
+
+        button.className="seat-ui";
 
 
-            button.className =
-                "seat-ui";
+        const number=seat.userData.seat;
 
 
-            const number =
-                seat.userData.seat;
+        button.textContent=
+            seat.userData.row+
+            seat.userData.col;
 
 
-            button.textContent =
-                seat.userData.row +
-                seat.userData.col;
+        if(seat.userData.accessible){
+            button.classList.add("accessible");
+            button.title="Accessible-designated seat";
+        }
 
 
-            if(
-                APP.seat ===
-                number
-            ){
+        if(APP.seat===number){
 
-                button.classList.add(
-                    "me"
-                );
-
-            }
-
-
-            else if(
-                isSeatOccupied(
-                    number
-                )
-            ){
-
-                button.classList.add(
-                    "taken"
-                );
-
-                button.disabled=true;
-
-            }
-
-
-            button.onclick =
-                () => {
-
-                    if(
-                        !isSeatOccupied(
-                            number
-                        )
-                    ){
-
-                        player.position.copy(
-                            seat.position
-                        );
-
-                        APP.nearbySeat =
-                            seat;
-
-                        toggleSit();
-
-                    }
-
-                };
-
-
-            grid.appendChild(
-                button
-            );
+            button.classList.add("me");
 
         }
-    );
 
+        else if(
+            isSeatOccupied(number)
+        ){
+
+            button.classList.add("taken");
+            button.disabled=true;
+
+        }
+
+
+        button.onclick=()=>{
+
+            if(
+                !isSeatOccupied(number)
+            ){
+
+                player.position.copy(
+                    seat.position
+                );
+
+                APP.nearbySeat=seat;
+
+                toggleSit();
+
+            }
+
+        };
+
+
+        grid.appendChild(button);
+
+    });
 }
 
 
 /* =========================================================
-   MOVIE
+   MOVIE FILE
+   Only created AFTER user selects a file.
 ========================================================= */
 
-$("movieInput")
-.addEventListener(
+$("movieInput").addEventListener(
     "change",
-    event => {
+    event=>{
 
-        const file =
-            event.target.files?.[0];
-
+        const file=event.target.files?.[0];
 
         if(!file)return;
 
@@ -3693,103 +2993,85 @@ $("movieInput")
         }
 
 
-        APP.movieURL =
-            URL.createObjectURL(
-                file
-            );
+        APP.movieURL=
+            URL.createObjectURL(file);
 
 
-        APP.movieName =
-            file.name;
+        APP.movieName=file.name;
 
 
-        movieVideo =
-            document.createElement(
-                "video"
-            );
+        if(movieVideo){
+
+            movieVideo.pause();
+
+            movieVideo.src="";
+        }
 
 
-        movieVideo.src =
-            APP.movieURL;
+        movieVideo=document.createElement("video");
 
+        movieVideo.src=APP.movieURL;
 
         movieVideo.loop=false;
 
-
         movieVideo.muted=true;
-
 
         movieVideo.playsInline=true;
 
-
-        movieVideo.crossOrigin =
-            "anonymous";
+        movieVideo.preload="metadata";
 
 
-        movieTexture =
-            new THREE.VideoTexture(
-                movieVideo
-            );
+        movieTexture=new THREE.VideoTexture(
+            movieVideo
+        );
 
 
-        movieTexture.colorSpace =
+        movieTexture.colorSpace=
             THREE.SRGBColorSpace;
 
 
-        screenMesh.material =
+        screenMesh.material=
             new THREE.MeshBasicMaterial({
                 map:movieTexture
             });
 
 
-        screenMesh.material.needsUpdate =
-            true;
+        screenMesh.material.needsUpdate=true;
 
 
-        $("movieInfo").textContent =
+        $("movieInfo").textContent=
             APP.movieName;
 
 
-        toast(
-            "Movie loaded 🎬"
-        );
-
+        toast("Movie loaded 🎬");
     }
 );
 
 
 /* =========================================================
-   MOVIE PLAYBACK
+   MOVIE CONTROLS
 ========================================================= */
 
 function playMovie(){
 
     if(!movieVideo){
 
-        toast(
-            "Select a movie first."
-        );
-
+        toast("Select a movie first.");
         return;
 
     }
 
 
-    movieVideo.play()
-        .catch(
-            () => {}
-        );
+    movieVideo.play().catch(()=>{});
 
 
     broadcast({
 
         type:"play",
 
-        time:
-            movieVideo.currentTime
+        time:movieVideo.currentTime
 
     });
-
 }
 
 
@@ -3805,82 +3087,101 @@ function pauseMovie(){
 
         type:"pause",
 
-        time:
-            movieVideo.currentTime
+        time:movieVideo.currentTime
 
     });
-
 }
 
 
-/* =========================================================
-   SYNC MOVIE
-========================================================= */
-
-function syncMovieTo(
-    connection
-){
+function stopMovie(){
 
     if(!movieVideo)return;
 
 
-    sendTo(
-        connection,
-        {
+    movieVideo.pause();
 
-            type:"sync",
+    movieVideo.currentTime=0;
 
-            time:
-                movieVideo.currentTime,
 
-            paused:
-                movieVideo.paused,
+    broadcast({
 
-            movieName:
-                APP.movieName
+        type:"pause",
 
-        }
-    );
+        time:0
 
+    });
+
+
+    toast("Movie stopped.");
 }
 
 
 /* =========================================================
-   PEER ROOM SYSTEM
+   PEERJS LAZY LOADER
 ========================================================= */
 
-function roomId(
-    code
-){
+function loadPeerJS(){
 
-    return (
-        "whos-watching-" +
-        code.toLowerCase()
+    if(typeof Peer!=="undefined"){
+        return Promise.resolve();
+    }
+
+
+    if(APP.peerLoading){
+        return APP.peerLoading;
+    }
+
+
+    APP.peerLoading=new Promise(
+        (resolve,reject)=>{
+
+            const script=
+                document.createElement("script");
+
+            script.src=
+                "https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js";
+
+            script.onload=resolve;
+
+            script.onerror=reject;
+
+            document.head.appendChild(script);
+
+        }
     );
 
+
+    return APP.peerLoading;
+}
+
+
+/* =========================================================
+   ROOM
+========================================================= */
+
+function roomId(code){
+
+    return(
+        "whos-watching-"+
+        code.toLowerCase()
+    );
 }
 
 
 function generateCode(){
 
-    const chars =
+    const chars=
         "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-
 
     let code="";
 
 
-    for(
-        let i=0;
-        i<6;
-        i++
-    ){
+    for(let i=0;i<6;i++){
 
-        code +=
+        code+=
             chars[
                 Math.floor(
-                    Math.random()*
-                    chars.length
+                    Math.random()*chars.length
                 )
             ];
 
@@ -3888,7 +3189,6 @@ function generateCode(){
 
 
     return code;
-
 }
 
 
@@ -3896,35 +3196,31 @@ function generateCode(){
    CREATE ROOM
 ========================================================= */
 
-function createRoom(){
+async function createRoom(){
 
-    if(
-        typeof Peer ===
-        "undefined"
-    ){
+    toast("Starting room service...");
 
-        toast(
-            "Room service unavailable."
-        );
+    try{
 
+        await loadPeerJS();
+
+    }catch(error){
+
+        toast("Could not load room service.");
         return;
 
     }
 
 
-    APP.playerName =
+    APP.playerName=
         $("playerName")
         .value
         .trim()
-        .slice(0,18)
-        ||
-        "Player";
+        .slice(0,18) ||
+        "Kush";
 
 
-    APP.room =
-        generateCode();
-
-
+    APP.room=generateCode();
     APP.host=true;
 
 
@@ -3937,40 +3233,29 @@ function createRoom(){
     }
 
 
-    APP.peer =
-        new Peer(
-            roomId(
-                APP.room
-            )
-        );
+    APP.peer=new Peer(
+        roomId(APP.room)
+    );
 
 
     APP.peer.on(
         "open",
-        () => {
+        ()=>{
 
-            $("roomCode").textContent =
+            $("roomCode").textContent=
                 APP.room;
 
-
-            $("roomCodeHUD").textContent =
+            $("roomCodeHUD").textContent=
                 APP.room;
-
 
             $("roomInfo")
                 .classList
                 .remove("hidden");
 
 
-            toast(
-                "Theatre created 🍿"
-            );
+            toast("Theatre created 🍿");
 
-
-            togglePanel(
-                "partyPanel"
-            );
-
+            togglePanel("partyPanel");
 
             addLocalPlayer();
 
@@ -3980,29 +3265,22 @@ function createRoom(){
 
     APP.peer.on(
         "connection",
-        connection => {
-
-            setupConnection(
-                connection
-            );
-
+        connection=>{
+            setupConnection(connection);
         }
     );
 
 
     APP.peer.on(
         "error",
-        error => {
+        error=>{
 
             console.error(error);
 
-            toast(
-                "Room creation failed."
-            );
+            toast("Room creation failed.");
 
         }
     );
-
 }
 
 
@@ -4010,23 +3288,9 @@ function createRoom(){
    JOIN ROOM
 ========================================================= */
 
-function joinRoom(){
+async function joinRoom(){
 
-    if(
-        typeof Peer ===
-        "undefined"
-    ){
-
-        toast(
-            "Room service unavailable."
-        );
-
-        return;
-
-    }
-
-
-    const code =
+    const code=
         $("joinCode")
         .value
         .trim()
@@ -4046,19 +3310,30 @@ function joinRoom(){
     }
 
 
-    APP.playerName =
+    toast("Loading room service...");
+
+
+    try{
+
+        await loadPeerJS();
+
+    }catch(error){
+
+        toast("Could not load room service.");
+        return;
+
+    }
+
+
+    APP.playerName=
         $("playerName")
         .value
         .trim()
-        .slice(0,18)
-        ||
-        "Player";
+        .slice(0,18) ||
+        "Kush";
 
 
-    APP.room =
-        code;
-
-
+    APP.room=code;
     APP.host=false;
 
 
@@ -4071,32 +3346,26 @@ function joinRoom(){
     }
 
 
-    APP.peer =
-        new Peer();
+    APP.peer=new Peer();
 
 
     APP.peer.on(
         "open",
-        () => {
+        ()=>{
 
-            const connection =
+            const connection=
                 APP.peer.connect(
-                    roomId(
-                        code
-                    ),
+                    roomId(code),
                     {
                         reliable:true
                     }
                 );
 
 
-            setupConnection(
-                connection
-            );
+            setupConnection(connection);
 
 
-            $("roomCodeHUD")
-                .textContent =
+            $("roomCodeHUD").textContent=
                 APP.room;
 
 
@@ -4110,7 +3379,7 @@ function joinRoom(){
 
     APP.peer.on(
         "error",
-        error => {
+        error=>{
 
             console.error(error);
 
@@ -4120,21 +3389,18 @@ function joinRoom(){
 
         }
     );
-
 }
 
 
 /* =========================================================
-   CONNECTION SETUP
+   CONNECTION
 ========================================================= */
 
-function setupConnection(
-    connection
-){
+function setupConnection(connection){
 
     connection.on(
         "open",
-        () => {
+        ()=>{
 
             APP.connections.set(
                 connection.peer,
@@ -4148,30 +3414,22 @@ function setupConnection(
 
                     type:"hello",
 
-                    name:
-                        APP.playerName,
+                    name:APP.playerName,
 
-                    seat:
-                        APP.seat
+                    seat:APP.seat
 
                 }
             );
 
 
             if(APP.host){
-
-                syncMovieTo(
-                    connection
-                );
-
+                syncMovieTo(connection);
             }
 
 
             updatePlayerList();
 
-            toast(
-                "Player connected 👋"
-            );
+            toast("Player connected 👋");
 
         }
     );
@@ -4179,30 +3437,26 @@ function setupConnection(
 
     connection.on(
         "data",
-        data => {
-
+        data=>{
             receiveData(
                 data,
                 connection
             );
-
         }
     );
 
 
     connection.on(
         "close",
-        () => {
+        ()=>{
 
             APP.connections.delete(
                 connection.peer
             );
 
-
             APP.players.delete(
                 connection.peer
             );
-
 
             updatePlayerList();
 
@@ -4210,12 +3464,11 @@ function setupConnection(
 
         }
     );
-
 }
 
 
 /* =========================================================
-   SEND HELPERS
+   SEND
 ========================================================= */
 
 function sendTo(
@@ -4229,44 +3482,56 @@ function sendTo(
     ){
 
         try{
-
-            connection.send(
-                data
-            );
-
+            connection.send(data);
         }catch(error){
-
-            console.error(
-                error
-            );
-
+            console.error(error);
         }
 
     }
-
 }
 
 
-function broadcast(
-    data
-){
+function broadcast(data){
 
     APP.connections.forEach(
-        connection => {
-
+        connection=>{
             sendTo(
                 connection,
                 data
             );
-
         }
     );
-
 }
 
 
 /* =========================================================
-   RECEIVE DATA
+   MOVIE SYNC
+========================================================= */
+
+function syncMovieTo(connection){
+
+    if(!movieVideo)return;
+
+
+    sendTo(
+        connection,
+        {
+
+            type:"sync",
+
+            time:movieVideo.currentTime,
+
+            paused:movieVideo.paused,
+
+            movieName:APP.movieName
+
+        }
+    );
+}
+
+
+/* =========================================================
+   RECEIVE
 ========================================================= */
 
 function receiveData(
@@ -4274,156 +3539,97 @@ function receiveData(
     connection
 ){
 
-    if(
-        !data ||
-        !data.type
-    ){
-
-        return;
-
-    }
+    if(!data || !data.type)return;
 
 
-    if(
-        data.type ===
-        "hello"
-    ){
+    if(data.type==="hello"){
 
         APP.players.set(
             connection.peer,
             {
 
-                peer:
-                    connection.peer,
+                peer:connection.peer,
 
-                name:
-                    data.name ||
-                    "Guest",
+                name:data.name || "Guest",
 
-                seat:
-                    data.seat ||
-                    null
+                seat:data.seat || null
 
             }
         );
 
 
         updatePlayerList();
-
         renderSeatUI();
 
 
         if(APP.host){
-
-            syncMovieTo(
-                connection
-            );
-
+            syncMovieTo(connection);
         }
 
 
         return;
-
     }
 
 
-    if(
-        data.type ===
-        "seat"
-    ){
+    if(data.type==="seat"){
 
         APP.players.set(
             connection.peer,
             {
 
-                peer:
-                    connection.peer,
+                peer:connection.peer,
 
-                name:
-                    data.name ||
-                    "Guest",
+                name:data.name || "Guest",
 
-                seat:
-                    data.seat ||
-                    null
+                seat:data.seat || null
 
             }
         );
 
 
         updatePlayerList();
-
         renderSeatUI();
 
-
         return;
-
     }
 
 
-    if(
-        data.type ===
-        "play"
-    ){
+    if(data.type==="play"){
 
         if(movieVideo){
 
-            movieVideo.currentTime =
-                Number(
-                    data.time ||
-                    0
-                );
+            movieVideo.currentTime=
+                Number(data.time || 0);
 
-
-            movieVideo.play()
-                .catch(
-                    () => {}
-                );
+            movieVideo.play().catch(()=>{});
 
         }
 
-
         return;
-
     }
 
 
-    if(
-        data.type ===
-        "pause"
-    ){
+    if(data.type==="pause"){
 
         if(movieVideo){
 
-            movieVideo.currentTime =
-                Number(
-                    data.time ||
-                    0
-                );
-
+            movieVideo.currentTime=
+                Number(data.time || 0);
 
             movieVideo.pause();
 
         }
 
-
         return;
-
     }
 
 
-    if(
-        data.type ===
-        "sync"
-    ){
+    if(data.type==="sync"){
 
         if(movieVideo){
 
-            movieVideo.currentTime =
-                Number(
-                    data.time ||
-                    0
-                );
+            movieVideo.currentTime=
+                Number(data.time || 0);
 
 
             if(data.paused){
@@ -4432,81 +3638,56 @@ function receiveData(
 
             }else{
 
-                movieVideo.play()
-                    .catch(
-                        () => {}
-                    );
+                movieVideo.play().catch(()=>{});
 
             }
 
         }
 
-
         return;
-
     }
 
 
-    if(
-        data.type ===
-        "chat"
-    ){
+    if(data.type==="chat"){
 
         addChatMessage(
-            data.name ||
-            "Guest",
-            data.text ||
-            ""
+            data.name || "Guest",
+            data.text || ""
         );
 
-
         return;
-
     }
 
 
-    if(
-        data.type ===
-        "reaction"
-    ){
+    if(data.type==="reaction"){
 
         showReaction(
-            data.emoji ||
-            "✨"
+            data.emoji || "✨"
         );
 
-
-        return;
-
     }
-
 }
 
 
 /* =========================================================
-   LOCAL PLAYER
+   PLAYERS
 ========================================================= */
 
 function addLocalPlayer(){
-
     updatePlayerList();
-
 }
 
 
 function updatePlayerList(){
 
-    const list =
-        $("playerList");
+    const list=$("playerList");
 
 
-    let html =
+    let html=
         `
         🟢
         <b>
-        ${escapeHTML(
-            APP.playerName
-        )}
+        ${escapeHTML(APP.playerName)}
         </b>
         ${
             APP.seat
@@ -4518,73 +3699,51 @@ function updatePlayerList(){
         `;
 
 
-    APP.players.forEach(
-        person => {
+    APP.players.forEach(person=>{
 
-            html +=
-                `
-                <br>
-                🔵
-                ${escapeHTML(
-                    person.name
-                )}
-                ${
-                    person.seat
-                    ?
-                    " • Seat "+
-                    person.seat
-                    :
-                    ""
-                }
-                `;
+        html+=
+            `
+            <br>
+            🔵
+            ${escapeHTML(person.name)}
+            ${
+                person.seat
+                ?
+                " • Seat "+person.seat
+                :
+                ""
+            }
+            `;
 
-        }
-    );
+    });
 
 
-    list.innerHTML =
-        html;
-
+    list.innerHTML=html;
 }
 
 
 /* =========================================================
-   COPY ROOM
+   COPY
 ========================================================= */
 
 function copyRoomCode(){
 
-    if(!APP.room){
-
-        return;
-
-    }
+    if(!APP.room)return;
 
 
-    if(
-        navigator.clipboard
-    ){
+    if(navigator.clipboard){
 
         navigator.clipboard
-            .writeText(
-                APP.room
-            )
-            .then(
-                () =>
-                    toast(
-                        "Room code copied!"
-                    )
-            );
+            .writeText(APP.room)
+            .then(()=>{
+                toast("Room code copied!");
+            });
 
     }else{
 
-        toast(
-            "Room: "+
-            APP.room
-        );
+        toast("Room: "+APP.room);
 
     }
-
 }
 
 
@@ -4594,20 +3753,11 @@ function copyRoomCode(){
 
 function sendChat(){
 
-    const input =
-        $("chatInput");
+    const input=$("chatInput");
 
+    const text=input.value.trim();
 
-    const text =
-        input.value
-        .trim();
-
-
-    if(!text){
-
-        return;
-
-    }
+    if(!text)return;
 
 
     addChatMessage(
@@ -4620,8 +3770,7 @@ function sendChat(){
 
         type:"chat",
 
-        name:
-            APP.playerName,
+        name:APP.playerName,
 
         text
 
@@ -4637,50 +3786,33 @@ function addChatMessage(
     text
 ){
 
-    const row =
-        document.createElement(
-            "div"
-        );
+    const row=
+        document.createElement("div");
 
 
-    row.className =
-        "msg";
+    row.className="msg";
 
 
-    row.innerHTML =
+    row.innerHTML=
         `
-        <b>
-        ${escapeHTML(name)}
-        </b>
-
+        <b>${escapeHTML(name)}</b>
         <small>
-        ${new Date()
-            .toLocaleTimeString(
-                [],
-                {
-                    hour:"2-digit",
-                    minute:"2-digit"
-                }
-            )}
+        ${new Date().toLocaleTimeString(
+            [],
+            {
+                hour:"2-digit",
+                minute:"2-digit"
+            }
+        )}
         </small>
-
-        <div>
-        ${escapeHTML(text)}
-        </div>
+        <div>${escapeHTML(text)}</div>
         `;
 
 
-    $("chatLog")
-        .appendChild(
-            row
-        );
+    $("chatLog").appendChild(row);
 
-
-    $("chatLog")
-        .scrollTop =
-        $("chatLog")
-        .scrollHeight;
-
+    $("chatLog").scrollTop=
+        $("chatLog").scrollHeight;
 }
 
 
@@ -4688,14 +3820,9 @@ function addChatMessage(
    REACTIONS
 ========================================================= */
 
-function sendReaction(
-    emoji
-){
+function sendReaction(emoji){
 
-    showReaction(
-        emoji
-    );
-
+    showReaction(emoji);
 
     broadcast({
 
@@ -4704,48 +3831,32 @@ function sendReaction(
         emoji
 
     });
-
 }
 
 
-function showReaction(
-    emoji
-){
+function showReaction(emoji){
 
-    const element =
-        document.createElement(
-            "div"
-        );
+    const element=
+        document.createElement("div");
 
 
-    element.className =
-        "reaction";
+    element.className="reaction";
+
+    element.textContent=emoji;
 
 
-    element.textContent =
-        emoji;
-
-
-    element.style.left =
-        (
-            10+
-            Math.random()*80
-        )+
-        "%";
+    element.style.left=
+        (10+Math.random()*80)+"%";
 
 
     $("reactions")
-        .appendChild(
-            element
-        );
+        .appendChild(element);
 
 
     setTimeout(
-        () =>
-            element.remove(),
+        ()=>element.remove(),
         1800
     );
-
 }
 
 
@@ -4755,37 +3866,39 @@ function showReaction(
 
 function toggleLights(){
 
-    APP.lights =
-        !APP.lights;
+    APP.lights=!APP.lights;
 
 
-    roomLights.forEach(
-        light => {
+    roomLights.forEach(light=>{
 
-            light.intensity =
-                APP.lights
+        if(light===undefined)return;
+
+        light.intensity=
+            APP.lights
+            ?
+            (
+                light.isDirectionalLight
                 ?
-                light.userData.baseIntensity ||
-                1
+                .85
                 :
-                .05;
+                13
+            )
+            :
+            .04;
 
-        }
-    );
+    });
 
 
-    aisleLights.forEach(
-        light => {
+    aisleLights.forEach(light=>{
 
-            light.intensity =
-                APP.lights
-                ?
-                3
-                :
-                .15;
+        light.intensity=
+            APP.lights
+            ?
+            2.2
+            :
+            .08;
 
-        }
-    );
+    });
 
 
     toast(
@@ -4795,7 +3908,6 @@ function toggleLights(){
         :
         "Cinema lights OFF"
     );
-
 }
 
 
@@ -4805,14 +3917,13 @@ function toggleLights(){
 
 function screenGlow(){
 
-    APP.screenGlow =
-        !APP.screenGlow;
+    APP.screenGlow=!APP.screenGlow;
 
 
-    screenGlowMesh.material.opacity =
+    screenGlowMesh.material.opacity=
         APP.screenGlow
         ?
-        .07
+        .065
         :
         0;
 
@@ -4824,32 +3935,29 @@ function screenGlow(){
         :
         "Screen glow OFF"
     );
-
 }
 
 
 /* =========================================================
-   THEATRE THEMES
+   THEMES
 ========================================================= */
 
-const THEMES = [
+const THEMES=[
 
     {
-        floor:0x111014,
-        seat:0x6d173e,
         glow:0xff5b9e
     },
 
     {
-        floor:0x111216,
-        seat:0x173d66,
         glow:0x4fa9ff
     },
 
     {
-        floor:0x14110b,
-        seat:0x69471d,
         glow:0xffbd62
+    },
+
+    {
+        glow:0x9b6cff
     }
 
 ];
@@ -4862,43 +3970,26 @@ function changeTheme(){
     if(
         APP.theme>=THEMES.length
     ){
-
         APP.theme=0;
-
     }
 
 
-    const theme =
-        THEMES[
-            APP.theme
-        ];
+    const theme=
+        THEMES[APP.theme];
 
 
     screenGlowMesh.material.color
-        .setHex(
-            theme.glow
-        );
+        .setHex(theme.glow);
 
 
-    screenGlowMesh.material.opacity =
-        .07;
-
-
-    aisleLights.forEach(
-        light => {
-
-            light.color.setHex(
-                theme.glow
-            );
-
-        }
-    );
+    aisleLights.forEach(light=>{
+        light.color.setHex(theme.glow);
+    });
 
 
     toast(
         "Theatre theme changed ✨"
     );
-
 }
 
 
@@ -4908,38 +3999,16 @@ function changeTheme(){
 
 function toggleFullscreen(){
 
-    if(
-        document.fullscreenElement
-    ){
+    if(document.fullscreenElement){
 
         document.exitFullscreen?.();
 
         return;
-
     }
 
 
     document.documentElement
         .requestFullscreen?.();
-
-}
-
-
-/* =========================================================
-   SEARCH-LIKE CAMERA RESET
-========================================================= */
-
-function resetView(){
-
-    if(!player)return;
-
-
-    camera.position.set(
-        player.position.x,
-        player.position.y+4.3,
-        player.position.z+8
-    );
-
 }
 
 
@@ -4947,14 +4016,12 @@ function resetView(){
    ESCAPE HTML
 ========================================================= */
 
-function escapeHTML(
-    value
-){
+function escapeHTML(value){
 
     return String(value)
         .replace(
             /[&<>"']/g,
-            char => {
+            char=>{
 
                 const map={
 
@@ -4970,7 +4037,6 @@ function escapeHTML(
 
             }
         );
-
 }
 
 
@@ -4980,61 +4046,50 @@ function escapeHTML(
 
 function animate(){
 
-    requestAnimationFrame(
-        animate
-    );
+    requestAnimationFrame(animate);
 
 
-    const delta =
+    const delta=
         Math.min(
             APP.clock.getDelta(),
             .05
         );
 
 
-    updateMovement(
-        delta
-    );
+    updateMovement(delta);
 
 
-    /* CINEMA LIGHT PULSE */
+    const now=
+        performance.now();
 
-    const pulse =
+
+    /* CHEAP LIGHT PULSE */
+
+    const pulse=
         1+
-        Math.sin(
-            performance.now()*.0015
-        )*.08;
+        Math.sin(now*.0015)*.07;
 
 
-    aisleLights.forEach(
-        light => {
+    aisleLights.forEach(light=>{
 
-            light.intensity *=
-                .99;
+        light.intensity=
+            APP.lights
+            ?
+            2.2*pulse
+            :
+            .08;
 
-            light.intensity +=
-                APP.lights
-                ?
-                .03*pulse
-                :
-                0;
+    });
 
-        }
-    );
-
-
-    /* SCREEN GLOW */
 
     if(
         screenGlowMesh &&
         APP.screenGlow
     ){
 
-        screenGlowMesh.material.opacity =
+        screenGlowMesh.material.opacity=
             .055+
-            Math.sin(
-                performance.now()*.001
-            )*.012;
+            Math.sin(now*.001)*.01;
 
     }
 
@@ -5043,7 +4098,6 @@ function animate(){
         scene,
         camera
     );
-
 }
 
 
@@ -5053,15 +4107,13 @@ function animate(){
 
 addEventListener(
     "resize",
-    () => {
+    ()=>{
 
-        if(!camera || !renderer)
-            return;
+        if(!camera || !renderer)return;
 
 
-        camera.aspect =
-            innerWidth/
-            innerHeight;
+        camera.aspect=
+            innerWidth/innerHeight;
 
 
         camera.updateProjectionMatrix();
@@ -5069,7 +4121,8 @@ addEventListener(
 
         renderer.setSize(
             innerWidth,
-            innerHeight
+            innerHeight,
+            false
         );
 
     }
@@ -5080,17 +4133,12 @@ addEventListener(
    CHAT ENTER
 ========================================================= */
 
-$("chatInput")
-.addEventListener(
+$("chatInput").addEventListener(
     "keydown",
-    event => {
+    event=>{
 
-        if(
-            event.key==="Enter"
-        ){
-
+        if(event.key==="Enter"){
             sendChat();
-
         }
 
     }
@@ -5098,26 +4146,16 @@ $("chatInput")
 
 
 /* =========================================================
-   INITIALIZATION
+   START
 ========================================================= */
 
 window.addEventListener(
     "load",
-    () => {
+    ()=>{
+
+        /* Start immediately */
 
         initThree();
-
-
-        setTimeout(
-            () => {
-
-                $("loading")
-                    .classList
-                    .add("hide");
-
-            },
-            900
-        );
 
 
         addChatMessage(
@@ -5126,7 +4164,7 @@ window.addEventListener(
         );
 
 
-        renderSeatUI();
+        $("playerName").value="Kush";
 
     }
 );
@@ -5138,7 +4176,7 @@ window.addEventListener(
 
 addEventListener(
     "beforeunload",
-    () => {
+    ()=>{
 
         if(APP.movieURL){
 
@@ -5152,9 +4190,7 @@ addEventListener(
         if(APP.peer){
 
             try{
-
                 APP.peer.destroy();
-
             }catch(error){}
 
         }
@@ -5165,4 +4201,4 @@ addEventListener(
 </script>
 
 </body>
-  </html>
+      </html>
