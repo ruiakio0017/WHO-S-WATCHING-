@@ -1,0 +1,3819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="theme-color" content="#08070c">
+<title>WHO'S WATCHING?</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  min-height:100vh;
+  overflow-x:hidden;
+  color:#fff;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+  background:
+    radial-gradient(
+      circle at 78% 8%,
+      rgba(255,90,170,.16),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 12% 80%,
+      rgba(120,90,255,.13),
+      transparent 34%
+    ),
+    linear-gradient(
+      145deg,
+      #07070b,
+      #0c0910 55%,
+      #050509
+    );
+}
+
+button,
+input{
+  font:inherit;
+}
+
+button{
+  color:#fff;
+}
+
+button:focus-visible,
+input:focus-visible{
+  outline:2px solid #ff70b7;
+  outline-offset:2px;
+}
+
+.hidden{
+  display:none!important;
+}
+
+
+/* =========================================================
+   GLASS SYSTEM
+========================================================= */
+
+.glass{
+  background:rgba(255,255,255,.065);
+  border:1px solid rgba(255,255,255,.13);
+  box-shadow:
+    0 24px 70px rgba(0,0,0,.38);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+}
+
+
+/* =========================================================
+   APP
+========================================================= */
+
+.app{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:235px minmax(0,1fr);
+  gap:20px;
+  padding:20px;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar{
+  position:sticky;
+  top:20px;
+
+  height:calc(100vh - 40px);
+
+  border-radius:30px;
+  padding:24px;
+
+  display:flex;
+  flex-direction:column;
+}
+
+.logo{
+  font-size:25px;
+  line-height:.92;
+  font-weight:950;
+  letter-spacing:-1.5px;
+}
+
+.logo span{
+  color:#ff70b7;
+}
+
+.tagline-small{
+  margin-top:10px;
+  color:#9996a2;
+  font-size:12px;
+  line-height:1.45;
+}
+
+.nav{
+  display:grid;
+  gap:9px;
+  margin-top:35px;
+}
+
+.nav button{
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.045);
+  border-radius:17px;
+
+  padding:14px 15px;
+
+  text-align:left;
+  cursor:pointer;
+
+  transition:
+    transform .22s ease,
+    background .22s ease,
+    border-color .22s ease;
+}
+
+.nav button:hover,
+.nav button.active{
+  transform:translateX(4px);
+  background:rgba(255,255,255,.105);
+  border-color:rgba(255,255,255,.2);
+}
+
+.sidebar-bottom{
+  margin-top:auto;
+  color:#77747e;
+  font-size:12px;
+  line-height:1.6;
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main{
+  min-width:0;
+}
+
+.topbar{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.search{
+  flex:1;
+  min-width:0;
+  max-width:650px;
+
+  padding:15px 18px;
+
+  border-radius:19px;
+  border:1px solid rgba(255,255,255,.13);
+
+  background:rgba(255,255,255,.055);
+  color:#fff;
+
+  outline:none;
+}
+
+.search::placeholder{
+  color:#77747e;
+}
+
+.profile{
+  margin-left:auto;
+
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  padding:
+    7px
+    13px
+    7px
+    7px;
+
+  border-radius:25px;
+}
+
+.avatar{
+  width:47px;
+  height:47px;
+
+  border-radius:50%;
+
+  display:grid;
+  place-items:center;
+
+  font-size:25px;
+
+  background:
+    radial-gradient(
+      circle at 35% 28%,
+      #ffe1ed,
+      #ff75b9 45%,
+      #6949bd
+    );
+
+  border:2px solid rgba(255,255,255,.4);
+
+  box-shadow:
+    0 0 28px rgba(255,100,180,.22);
+}
+
+.profile small{
+  color:#92909a;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+  margin-top:24px;
+
+  min-height:430px;
+
+  border-radius:36px;
+
+  padding:50px;
+
+  display:flex;
+  align-items:center;
+
+  position:relative;
+  overflow:hidden;
+}
+
+.hero::after{
+  content:"";
+
+  position:absolute;
+
+  right:-140px;
+  bottom:-180px;
+
+  width:650px;
+  height:650px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,75,165,.22),
+      transparent 65%
+    );
+
+  pointer-events:none;
+}
+
+.hero-content{
+  position:relative;
+  z-index:5;
+
+  max-width:650px;
+}
+
+.kicker{
+  color:#ff93c7;
+
+  font-size:12px;
+  font-weight:850;
+
+  letter-spacing:2.5px;
+}
+
+.hero h1{
+  margin-top:15px;
+
+  font-size:
+    clamp(
+      55px,
+      8vw,
+      105px
+    );
+
+  line-height:.82;
+
+  font-weight:1000;
+
+  letter-spacing:-6px;
+}
+
+.hero h1 span{
+  color:#ff70b7;
+}
+
+.hero p{
+  margin-top:25px;
+
+  color:#d2ced8;
+
+  font-size:19px;
+}
+
+.primary{
+  margin-top:28px;
+
+  padding:15px 23px;
+
+  border-radius:20px;
+
+  border:1px solid rgba(255,255,255,.18);
+
+  cursor:pointer;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,112,183,.8),
+      rgba(130,95,255,.72)
+    );
+
+  box-shadow:
+    0 15px 45px rgba(255,80,170,.16);
+
+  transition:
+    transform .22s ease,
+    filter .22s ease;
+}
+
+.primary:hover{
+  transform:
+    translateY(-3px)
+    scale(1.01);
+
+  filter:brightness(1.08);
+}
+
+
+/* =========================================================
+   NEZUKO-STYLE CHARACTER
+========================================================= */
+
+.character{
+  position:absolute;
+
+  right:45px;
+  bottom:-5px;
+
+  width:270px;
+  height:340px;
+
+  pointer-events:none;
+
+  z-index:4;
+
+  filter:
+    drop-shadow(
+      0 25px 30px
+      rgba(0,0,0,.5)
+    );
+}
+
+.char-hair{
+  position:absolute;
+
+  left:50px;
+  top:18px;
+
+  width:150px;
+  height:205px;
+
+  border-radius:
+    52%
+    55%
+    45%
+    48%;
+
+  background:
+    linear-gradient(
+      145deg,
+      #26183e,
+      #6e234f 55%,
+      #d05b91
+    );
+
+  transform:rotate(7deg);
+}
+
+.char-face{
+  position:absolute;
+
+  left:86px;
+  top:72px;
+
+  width:105px;
+  height:130px;
+
+  border-radius:
+    48%
+    48%
+    45%
+    45%;
+
+  background:#ffd8ce;
+
+  z-index:2;
+}
+
+.char-eyes{
+  position:absolute;
+
+  left:106px;
+  top:120px;
+
+  z-index:4;
+
+  font-size:16px;
+
+  letter-spacing:23px;
+}
+
+.char-ribbon{
+  position:absolute;
+
+  left:57px;
+  top:43px;
+
+  z-index:5;
+
+  font-size:38px;
+
+  transform:rotate(-10deg);
+}
+
+.char-kimono{
+  position:absolute;
+
+  left:40px;
+  top:182px;
+
+  width:185px;
+  height:150px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #b92e68,
+      #4d2c75
+    );
+
+  clip-path:
+    polygon(
+      22% 0,
+      78% 0,
+      100% 100%,
+      0 100%
+    );
+
+  border-radius:24px;
+}
+
+
+/* =========================================================
+   FEATURE CARDS
+========================================================= */
+
+.cards{
+  margin-top:16px;
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(
+      4,
+      minmax(0,1fr)
+    );
+
+  gap:14px;
+}
+
+.card{
+  min-height:145px;
+
+  padding:22px;
+
+  border-radius:24px;
+
+  cursor:pointer;
+
+  transition:
+    transform .22s ease,
+    background .22s ease;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+  background:rgba(255,255,255,.105);
+}
+
+.card-icon{
+  font-size:29px;
+}
+
+.card h3{
+  margin-top:13px;
+  margin-bottom:6px;
+}
+
+.card p{
+  margin:0;
+
+  color:#9996a2;
+
+  font-size:13px;
+  line-height:1.45;
+}
+
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+.section{
+  margin-top:20px;
+}
+
+.section-title{
+  margin:0 0 12px;
+
+  font-size:21px;
+}
+
+.panel{
+  border-radius:27px;
+  padding:22px;
+}
+
+.row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.status{
+  color:#9996a2;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.file-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+
+  padding:13px 18px;
+
+  border-radius:16px;
+
+  background:rgba(255,255,255,.08);
+
+  border:1px solid rgba(255,255,255,.14);
+
+  cursor:pointer;
+
+  transition:.2s;
+}
+
+.file-btn:hover{
+  background:rgba(255,255,255,.13);
+}
+
+input[type=file]{
+  display:none;
+}
+
+
+/* =========================================================
+   ROOMS
+========================================================= */
+
+.room-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0,1fr)
+    );
+
+  gap:14px;
+}
+
+.field{
+  width:100%;
+
+  padding:13px 15px;
+
+  border-radius:15px;
+
+  border:1px solid rgba(255,255,255,.13);
+
+  background:rgba(0,0,0,.18);
+
+  color:#fff;
+
+  outline:none;
+}
+
+.field::placeholder{
+  color:#77747e;
+}
+
+.soft-btn{
+  padding:11px 15px;
+
+  border-radius:15px;
+
+  border:1px solid rgba(255,255,255,.13);
+
+  background:rgba(255,255,255,.07);
+
+  cursor:pointer;
+
+  transition:.2s;
+}
+
+.soft-btn:hover{
+  background:rgba(255,255,255,.12);
+}
+
+.room-code{
+  margin-top:8px;
+
+  color:#ff9aca;
+
+  font-size:31px;
+  font-weight:950;
+
+  letter-spacing:6px;
+}
+
+.copy-btn{
+  margin-top:10px;
+}
+
+
+/* =========================================================
+   THEATRE
+========================================================= */
+
+.theatre{
+  position:fixed;
+
+  inset:0;
+
+  z-index:100;
+
+  display:none;
+
+  overflow:auto;
+
+  padding:
+    14px
+    14px
+    45px;
+
+  background:
+    radial-gradient(
+      circle at 50% 20%,
+      rgba(80,80,100,.08),
+      transparent 42%
+    ),
+    #020205;
+}
+
+.theatre.open{
+  display:block;
+}
+
+.theatre-top{
+  max-width:1100px;
+
+  margin:auto;
+
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  padding-bottom:12px;
+}
+
+.theatre-title{
+  font-weight:900;
+}
+
+.spacer{
+  flex:1;
+}
+
+.movie-wrap{
+  max-width:1100px;
+  margin:auto;
+}
+
+.screen{
+  width:100%;
+
+  height:
+    min(
+      58vh,
+      650px
+    );
+
+  border-radius:24px;
+
+  overflow:hidden;
+
+  background:#000;
+
+  border:
+    1px solid
+    rgba(255,255,255,.1);
+
+  box-shadow:
+    0 0 100px
+    rgba(255,255,255,.05);
+}
+
+.screen video{
+  width:100%;
+  height:100%;
+
+  object-fit:contain;
+
+  background:#000;
+}
+
+.theatre-tools{
+  display:flex;
+
+  flex-wrap:wrap;
+
+  gap:8px;
+
+  margin:12px 0;
+}
+
+.theatre-tools button{
+  padding:10px 13px;
+
+  border-radius:14px;
+
+  background:rgba(255,255,255,.07);
+
+  border:
+    1px solid
+    rgba(255,255,255,.13);
+
+  cursor:pointer;
+}
+
+.theatre-tools button:hover{
+  background:rgba(255,255,255,.12);
+}
+
+
+/* =========================================================
+   THEATRE LOWER AREA
+========================================================= */
+
+.theatre-layout{
+  display:grid;
+
+  grid-template-columns:
+    minmax(0,1.3fr)
+    minmax(300px,.7fr);
+
+  gap:14px;
+
+  margin-top:15px;
+}
+
+.seat-panel,
+.chat-panel{
+  border-radius:24px;
+  padding:18px;
+}
+
+.stage{
+  text-align:center;
+
+  color:#85828d;
+
+  font-size:12px;
+
+  letter-spacing:2px;
+
+  padding:9px;
+
+  border-radius:12px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,.07),
+      transparent
+    );
+}
+
+.seats{
+  display:grid;
+
+  grid-template-columns:
+    repeat(
+      8,
+      minmax(0,1fr)
+    );
+
+  gap:8px;
+
+  max-width:680px;
+
+  margin:16px auto;
+}
+
+.seat{
+  aspect-ratio:1;
+
+  border-radius:
+    10px
+    10px
+    5px
+    5px;
+
+  border:
+    1px solid
+    #45404c;
+
+  background:#29252f;
+
+  color:#aaa;
+
+  cursor:pointer;
+
+  transition:
+    transform .18s ease,
+    background .18s ease,
+    box-shadow .18s ease;
+}
+
+.seat:hover{
+  transform:translateY(-3px);
+  background:#504356;
+}
+
+.seat.me{
+  color:#fff;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ff70b7,
+      #8e66ff
+    );
+
+  box-shadow:
+    0 0 22px
+    rgba(255,100,180,.3);
+}
+
+.seat.friend{
+  color:#fff;
+  background:#5b8eea;
+}
+
+.seat.taken{
+  color:#555;
+
+  background:#151419;
+
+  opacity:.45;
+
+  cursor:not-allowed;
+}
+
+.legend{
+  display:flex;
+
+  justify-content:center;
+
+  gap:15px;
+
+  color:#88858f;
+
+  font-size:12px;
+}
+
+.dot{
+  display:inline-block;
+
+  width:10px;
+  height:10px;
+
+  margin-right:4px;
+
+  border-radius:3px;
+
+  background:#29252f;
+}
+
+.dot.me{
+  background:#ff70b7;
+}
+
+.dot.friend{
+  background:#5b8eea;
+}
+
+
+/* =========================================================
+   CHAT
+========================================================= */
+
+.chat-log{
+  height:270px;
+
+  overflow:auto;
+
+  padding:10px;
+
+  border-radius:17px;
+
+  background:rgba(0,0,0,.16);
+}
+
+.message{
+  padding:8px;
+
+  border-bottom:
+    1px solid
+    rgba(255,255,255,.05);
+
+  font-size:13px;
+}
+
+.message b{
+  color:#ff9bca;
+}
+
+.message small{
+  margin-left:6px;
+  color:#66636c;
+}
+
+.message div{
+  margin-top:3px;
+  color:#ddd;
+}
+
+.chat-input{
+  display:flex;
+
+  gap:8px;
+
+  margin-top:8px;
+}
+
+.chat-input input{
+  flex:1;
+}
+
+.chat-input button{
+  padding:11px 14px;
+
+  border-radius:14px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.13);
+
+  background:rgba(255,255,255,.08);
+
+  cursor:pointer;
+}
+
+.reactions{
+  display:flex;
+
+  flex-wrap:wrap;
+
+  gap:7px;
+
+  margin-top:10px;
+}
+
+.reaction{
+  padding:7px 10px;
+
+  border-radius:13px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.12);
+
+  background:rgba(255,255,255,.07);
+
+  cursor:pointer;
+}
+
+
+/* =========================================================
+   TOAST + FLOATING REACTIONS
+========================================================= */
+
+.toast{
+  position:fixed;
+
+  left:50%;
+  bottom:22px;
+
+  z-index:300;
+
+  transform:
+    translateX(-50%)
+    translateY(20px);
+
+  padding:12px 17px;
+
+  border-radius:15px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.13);
+
+  background:rgba(25,22,30,.92);
+
+  opacity:0;
+
+  pointer-events:none;
+
+  transition:.25s;
+
+  backdrop-filter:blur(18px);
+}
+
+.toast.show{
+  opacity:1;
+
+  transform:
+    translateX(-50%)
+    translateY(0);
+}
+
+#reactionFloat{
+  position:fixed;
+
+  inset:0;
+
+  pointer-events:none;
+
+  z-index:250;
+}
+
+.float-reaction{
+  position:absolute;
+
+  bottom:15%;
+
+  font-size:35px;
+
+  animation:
+    floatReaction
+    1.6s
+    ease
+    forwards;
+}
+
+@keyframes floatReaction{
+
+  from{
+    transform:
+      translateY(0)
+      scale(.7)
+      rotate(0deg);
+
+    opacity:1;
+  }
+
+  to{
+    transform:
+      translateY(-55vh)
+      scale(1.3)
+      rotate(18deg);
+
+    opacity:0;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:900px){
+
+  .app{
+    grid-template-columns:1fr;
+    padding:12px;
+  }
+
+  .sidebar{
+    position:static;
+
+    height:auto;
+
+    padding:18px;
+  }
+
+  .nav{
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0,1fr)
+      );
+  }
+
+  .sidebar-bottom{
+    display:none;
+  }
+
+  .hero{
+    padding:32px;
+    min-height:400px;
+  }
+
+  .character{
+    right:-30px;
+    opacity:.28;
+  }
+
+  .cards{
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0,1fr)
+      );
+  }
+
+  .theatre-layout{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:560px){
+
+  .topbar{
+    align-items:stretch;
+  }
+
+  .profile div:not(.avatar){
+    display:none;
+  }
+
+  .hero{
+    padding:27px;
+    min-height:390px;
+  }
+
+  .hero h1{
+    font-size:55px;
+    letter-spacing:-4px;
+  }
+
+  .cards{
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0,1fr)
+      );
+  }
+
+  .card{
+    padding:17px;
+  }
+
+  .room-grid{
+    grid-template-columns:1fr;
+  }
+
+  .screen{
+    height:34vh;
+  }
+
+  .seats{
+    gap:5px;
+  }
+
+  .seat{
+    font-size:9px;
+  }
+
+  .theatre{
+    padding:9px;
+  }
+}
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     MAIN APP
+====================================================== -->
+
+<div class="app">
+
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar glass">
+
+    <div class="logo">
+      🍿 WHO'S<br>
+      <span>WATCHING?</span>
+    </div>
+
+    <div class="tagline-small">
+      Grab a seat.<br>
+      Pick a movie.<br>
+      Press play.
+    </div>
+
+
+    <nav class="nav">
+
+      <button
+        class="active"
+        onclick="goHome()"
+      >
+        ⌂ Home
+      </button>
+
+      <button
+        onclick="showCreateRoom()"
+      >
+        ＋ Create Room
+      </button>
+
+      <button
+        onclick="showJoinRoom()"
+      >
+        👥 Join Room
+      </button>
+
+      <button
+        onclick="openTheatre()"
+      >
+        🎬 Theatre
+      </button>
+
+      <button
+        onclick="scrollToId('library')"
+      >
+        ▣ My Movie
+      </button>
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+      WHO'S WATCHING? V1–V4<br>
+
+      Local movie • Seats<br>
+      Rooms • Sync • Chat
+
+    </div>
+
+  </aside>
+
+
+  <!-- MAIN -->
+
+  <main class="main">
+
+
+    <!-- TOP BAR -->
+
+    <header class="topbar">
+
+      <input
+        id="search"
+        class="search"
+        placeholder="🔍 Search this theatre..."
+      >
+
+
+      <div class="profile glass">
+
+        <div class="avatar">
+          🌸
+        </div>
+
+        <div>
+
+          <b id="meName">
+            Nezuko
+          </b>
+
+          <br>
+
+          <small id="connectionText">
+            Local mode
+          </small>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+
+    <!-- HERO -->
+
+    <section
+      class="hero glass"
+      id="home"
+    >
+
+      <div class="hero-content">
+
+        <div class="kicker">
+          🎬 YOUR PERSONAL THEATRE
+        </div>
+
+
+        <h1>
+          WHO'S<br>
+          <span>WATCHING?</span>
+        </h1>
+
+
+        <p>
+          Grab a seat. Pick a movie. Press play. 🍿
+        </p>
+
+
+        <button
+          class="primary"
+          onclick="showCreateRoom()"
+        >
+          ▶ Start Watching →
+        </button>
+
+      </div>
+
+
+      <!-- ORIGINAL ANIME-STYLE PROFILE CHARACTER -->
+
+      <div
+        class="character"
+        aria-hidden="true"
+      >
+
+        <div class="char-hair"></div>
+
+        <div class="char-face"></div>
+
+        <div class="char-eyes">
+          ◉ ◉
+        </div>
+
+        <div class="char-ribbon">
+          🎀
+        </div>
+
+        <div class="char-kimono"></div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- FEATURE CARDS -->
+
+    <section class="cards">
+
+
+      <div
+        class="card glass"
+        onclick="scrollToId('library')"
+      >
+
+        <div class="card-icon">
+          🎞️
+        </div>
+
+        <h3>
+          Pick Movie
+        </h3>
+
+        <p>
+          Use a movie already on your device.
+        </p>
+
+      </div>
+
+
+
+      <div
+        class="card glass"
+        onclick="scrollToId('rooms')"
+      >
+
+        <div class="card-icon">
+          💺
+        </div>
+
+        <h3>
+          Choose Seat
+        </h3>
+
+        <p>
+          Claim your seat in the virtual theatre.
+        </p>
+
+      </div>
+
+
+
+      <div
+        class="card glass"
+        onclick="showJoinRoom()"
+      >
+
+        <div class="card-icon">
+          👥
+        </div>
+
+        <h3>
+          Watch Together
+        </h3>
+
+        <p>
+          Join friends through a room code.
+        </p>
+
+      </div>
+
+
+
+      <div
+        class="card glass"
+        onclick="openTheatre()"
+      >
+
+        <div class="card-icon">
+          🔦
+        </div>
+
+        <h3>
+          Cinema Mode
+        </h3>
+
+        <p>
+          Big screen, dark room, reactions and chat.
+        </p>
+
+      </div>
+
+
+    </section>
+
+
+
+    <!-- MOVIE LIBRARY -->
+
+    <section
+      class="section"
+      id="library"
+    >
+
+      <h2 class="section-title">
+        🎬 My Movie
+      </h2>
+
+
+      <div class="panel glass">
+
+        <div class="row">
+
+          <label class="file-btn">
+
+            🎞️ Select Video
+
+            <input
+              id="movieInput"
+              type="file"
+              accept="video/*"
+            >
+
+          </label>
+
+
+          <span
+            class="status"
+            id="movieStatus"
+          >
+            No movie selected.
+            Your file stays on your device.
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ROOMS -->
+
+    <section
+      class="section"
+      id="rooms"
+    >
+
+      <h2 class="section-title">
+        👥 Theatre Room
+      </h2>
+
+
+      <div class="room-grid">
+
+
+        <!-- CREATE -->
+
+        <div class="panel glass">
+
+          <h3>
+            Create a room
+          </h3>
+
+
+          <p class="status">
+            You become the host.
+            Give your friends the room code.
+          </p>
+
+
+          <div
+            class="row"
+            style="margin-top:13px"
+          >
+
+            <input
+              id="nameInput"
+              class="field"
+              maxlength="18"
+              placeholder="Your display name"
+              value="Nezuko"
+            >
+
+
+            <button
+              class="primary"
+              onclick="createRoom()"
+            >
+              Create Room
+            </button>
+
+          </div>
+
+
+          <div
+            id="hostRoomInfo"
+            class="hidden"
+            style="margin-top:17px"
+          >
+
+            <div class="status">
+              ROOM CODE
+            </div>
+
+
+            <div
+              class="room-code"
+              id="hostRoomCode"
+            >
+              ------
+            </div>
+
+
+            <button
+              class="soft-btn copy-btn"
+              onclick="copyRoom()"
+            >
+              Copy code
+            </button>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- JOIN -->
+
+        <div class="panel glass">
+
+          <h3>
+            Join a room
+          </h3>
+
+
+          <p class="status">
+            Enter your friend's room code.
+          </p>
+
+
+          <div
+            class="row"
+            style="margin-top:13px"
+          >
+
+            <input
+              id="joinName"
+              class="field"
+              maxlength="18"
+              placeholder="Your display name"
+            >
+
+
+            <input
+              id="joinCode"
+              class="field"
+              maxlength="6"
+              placeholder="6-character code"
+            >
+
+
+            <button
+              class="primary"
+              onclick="joinRoom()"
+            >
+              Join Room
+            </button>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+</div>
+
+
+
+<!-- =====================================================
+     FULL THEATRE
+====================================================== -->
+
+<section
+  class="theatre"
+  id="theatre"
+>
+
+
+  <!-- THEATRE HEADER -->
+
+  <div class="theatre-top">
+
+    <button
+      class="soft-btn"
+      onclick="closeTheatre()"
+    >
+      ✕ Exit
+    </button>
+
+
+    <div class="theatre-title">
+
+      🍿 WHO'S WATCHING?
+
+      <span id="roomLabel"></span>
+
+    </div>
+
+
+    <div class="spacer"></div>
+
+
+    <button
+      class="soft-btn"
+      onclick="toggleLights()"
+    >
+      🔦 Lights
+    </button>
+
+  </div>
+
+
+
+  <div class="movie-wrap">
+
+
+    <!-- BIG SCREEN -->
+
+    <div class="screen">
+
+      <video
+        id="player"
+        controls
+        playsinline
+      ></video>
+
+    </div>
+
+
+
+    <!-- PLAYER CONTROLS -->
+
+    <div class="theatre-tools">
+
+
+      <button
+        onclick="syncPlay()"
+      >
+        ▶ Play for everyone
+      </button>
+
+
+      <button
+        onclick="syncPause()"
+      >
+        ⏸ Pause for everyone
+      </button>
+
+
+      <button
+        onclick="syncNow()"
+      >
+        🔄 Sync now
+      </button>
+
+
+      <button
+        onclick="openFullscreen()"
+      >
+        ⛶ Fullscreen
+      </button>
+
+
+    </div>
+
+
+
+    <!-- LOWER THEATRE -->
+
+    <div class="theatre-layout">
+
+
+      <!-- SEATS -->
+
+      <div class="seat-panel glass">
+
+        <div class="stage">
+          SCREEN / STAGE
+        </div>
+
+
+        <div
+          class="seats"
+          id="seats"
+        ></div>
+
+
+        <div class="legend">
+
+          <span>
+            <i class="dot"></i>
+            free
+          </span>
+
+          <span>
+            <i class="dot me"></i>
+            you
+          </span>
+
+          <span>
+            <i class="dot friend"></i>
+            friend
+          </span>
+
+        </div>
+
+
+        <p
+          class="status"
+          id="seatStatus"
+          style="text-align:center;margin-top:13px"
+        >
+          Pick a seat.
+        </p>
+
+      </div>
+
+
+
+      <!-- CHAT -->
+
+      <div class="chat-panel glass">
+
+        <h3>
+          💬 Theatre Chat
+        </h3>
+
+
+        <div
+          class="chat-log"
+          id="chatLog"
+        ></div>
+
+
+        <div class="chat-input">
+
+          <input
+            id="chatInput"
+            class="field"
+            maxlength="120"
+            placeholder="Say something..."
+          >
+
+
+          <button
+            onclick="sendChat()"
+          >
+            Send
+          </button>
+
+        </div>
+
+
+        <div class="reactions">
+
+          <button
+            class="reaction"
+            onclick="sendReaction('😂')"
+          >
+            😂
+          </button>
+
+          <button
+            class="reaction"
+            onclick="sendReaction('🍿')"
+          >
+            🍿
+          </button>
+
+          <button
+            class="reaction"
+            onclick="sendReaction('🔥')"
+          >
+            🔥
+          </button>
+
+          <button
+            class="reaction"
+            onclick="sendReaction('😭')"
+          >
+            😭
+          </button>
+
+          <button
+            class="reaction"
+            onclick="sendReaction('❤️')"
+          >
+            ❤️
+          </button>
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- TOAST -->
+
+<div
+  class="toast"
+  id="toast"
+></div>
+
+
+<!-- FLOATING REACTIONS -->
+
+<div
+  id="reactionFloat"
+></div>
+
+
+
+<!-- =====================================================
+     PEERJS
+====================================================== -->
+
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+
+
+<script>
+"use strict";
+
+
+/* =====================================================
+   STATE
+====================================================== */
+
+const state = {
+
+  name:"Nezuko",
+
+  room:"",
+
+  host:false,
+
+  peer:null,
+
+  connections:new Map(),
+
+  mySeat:null,
+
+  remoteSeats:new Map(),
+
+  movieURL:null,
+
+  movieName:"",
+
+  lights:false,
+
+  applyingRemoteState:false
+
+};
+
+
+const $ = id =>
+  document.getElementById(id);
+
+
+const player =
+  $("player");
+
+
+/* =====================================================
+   BASIC UI
+====================================================== */
+
+function toast(message){
+
+  const element =
+    $("toast");
+
+  element.textContent =
+    message;
+
+  element.classList.add("show");
+
+  clearTimeout(
+    window.__toastTimer
+  );
+
+  window.__toastTimer =
+    setTimeout(
+      () => {
+        element.classList.remove("show");
+      },
+      2300
+    );
+}
+
+
+function scrollToId(id){
+
+  const element =
+    $(id);
+
+  if(!element) return;
+
+  element.scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
+
+}
+
+
+function goHome(){
+
+  scrollToId("home");
+
+}
+
+
+function showCreateRoom(){
+
+  scrollToId("rooms");
+
+  setTimeout(
+    () =>
+      $("nameInput").focus(),
+    350
+  );
+
+}
+
+
+function showJoinRoom(){
+
+  scrollToId("rooms");
+
+  setTimeout(
+    () =>
+      $("joinCode").focus(),
+    350
+  );
+
+}
+
+
+/* =====================================================
+   NAME
+====================================================== */
+
+$("nameInput").addEventListener(
+  "input",
+  event => {
+
+    state.name =
+      event.target.value
+        .trim()
+        .slice(0,18)
+      ||
+      "Nezuko";
+
+    $("meName").textContent =
+      state.name;
+
+  }
+);
+
+
+/* =====================================================
+   LOCAL MOVIE
+====================================================== */
+
+$("movieInput").addEventListener(
+  "change",
+  event => {
+
+    const file =
+      event.target.files?.[0];
+
+    if(!file) return;
+
+
+    if(state.movieURL){
+
+      URL.revokeObjectURL(
+        state.movieURL
+      );
+
+    }
+
+
+    state.movieURL =
+      URL.createObjectURL(
+        file
+      );
+
+    state.movieName =
+      file.name;
+
+
+    player.src =
+      state.movieURL;
+
+
+    $("movieStatus").textContent =
+      file.name +
+      " • local only";
+
+
+    openTheatre();
+
+
+    toast(
+      "Movie loaded 🎬"
+    );
+
+  }
+);
+
+
+/* =====================================================
+   ROOM CODE
+====================================================== */
+
+function makeRoomCode(){
+
+  const chars =
+    "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+  let result = "";
+
+  for(
+    let i=0;
+    i<6;
+    i++
+  ){
+
+    result +=
+      chars[
+        Math.floor(
+          Math.random() *
+          chars.length
+        )
+      ];
+
+  }
+
+  return result;
+
+}
+
+
+function hostPeerId(code){
+
+  return (
+    "whos-watching-host-" +
+    code.toLowerCase()
+  );
+
+}
+
+
+/* =====================================================
+   CREATE ROOM
+====================================================== */
+
+function createRoom(){
+
+  if(
+    typeof Peer ===
+    "undefined"
+  ){
+
+    toast(
+      "Room service is unavailable."
+    );
+
+    return;
+
+  }
+
+
+  state.name =
+    $("nameInput")
+      .value
+      .trim()
+      .slice(0,18)
+    ||
+    "Nezuko";
+
+
+  $("meName").textContent =
+    state.name;
+
+
+  const code =
+    makeRoomCode();
+
+
+  state.room =
+    code;
+
+  state.host =
+    true;
+
+
+  $("hostRoomInfo")
+    .classList
+    .remove("hidden");
+
+
+  $("hostRoomCode")
+    .textContent =
+    code;
+
+
+  $("roomLabel")
+    .textContent =
+    " • ROOM " +
+    code;
+
+
+  toast(
+    "Creating room..."
+  );
+
+
+  if(state.peer){
+
+    try{
+      state.peer.destroy();
+    }catch(error){}
+
+    state.peer =
+      null;
+
+  }
+
+
+  state.peer =
+    new Peer(
+      hostPeerId(code)
+    );
+
+
+  state.peer.on(
+    "open",
+    () => {
+
+      $("connectionText")
+        .textContent =
+        "🟢 Host online";
+
+
+      toast(
+        "Room ready! Share the code."
+      );
+
+
+      openTheatre();
+
+    }
+  );
+
+
+  state.peer.on(
+    "connection",
+    connection => {
+
+      attachConnection(
+        connection
+      );
+
+    }
+  );
+
+
+  state.peer.on(
+    "error",
+    error => {
+
+      console.error(error);
+
+      toast(
+        "Could not create room."
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   JOIN ROOM
+====================================================== */
+
+async function joinRoom(){
+
+  if(
+    typeof Peer ===
+    "undefined"
+  ){
+
+    toast(
+      "Room service is unavailable."
+    );
+
+    return;
+
+  }
+
+
+  const name =
+    $("joinName")
+      .value
+      .trim()
+      .slice(0,18)
+    ||
+    "Guest";
+
+
+  const code =
+    $("joinCode")
+      .value
+      .trim()
+      .toUpperCase();
+
+
+  if(
+    !/^[A-Z0-9]{6}$/.test(code)
+  ){
+
+    toast(
+      "Enter a valid 6-character code."
+    );
+
+    return;
+
+  }
+
+
+  state.name =
+    name;
+
+  state.room =
+    code;
+
+  state.host =
+    false;
+
+
+  $("meName")
+    .textContent =
+    name;
+
+
+  $("roomLabel")
+    .textContent =
+    " • ROOM " +
+    code;
+
+
+  toast(
+    "Joining room..."
+  );
+
+
+  if(state.peer){
+
+    try{
+      state.peer.destroy();
+    }catch(error){}
+
+    state.peer =
+      null;
+
+  }
+
+
+  state.peer =
+    new Peer();
+
+
+  state.peer.on(
+    "open",
+    () => {
+
+      const connection =
+        state.peer.connect(
+          hostPeerId(code),
+          {
+            reliable:true
+          }
+        );
+
+
+      attachConnection(
+        connection
+      );
+
+    }
+  );
+
+
+  state.peer.on(
+    "error",
+    error => {
+
+      console.error(error);
+
+      toast(
+        "Could not join room."
+      );
+
+    }
+  );
+
+
+  openTheatre();
+
+}
+
+
+/* =====================================================
+   CONNECTION
+====================================================== */
+
+function attachConnection(
+  connection
+){
+
+  connection.on(
+    "open",
+    () => {
+
+      state.connections.set(
+        connection.peer,
+        connection
+      );
+
+
+      $("connectionText")
+        .textContent =
+        "🟢 Room connected";
+
+
+      sendTo(
+        connection,
+        {
+          type:"hello",
+          name:state.name,
+          seat:state.mySeat
+        }
+      );
+
+
+      if(state.host){
+
+        sendRoomState(
+          connection
+        );
+
+      }
+
+
+      toast(
+        "Friend connected 👋"
+      );
+
+    }
+  );
+
+
+  connection.on(
+    "data",
+    data => {
+
+      handleData(
+        data,
+        connection
+      );
+
+    }
+  );
+
+
+  connection.on(
+    "close",
+    () => {
+
+      state.connections.delete(
+        connection.peer
+      );
+
+
+      state.remoteSeats.delete(
+        connection.peer
+      );
+
+
+      renderSeats();
+
+    }
+  );
+
+
+  connection.on(
+    "error",
+    error => {
+
+      console.error(
+        "Connection error:",
+        error
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   DATA HELPERS
+====================================================== */
+
+function sendTo(
+  connection,
+  data
+){
+
+  if(
+    connection &&
+    connection.open
+  ){
+
+    try{
+      connection.send(data);
+    }catch(error){
+      console.error(error);
+    }
+
+  }
+
+}
+
+
+function broadcast(
+  data
+){
+
+  state.connections.forEach(
+    connection => {
+
+      sendTo(
+        connection,
+        data
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   ROOM STATE
+====================================================== */
+
+function sendRoomState(
+  target
+){
+
+  const data = {
+
+    type:"roomState",
+
+    movieName:
+      state.movieName,
+
+    time:
+      Number(
+        player.currentTime || 0
+      ),
+
+    paused:
+      player.paused,
+
+    seats:
+      Array.from(
+        state.remoteSeats.values()
+      )
+
+  };
+
+
+  if(target){
+
+    sendTo(
+      target,
+      data
+    );
+
+  }else{
+
+    broadcast(
+      data
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   RECEIVE DATA
+====================================================== */
+
+function handleData(
+  data,
+  connection
+){
+
+  if(
+    !data ||
+    !data.type
+  ){
+
+    return;
+
+  }
+
+
+  /* HELLO */
+
+  if(
+    data.type ===
+    "hello"
+  ){
+
+    state.remoteSeats.set(
+      connection.peer,
+      {
+        peer:connection.peer,
+        name:data.name || "Guest",
+        seat:data.seat || null
+      }
+    );
+
+
+    renderSeats();
+
+
+    if(state.host){
+
+      sendRoomState(
+        connection
+      );
+
+    }
+
+
+    addMessage(
+      "System",
+      (data.name || "Guest") +
+      " joined the theatre."
+    );
+
+
+    return;
+
+  }
+
+
+  /* SEAT */
+
+  if(
+    data.type ===
+    "seat"
+  ){
+
+    state.remoteSeats.set(
+      connection.peer,
+      {
+        peer:connection.peer,
+        name:data.name || "Guest",
+        seat:data.seat || null
+      }
+    );
+
+
+    renderSeats();
+
+    return;
+
+  }
+
+
+  /* PLAY */
+
+  if(
+    data.type ===
+    "play"
+  ){
+
+    applyRemote(
+      () => {
+
+        player.currentTime =
+          Number(
+            data.time || 0
+          );
+
+        player.play()
+          .catch(
+            () => {}
+          );
+
+      }
+    );
+
+    return;
+
+  }
+
+
+  /* PAUSE */
+
+  if(
+    data.type ===
+    "pause"
+  ){
+
+    applyRemote(
+      () => {
+
+        player.currentTime =
+          Number(
+            data.time || 0
+          );
+
+        player.pause();
+
+      }
+    );
+
+    return;
+
+  }
+
+
+  /* SEEK */
+
+  if(
+    data.type ===
+    "seek"
+  ){
+
+    applyRemote(
+      () => {
+
+        player.currentTime =
+          Number(
+            data.time || 0
+          );
+
+      }
+    );
+
+    return;
+
+  }
+
+
+  /* SYNC REQUEST */
+
+  if(
+    data.type ===
+    "syncRequest"
+  ){
+
+    if(state.host){
+
+      sendTo(
+        connection,
+        {
+          type:"sync",
+          time:
+            Number(
+              player.currentTime || 0
+            ),
+          paused:
+            player.paused,
+          movieName:
+            state.movieName
+        }
+      );
+
+    }
+
+    return;
+
+  }
+
+
+  /* SYNC */
+
+  if(
+    data.type ===
+    "sync"
+  ){
+
+    if(
+      data.movieName &&
+      state.movieName &&
+      data.movieName !==
+      state.movieName
+    ){
+
+      toast(
+        "Select the same movie as the host."
+      );
+
+    }
+
+
+    applyRemote(
+      () => {
+
+        player.currentTime =
+          Number(
+            data.time || 0
+          );
+
+
+        if(data.paused){
+
+          player.pause();
+
+        }else{
+
+          player.play()
+            .catch(
+              () => {}
+            );
+
+        }
+
+      }
+    );
+
+    return;
+
+  }
+
+
+  /* CHAT */
+
+  if(
+    data.type ===
+    "chat"
+  ){
+
+    addMessage(
+      data.name || "Guest",
+      data.text || ""
+    );
+
+    return;
+
+  }
+
+
+  /* REACTION */
+
+  if(
+    data.type ===
+    "reaction"
+  ){
+
+    floatReaction(
+      data.emoji || "✨"
+    );
+
+    return;
+
+  }
+
+
+  /* ROOM STATE */
+
+  if(
+    data.type ===
+    "roomState"
+  ){
+
+    if(
+      data.movieName &&
+      state.movieName &&
+      data.movieName !==
+      state.movieName
+    ){
+
+      toast(
+        "Use the same movie file to sync."
+      );
+
+    }
+
+
+    if(
+      Array.isArray(data.seats)
+    ){
+
+      data.seats.forEach(
+        person => {
+
+          if(
+            person &&
+            person.peer
+          ){
+
+            state.remoteSeats.set(
+              person.peer,
+              person
+            );
+
+          }
+
+        }
+      );
+
+      renderSeats();
+
+    }
+
+
+    applyRemote(
+      () => {
+
+        player.currentTime =
+          Number(
+            data.time || 0
+          );
+
+
+        if(data.paused){
+
+          player.pause();
+
+        }else{
+
+          player.play()
+            .catch(
+              () => {}
+            );
+
+        }
+
+      }
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   REMOTE STATE GUARD
+====================================================== */
+
+function applyRemote(
+  callback
+){
+
+  state.applyingRemoteState =
+    true;
+
+
+  try{
+
+    callback();
+
+  }finally{
+
+    setTimeout(
+      () => {
+
+        state.applyingRemoteState =
+          false;
+
+      },
+      150
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   SEATS
+====================================================== */
+
+function claimSeat(
+  seatNumber
+){
+
+  if(!state.room){
+
+    toast(
+      "Create or join a room first."
+    );
+
+    return;
+
+  }
+
+
+  for(
+    const person
+    of state.remoteSeats.values()
+  ){
+
+    if(
+      person.seat ===
+      seatNumber
+    ){
+
+      toast(
+        "That seat is taken."
+      );
+
+      return;
+
+    }
+
+  }
+
+
+  state.mySeat =
+    seatNumber;
+
+
+  $("seatStatus")
+    .textContent =
+    "Your seat: A" +
+    seatNumber;
+
+
+  renderSeats();
+
+
+  broadcast({
+
+    type:"seat",
+
+    name:
+      state.name,
+
+    seat:
+      state.mySeat
+
+  });
+
+}
+
+
+/* =====================================================
+   SEAT RENDER
+====================================================== */
+
+function renderSeats(){
+
+  const container =
+    $("seats");
+
+
+  container.innerHTML =
+    "";
+
+
+  const occupied =
+    new Map();
+
+
+  state.remoteSeats.forEach(
+    person => {
+
+      if(person.seat){
+
+        occupied.set(
+          person.seat,
+          person
+        );
+
+      }
+
+    }
+  );
+
+
+  for(
+    let i=1;
+    i<=40;
+    i++
+  ){
+
+    const button =
+      document.createElement(
+        "button"
+      );
+
+
+    button.className =
+      "seat";
+
+
+    button.textContent =
+      "A" + i;
+
+
+    if(
+      state.mySeat ===
+      i
+    ){
+
+      button.classList.add(
+        "me"
+      );
+
+      button.title =
+        "Your seat";
+
+    }
+
+
+    else if(
+      occupied.has(i)
+    ){
+
+      const person =
+        occupied.get(i);
+
+
+      button.classList.add(
+        "friend"
+      );
+
+
+      button.textContent =
+        "👤";
+
+
+      button.disabled =
+        true;
+
+
+      button.title =
+        person.name +
+        " • A" +
+        i;
+
+    }
+
+
+    button.onclick =
+      () =>
+        claimSeat(i);
+
+
+    container.appendChild(
+      button
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   THEATRE
+====================================================== */
+
+function openTheatre(){
+
+  $("theatre")
+    .classList
+    .add("open");
+
+
+  renderSeats();
+
+}
+
+
+function closeTheatre(){
+
+  $("theatre")
+    .classList
+    .remove("open");
+
+}
+
+
+function toggleLights(){
+
+  state.lights =
+    !state.lights;
+
+
+  $("theatre").style.background =
+    state.lights
+
+      ? "#000"
+
+      : `
+        radial-gradient(
+          circle at 50% 20%,
+          rgba(80,80,100,.08),
+          transparent 42%
+        ),
+        #020205
+      `;
+
+}
+
+
+/* =====================================================
+   PLAYBACK SYNC
+====================================================== */
+
+function syncPlay(){
+
+  if(!player.src){
+
+    toast(
+      "Select a movie first."
+    );
+
+    return;
+
+  }
+
+
+  player.play()
+    .catch(
+      () => {}
+    );
+
+
+  if(state.room){
+
+    broadcast({
+
+      type:"play",
+
+      time:
+        Number(
+          player.currentTime || 0
+        )
+
+    });
+
+  }
+
+}
+
+
+function syncPause(){
+
+  player.pause();
+
+
+  if(state.room){
+
+    broadcast({
+
+      type:"pause",
+
+      time:
+        Number(
+          player.currentTime || 0
+        )
+
+    });
+
+  }
+
+}
+
+
+function syncNow(){
+
+  if(!state.room){
+
+    toast(
+      "Join a room first."
+    );
+
+    return;
+
+  }
+
+
+  if(state.host){
+
+    sendRoomState();
+
+    toast(
+      "Sync sent to everyone."
+    );
+
+  }else{
+
+    broadcast({
+      type:"syncRequest"
+    });
+
+    toast(
+      "Asked the host to sync you."
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   PLAYER EVENTS
+====================================================== */
+
+player.addEventListener(
+  "play",
+  () => {
+
+    if(
+      state.applyingRemoteState
+    ){
+
+      return;
+
+    }
+
+
+    if(
+      state.room &&
+      state.host
+    ){
+
+      broadcast({
+
+        type:"play",
+
+        time:
+          Number(
+            player.currentTime || 0
+          )
+
+      });
+
+    }
+
+  }
+);
+
+
+player.addEventListener(
+  "pause",
+  () => {
+
+    if(
+      state.applyingRemoteState
+    ){
+
+      return;
+
+    }
+
+
+    if(
+      state.room &&
+      state.host
+    ){
+
+      broadcast({
+
+        type:"pause",
+
+        time:
+          Number(
+            player.currentTime || 0
+          )
+
+      });
+
+    }
+
+  }
+);
+
+
+player.addEventListener(
+  "seeked",
+  () => {
+
+    if(
+      state.applyingRemoteState
+    ){
+
+      return;
+
+    }
+
+
+    if(
+      state.room &&
+      state.host
+    ){
+
+      broadcast({
+
+        type:"seek",
+
+        time:
+          Number(
+            player.currentTime || 0
+          )
+
+      });
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   CHAT
+====================================================== */
+
+function addMessage(
+  name,
+  text
+){
+
+  const row =
+    document.createElement(
+      "div"
+    );
+
+
+  row.className =
+    "message";
+
+
+  row.innerHTML =
+
+    "<b>" +
+    escapeHTML(name) +
+    "</b>" +
+
+    "<small>" +
+    new Date()
+      .toLocaleTimeString(
+        [],
+        {
+          hour:"2-digit",
+          minute:"2-digit"
+        }
+      ) +
+    "</small>" +
+
+    "<div>" +
+    escapeHTML(text) +
+    "</div>";
+
+
+  $("chatLog")
+    .appendChild(row);
+
+
+  $("chatLog")
+    .scrollTop =
+    $("chatLog")
+      .scrollHeight;
+
+}
+
+
+function sendChat(){
+
+  const input =
+    $("chatInput");
+
+
+  const text =
+    input.value.trim();
+
+
+  if(!text){
+
+    return;
+
+  }
+
+
+  addMessage(
+    state.name,
+    text
+  );
+
+
+  if(state.room){
+
+    broadcast({
+
+      type:"chat",
+
+      name:
+        state.name,
+
+      text
+
+    });
+
+  }
+
+
+  input.value =
+    "";
+
+}
+
+
+$("chatInput").addEventListener(
+  "keydown",
+  event => {
+
+    if(
+      event.key ===
+      "Enter"
+    ){
+
+      sendChat();
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   REACTIONS
+====================================================== */
+
+function sendReaction(
+  emoji
+){
+
+  floatReaction(
+    emoji
+  );
+
+
+  if(state.room){
+
+    broadcast({
+
+      type:"reaction",
+
+      emoji
+
+    });
+
+  }
+
+}
+
+
+function floatReaction(
+  emoji
+){
+
+  const element =
+    document.createElement(
+      "div"
+    );
+
+
+  element.className =
+    "float-reaction";
+
+
+  element.textContent =
+    emoji;
+
+
+  element.style.left =
+    (
+      12 +
+      Math.random()*76
+    ) +
+    "%";
+
+
+  $("reactionFloat")
+    .appendChild(element);
+
+
+  setTimeout(
+    () =>
+      element.remove(),
+    1600
+  );
+
+}
+
+
+/* =====================================================
+   FULLSCREEN
+====================================================== */
+
+function openFullscreen(){
+
+  const screen =
+    document.querySelector(
+      ".screen"
+    );
+
+
+  if(
+    screen.requestFullscreen
+  ){
+
+    screen.requestFullscreen();
+
+  }else{
+
+    player.requestFullscreen?.();
+
+  }
+
+}
+
+
+/* =====================================================
+   COPY ROOM
+====================================================== */
+
+function copyRoom(){
+
+  if(!state.room){
+
+    return;
+
+  }
+
+
+  if(
+    navigator.clipboard &&
+    window.isSecureContext
+  ){
+
+    navigator.clipboard
+      .writeText(
+        state.room
+      )
+      .then(
+        () =>
+          toast(
+            "Room code copied!"
+          )
+      )
+      .catch(
+        () =>
+          toast(
+            "Room: " +
+            state.room
+          )
+      );
+
+  }else{
+
+    toast(
+      "Room: " +
+      state.room
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   SAFE TEXT
+====================================================== */
+
+function escapeHTML(
+  value
+){
+
+  return String(value)
+    .replace(
+      /[&<>"']/g,
+      character => {
+
+        const map = {
+
+          "&":"&amp;",
+          "<":"&lt;",
+          ">":"&gt;",
+          '"':"&quot;",
+          "'":"&#039;"
+
+        };
+
+        return map[
+          character
+        ];
+
+      }
+    );
+
+}
+
+
+/* =====================================================
+   STARTUP
+====================================================== */
+
+renderSeats();
+
+
+addMessage(
+  "System",
+  "Welcome to WHO'S WATCHING? 🍿"
+);
+
+
+$("joinCode")
+  .addEventListener(
+    "input",
+    event => {
+
+      event.target.value =
+        event.target.value
+          .toUpperCase()
+          .replace(
+            /[^A-Z0-9]/g,
+            ""
+          )
+          .slice(0,6);
+
+    }
+  );
+
+
+window.addEventListener(
+  "beforeunload",
+  () => {
+
+    if(state.movieURL){
+
+      URL.revokeObjectURL(
+        state.movieURL
+      );
+
+    }
+
+    if(state.peer){
+
+      try{
+        state.peer.destroy();
+      }catch(error){}
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+  </html>
