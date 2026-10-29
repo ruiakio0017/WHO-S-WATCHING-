@@ -2,15 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-
-<title>WHO'S WATCHING?</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>WHO'S WATCHING? — V1.010</title>
 
 <style>
 *{
   box-sizing:border-box;
   -webkit-tap-highlight-color:transparent;
+  user-select:none;
 }
 
 html,body{
@@ -18,8 +17,8 @@ html,body{
   width:100%;
   height:100%;
   overflow:hidden;
-  background:#050308;
-  color:#fff;
+  background:#030207;
+  color:white;
   font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
 
@@ -28,114 +27,75 @@ button,input{
 }
 
 button{
+  color:white;
   border:0;
-  color:#fff;
-  cursor:pointer;
 }
 
 #app{
   position:fixed;
   inset:0;
   overflow:hidden;
+  background:#030207;
+}
+
+/* =========================================================
+   LANDSCAPE
+========================================================= */
+
+#rotate{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:none;
+  place-items:center;
+  text-align:center;
   background:
-    radial-gradient(circle at 50% 35%,rgba(255,40,150,.14),transparent 35%),
-    linear-gradient(#07050b,#030207);
+    radial-gradient(circle at 50% 45%,#4b0d46,#08030b 65%);
+  padding:30px;
+}
+
+.rotate-box{
+  max-width:420px;
+}
+
+.rotate-icon{
+  font-size:60px;
+  animation:rot 1.8s ease-in-out infinite;
+}
+
+@keyframes rot{
+  0%,100%{transform:rotate(0)}
+  50%{transform:rotate(90deg)}
+}
+
+.rotate-box h1{
+  margin:15px 0 8px;
+}
+
+.rotate-box p{
+  opacity:.55;
+  font-size:13px;
+}
+
+@media(orientation:portrait) and (max-width:800px){
+  #rotate{
+    display:grid;
+  }
 }
 
 /* =========================================================
-   BACKGROUND
+   COMMON
 ========================================================= */
 
-.bg{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  overflow:hidden;
+.glass{
+  background:rgba(8,5,13,.64);
+  border:1px solid rgba(255,255,255,.13);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  box-shadow:
+    0 15px 50px rgba(0,0,0,.35),
+    inset 0 1px rgba(255,255,255,.07);
 }
-
-.glow{
-  position:absolute;
-  width:45vw;
-  height:45vw;
-  border-radius:50%;
-  filter:blur(70px);
-  opacity:.28;
-  background:#ff1594;
-}
-
-.glow.one{
-  left:-15vw;
-  top:15vh;
-}
-
-.glow.two{
-  right:-18vw;
-  top:5vh;
-  background:#8a21ff;
-}
-
-.grid{
-  position:absolute;
-  inset:0;
-  opacity:.08;
-  background-image:
-    linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px);
-  background-size:50px 50px;
-  transform:perspective(500px) rotateX(58deg) scale(1.8);
-  transform-origin:bottom;
-}
-
-/* =========================================================
-   HEADER
-========================================================= */
-
-.header{
-  position:absolute;
-  z-index:20;
-  top:0;
-  left:0;
-  right:0;
-  padding:18px 22px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  pointer-events:none;
-}
-
-.logo{
-  pointer-events:auto;
-  font-weight:950;
-  letter-spacing:.14em;
-  font-size:clamp(15px,3vw,24px);
-}
-
-.logo span{
-  color:#ff4eae;
-  text-shadow:0 0 20px #ff1594;
-}
-
-.made{
-  margin-top:4px;
-  font-size:8px;
-  letter-spacing:.25em;
-  opacity:.48;
-}
-
-.badge{
-  pointer-events:auto;
-  padding:8px 13px;
-  border:1px solid rgba(255,255,255,.14);
-  border-radius:999px;
-  background:rgba(255,255,255,.06);
-  backdrop-filter:blur(16px);
-  font-size:11px;
-  letter-spacing:.12em;
-}
-
-/* =========================================================
-   HOME
-========================================================= */
 
 #home{
   position:absolute;
@@ -144,325 +104,296 @@ button{
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:80px 18px 35px;
+  background:
+    radial-gradient(circle at 25% 55%,rgba(255,20,150,.20),transparent 32%),
+    radial-gradient(circle at 80% 25%,rgba(120,30,255,.12),transparent 35%),
+    linear-gradient(110deg,#07030a,#020205);
 }
 
-.home-inner{
-  width:min(1050px,100%);
-  height:100%;
+.home-grid{
+  position:absolute;
+  inset:0;
+  opacity:.055;
+  background-image:
+    linear-gradient(rgba(255,255,255,.7) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.7) 1px,transparent 1px);
+  background-size:50px 50px;
+  transform:perspective(600px) rotateX(62deg) scale(1.5);
+  transform-origin:bottom;
+}
+
+.home-content{
+  position:relative;
+  z-index:2;
+  width:min(1200px,94vw);
+  height:min(700px,88vh);
   display:grid;
   grid-template-columns:1.15fr .85fr;
-  gap:25px;
   align-items:center;
+  gap:30px;
 }
 
-/* CHARACTER */
-
-.character-stage{
+.hero{
   position:relative;
-  height:min(650px,82vh);
-  min-height:430px;
+  height:100%;
   display:flex;
   align-items:flex-end;
   justify-content:center;
 }
 
-.pink-backlight{
+.hero-glow{
   position:absolute;
   width:65%;
   height:65%;
-  bottom:5%;
   border-radius:50%;
-  background:#ff0c91;
-  filter:blur(75px);
-  opacity:.28;
-  animation:pulse 3s ease-in-out infinite;
+  background:#ff1493;
+  filter:blur(90px);
+  opacity:.25;
 }
 
-@keyframes pulse{
-  0%,100%{transform:scale(.95);opacity:.22}
-  50%{transform:scale(1.06);opacity:.36}
-}
-
-/* simple anime-inspired non-sexualized avatar */
-
-.girl{
+.hero-girl{
   position:relative;
-  width:210px;
-  height:400px;
+  width:260px;
+  height:500px;
   transform:rotate(3deg);
-  animation:waveBody 3.2s ease-in-out infinite;
-  filter:drop-shadow(0 0 30px rgba(255,20,150,.3));
+  filter:drop-shadow(0 0 35px rgba(255,20,150,.3));
+  animation:floatGirl 3.5s ease-in-out infinite;
 }
 
-@keyframes waveBody{
+@keyframes floatGirl{
   0%,100%{transform:rotate(3deg) translateY(0)}
-  50%{transform:rotate(0deg) translateY(-8px)}
+  50%{transform:rotate(0deg) translateY(-9px)}
 }
 
-.head{
+.g-head{
   position:absolute;
-  width:105px;
-  height:105px;
+  left:72px;
+  top:45px;
+  width:120px;
+  height:120px;
   border-radius:50%;
-  background:#ffd8c8;
-  top:20px;
-  left:54px;
+  background:#ffd8c9;
   z-index:4;
-  box-shadow:inset -10px -10px 0 rgba(0,0,0,.06);
 }
 
-.hair{
+.g-hair{
   position:absolute;
-  width:125px;
-  height:130px;
-  border-radius:60% 60% 45% 45%;
-  background:#17101c;
-  top:5px;
-  left:44px;
+  left:57px;
+  top:25px;
+  width:150px;
+  height:190px;
+  border-radius:55% 55% 42% 42%;
+  background:#160f19;
   z-index:5;
 }
 
-.hair:after{
-  content:"";
+.g-eye{
   position:absolute;
-  width:35px;
-  height:105px;
-  right:-18px;
-  top:38px;
-  border-radius:30px;
-  background:#17101c;
-  transform:rotate(-12deg);
-}
-
-.eye{
-  position:absolute;
-  width:10px;
-  height:15px;
+  top:93px;
+  width:13px;
+  height:20px;
   border-radius:50%;
-  background:#20111d;
-  top:63px;
-  z-index:7;
+  background:#281324;
+  z-index:8;
 }
 
-.eye.left{left:80px}
-.eye.right{left:119px}
+.g-eye.a{left:100px}
+.g-eye.b{left:148px}
 
-.smile{
+.g-mouth{
   position:absolute;
-  width:24px;
+  left:119px;
+  top:122px;
+  width:28px;
   height:10px;
-  border-bottom:3px solid #7b334c;
+  border-bottom:3px solid #813a58;
   border-radius:50%;
-  top:91px;
-  left:95px;
-  z-index:7;
+  z-index:8;
 }
 
-.body{
+.g-body{
   position:absolute;
-  width:125px;
-  height:180px;
-  top:118px;
-  left:47px;
+  top:165px;
+  left:62px;
+  width:145px;
+  height:205px;
   border-radius:45px 45px 30px 30px;
-  background:linear-gradient(145deg,#f3a7d0,#b94c94);
-  z-index:2;
-}
-
-.skirt{
-  position:absolute;
-  width:155px;
-  height:80px;
-  top:255px;
-  left:32px;
-  background:#24182d;
-  clip-path:polygon(15% 0,85% 0,100% 100%,0 100%);
+  background:linear-gradient(145deg,#f2a3ca,#9c3d7e);
   z-index:3;
 }
 
-.leg{
+.g-skirt{
   position:absolute;
+  top:330px;
+  left:42px;
+  width:185px;
+  height:90px;
+  background:#211426;
+  clip-path:polygon(15% 0,85% 0,100% 100%,0 100%);
+  z-index:4;
+}
+
+.g-arm{
+  position:absolute;
+  top:170px;
   width:30px;
-  height:115px;
-  top:320px;
-  background:#ffd8c8;
-  border-radius:20px;
-}
-
-.leg.left{left:67px}
-.leg.right{left:118px}
-
-.shoe{
-  position:absolute;
-  width:55px;
-  height:25px;
+  height:150px;
   border-radius:30px;
-  background:#151019;
-  top:420px;
+  background:#ffd8c9;
+  z-index:2;
 }
 
-.shoe.left{left:45px}
-.shoe.right{left:112px}
-
-.arm{
-  position:absolute;
-  width:28px;
-  height:125px;
-  background:#ffd8c8;
-  border-radius:30px;
-  top:125px;
-  z-index:1;
+.g-arm.a{
+  left:38px;
+  transform:rotate(27deg);
 }
 
-.arm.left{
-  left:28px;
-  transform:rotate(30deg);
-}
-
-.arm.right{
-  left:150px;
-  transform:rotate(-48deg);
+.g-arm.b{
+  left:195px;
+  transform:rotate(-52deg);
   transform-origin:top;
-  animation:wave 1.15s ease-in-out infinite alternate;
+  animation:wave 1.1s ease-in-out infinite alternate;
 }
 
 @keyframes wave{
-  from{transform:rotate(-55deg)}
+  from{transform:rotate(-58deg)}
   to{transform:rotate(-28deg)}
 }
 
-.hand{
+.g-hand{
   position:absolute;
-  width:35px;
-  height:35px;
+  left:209px;
+  top:140px;
+  width:40px;
+  height:40px;
   border-radius:50%;
-  background:#ffd8c8;
-  top:102px;
-  left:166px;
+  background:#ffd8c9;
+  z-index:8;
+}
+
+.g-leg{
+  position:absolute;
+  top:400px;
+  width:34px;
+  height:110px;
+  border-radius:20px;
+  background:#ffd8c9;
+  z-index:2;
+}
+
+.g-leg.a{left:85px}
+.g-leg.b{left:140px}
+
+.g-shoe{
+  position:absolute;
+  top:480px;
+  width:62px;
+  height:27px;
+  border-radius:30px;
+  background:#130d18;
   z-index:5;
 }
 
-/* SEATS */
-
-.seats-mini{
-  position:absolute;
-  bottom:0;
-  width:100%;
-  display:flex;
-  justify-content:center;
-  gap:9px;
-  opacity:.8;
-}
-
-.seat-mini{
-  width:42px;
-  height:55px;
-  border-radius:10px 10px 4px 4px;
-  background:linear-gradient(#3d1838,#140b17);
-  box-shadow:0 -4px 15px rgba(255,30,150,.12);
-}
-
-/* =========================================================
-   MENU
-========================================================= */
+.g-shoe.a{left:70px}
+.g-shoe.b{left:132px}
 
 .menu{
   width:100%;
-  max-width:440px;
-  margin:auto;
+  max-width:470px;
 }
 
-.eyebrow{
-  color:#ff54b3;
+.kicker{
+  color:#ff50b1;
   font-size:11px;
-  font-weight:800;
-  letter-spacing:.25em;
+  font-weight:900;
+  letter-spacing:.28em;
   margin-bottom:10px;
 }
 
-h1{
-  margin:0;
-  font-size:clamp(42px,7vw,78px);
-  line-height:.88;
-  letter-spacing:-.055em;
+.logo{
+  font-size:clamp(45px,6vw,82px);
+  font-weight:1000;
+  line-height:.84;
+  letter-spacing:-.065em;
 }
 
-.subtitle{
-  margin:18px 0 25px;
-  max-width:420px;
-  color:rgba(255,255,255,.58);
-  line-height:1.5;
-  font-size:14px;
+.logo span{
+  color:#ff38a7;
+  text-shadow:0 0 25px rgba(255,20,150,.65);
 }
 
-.option{
+.description{
+  max-width:440px;
+  margin:20px 0 25px;
+  color:rgba(255,255,255,.55);
+  line-height:1.55;
+  font-size:13px;
+}
+
+.menu-button{
   position:relative;
   width:100%;
-  min-height:70px;
-  margin:10px 0;
-  padding:16px 20px;
+  min-height:68px;
+  padding:15px 55px 15px 20px;
+  margin:9px 0;
   text-align:left;
-  border:1px solid rgba(255,255,255,.13);
-  border-radius:20px;
+  border-radius:18px;
   background:rgba(255,255,255,.055);
-  backdrop-filter:blur(22px);
-  box-shadow:
-    inset 0 1px rgba(255,255,255,.08),
-    0 15px 45px rgba(0,0,0,.18);
-  transition:.2s ease;
+  border:1px solid rgba(255,255,255,.13);
+  transition:.18s;
+  cursor:pointer;
 }
 
-.option:hover{
-  transform:translateY(-2px);
-  background:rgba(255,50,170,.12);
-  border-color:rgba(255,80,190,.4);
+.menu-button:hover{
+  transform:translateX(5px);
+  border-color:rgba(255,60,180,.5);
+  background:rgba(255,30,160,.11);
 }
 
-.option:active{
+.menu-button:active{
   transform:scale(.98);
 }
 
-.option-title{
+.menu-title{
   font-weight:850;
   font-size:14px;
-  letter-spacing:.04em;
 }
 
-.option-desc{
+.menu-desc{
+  font-size:10px;
+  opacity:.42;
   margin-top:5px;
-  font-size:11px;
-  opacity:.48;
 }
 
-.arrow{
+.menu-arrow{
   position:absolute;
-  right:18px;
+  right:20px;
   top:50%;
   transform:translateY(-50%);
-  font-size:20px;
-  opacity:.65;
+  font-size:25px;
+  color:#ff5bb7;
 }
 
-.footer{
-  margin-top:18px;
-  font-size:9px;
-  letter-spacing:.2em;
+.made{
+  margin-top:16px;
+  font-size:8px;
+  letter-spacing:.3em;
   opacity:.32;
 }
 
 /* =========================================================
-   THEATRE
+   GAME
 ========================================================= */
 
-#theatre{
+#game{
   position:absolute;
   inset:0;
   display:none;
-  z-index:30;
+  z-index:20;
+  background:#020106;
 }
 
-#three{
+#world{
   position:absolute;
   inset:0;
   width:100%;
@@ -470,221 +401,273 @@ h1{
   display:block;
 }
 
-.theatre-bg{
+.hud{
   position:absolute;
-  inset:0;
+  z-index:50;
   pointer-events:none;
-  background:
-    radial-gradient(ellipse at 50% 28%,rgba(255,30,155,.13),transparent 36%),
-    linear-gradient(180deg,transparent 55%,rgba(0,0,0,.75));
 }
 
-.theatre-top{
-  position:absolute;
-  top:15px;
+.top-left{
   left:15px;
+  top:15px;
+}
+
+.top-right{
   right:15px;
+  top:15px;
   display:flex;
-  justify-content:space-between;
-  z-index:5;
+  gap:7px;
+  pointer-events:auto;
 }
 
-.glass{
-  border:1px solid rgba(255,255,255,.13);
-  background:rgba(10,7,15,.54);
-  backdrop-filter:blur(18px);
-  border-radius:16px;
-}
-
-.small-btn{
+.brand{
   padding:10px 14px;
+  border-radius:13px;
   font-size:11px;
-  border-radius:12px;
-  background:rgba(255,255,255,.07);
-  border:1px solid rgba(255,255,255,.1);
-}
-
-.screen-wrap{
-  position:absolute;
-  left:50%;
-  top:10%;
-  width:min(78vw,900px);
-  aspect-ratio:16/9;
-  transform:translateX(-50%);
-  z-index:3;
-  border-radius:8px;
-  background:#020104;
-  border:5px solid #19121d;
-  box-shadow:
-    0 0 0 2px rgba(255,255,255,.04),
-    0 0 60px rgba(255,15,145,.28),
-    0 25px 100px rgba(0,0,0,.8);
-  overflow:hidden;
-}
-
-#movie{
-  width:100%;
-  height:100%;
-  display:block;
-  background:#000;
-  object-fit:contain;
-}
-
-.screen-placeholder{
-  position:absolute;
-  inset:0;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  pointer-events:none;
-  background:
-    radial-gradient(circle,rgba(255,20,150,.12),transparent 55%),
-    #030204;
-}
-
-.screen-placeholder strong{
-  font-size:clamp(20px,4vw,45px);
+  font-weight:900;
   letter-spacing:.12em;
 }
 
-.screen-placeholder small{
-  margin-top:10px;
-  opacity:.45;
+.hud-button{
+  padding:10px 13px;
+  border-radius:12px;
+  cursor:pointer;
+  background:rgba(10,6,15,.68);
+  border:1px solid rgba(255,255,255,.12);
+}
+
+.interaction{
+  position:absolute;
+  left:50%;
+  bottom:18%;
+  transform:translateX(-50%);
+  z-index:60;
+  display:none;
+  padding:11px 17px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:800;
+  pointer-events:none;
+}
+
+.interaction.show{
+  display:block;
 }
 
 .controls{
   position:absolute;
+  z-index:60;
   left:50%;
-  bottom:18px;
+  bottom:15px;
   transform:translateX(-50%);
-  z-index:10;
   display:flex;
-  gap:8px;
-  padding:9px;
-  border-radius:18px;
+  gap:7px;
+  padding:8px;
+  border-radius:17px;
 }
 
-.control{
-  min-width:46px;
-  height:42px;
-  padding:0 13px;
-  border-radius:12px;
+.game-btn{
+  padding:10px 14px;
+  border-radius:11px;
   background:rgba(255,255,255,.07);
   border:1px solid rgba(255,255,255,.1);
+  cursor:pointer;
   font-size:11px;
 }
 
-.control.primary{
-  background:rgba(255,30,155,.25);
-  border-color:rgba(255,80,190,.4);
+.game-btn.pink{
+  background:rgba(255,25,155,.22);
+  border-color:rgba(255,50,180,.35);
 }
 
-.panel{
+#joystick{
   position:absolute;
-  z-index:20;
+  left:25px;
+  bottom:25px;
+  width:135px;
+  height:135px;
+  z-index:70;
+  display:none;
+  border-radius:50%;
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.12);
+  touch-action:none;
+}
+
+#stick{
+  position:absolute;
+  left:40px;
+  top:40px;
+  width:55px;
+  height:55px;
+  border-radius:50%;
+  background:rgba(255,35,165,.3);
+  border:1px solid rgba(255,100,205,.5);
+}
+
+#touchLook{
+  position:absolute;
+  right:0;
+  top:0;
+  width:58%;
+  height:75%;
+  z-index:40;
+  touch-action:none;
+}
+
+#chatPanel{
+  position:absolute;
   right:15px;
   top:70px;
-  width:min(330px,calc(100vw - 30px));
-  max-height:70vh;
-  overflow:auto;
-  padding:18px;
+  width:300px;
+  max-width:calc(100vw - 30px);
+  z-index:100;
   display:none;
+  padding:15px;
+  border-radius:17px;
+  pointer-events:auto;
 }
 
-.panel.open{
+#chatPanel.open{
   display:block;
 }
 
-.panel h2{
-  margin:0 0 15px;
-  font-size:18px;
-}
-
-.panel p{
-  font-size:12px;
-  opacity:.55;
-  line-height:1.5;
-}
-
-.file{
-  display:block;
-  width:100%;
-  padding:14px;
-  border-radius:13px;
-  background:rgba(255,255,255,.07);
-  border:1px dashed rgba(255,255,255,.2);
-  text-align:center;
-  font-size:12px;
+#chatMessages{
+  height:180px;
+  overflow:auto;
+  font-size:11px;
   margin-bottom:10px;
 }
 
-input[type=file]{
+.chat-line{
+  padding:6px 0;
+  opacity:.75;
+}
+
+.chat-input{
+  width:100%;
+  padding:11px;
+  color:white;
+  outline:0;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.06);
+}
+
+#moviePanel{
+  position:absolute;
+  left:15px;
+  top:70px;
+  width:310px;
+  max-width:calc(100vw - 30px);
+  z-index:100;
+  display:none;
+  padding:15px;
+  border-radius:17px;
+  pointer-events:auto;
+}
+
+#moviePanel.open{
+  display:block;
+}
+
+#moviePanel h3{
+  margin:0 0 12px;
+}
+
+.file-label{
+  display:block;
+  text-align:center;
+  padding:12px;
+  border-radius:11px;
+  border:1px dashed rgba(255,255,255,.18);
+  background:rgba(255,255,255,.05);
+  cursor:pointer;
+  font-size:11px;
+}
+
+#movieFile{
   display:none;
 }
 
-.room-code{
+.movie-action{
   width:100%;
-  padding:13px;
-  color:#fff;
-  outline:none;
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(255,255,255,.05);
-  border-radius:12px;
-  margin-bottom:8px;
-}
-
-.panel-btn{
-  width:100%;
-  padding:13px;
-  border-radius:12px;
-  background:#ff299e;
   margin-top:8px;
-  font-weight:800;
-}
-
-.seat-grid{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:7px;
-  margin-top:12px;
-}
-
-.seat{
-  padding:10px 4px;
-  border-radius:9px;
-  background:rgba(255,255,255,.07);
-  font-size:10px;
-}
-
-.seat.selected{
-  background:#ff299e;
-}
-
-.status{
-  margin-top:12px;
-  padding:10px;
+  padding:11px;
   border-radius:10px;
-  background:rgba(255,255,255,.045);
+  background:#ff239e;
+  cursor:pointer;
+  font-weight:800;
+  font-size:11px;
+}
+
+.movie-info{
+  margin-top:10px;
   font-size:10px;
-  opacity:.7;
+  opacity:.48;
+  line-height:1.4;
+}
+
+#roomPanel{
+  position:absolute;
+  right:15px;
+  top:70px;
+  width:300px;
+  max-width:calc(100vw - 30px);
+  z-index:100;
+  display:none;
+  padding:15px;
+  border-radius:17px;
+  pointer-events:auto;
+}
+
+#roomPanel.open{
+  display:block;
+}
+
+.room-input{
+  width:100%;
+  padding:11px;
+  margin:5px 0;
+  color:white;
+  outline:0;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.06);
+  text-transform:uppercase;
+}
+
+.room-btn{
+  width:100%;
+  padding:11px;
+  margin-top:7px;
+  border-radius:10px;
+  background:rgba(255,30,155,.2);
+  border:1px solid rgba(255,50,180,.25);
+  cursor:pointer;
+}
+
+.room-status{
+  margin-top:10px;
+  font-size:10px;
+  opacity:.55;
 }
 
 #toast{
   position:absolute;
   left:50%;
-  bottom:80px;
-  transform:translate(-50%,20px);
-  z-index:50;
-  padding:11px 15px;
-  border-radius:999px;
-  background:rgba(15,10,18,.8);
-  backdrop-filter:blur(16px);
-  border:1px solid rgba(255,255,255,.12);
-  font-size:11px;
+  bottom:75px;
+  z-index:150;
+  transform:translate(-50%,15px);
   opacity:0;
   pointer-events:none;
-  transition:.25s;
+  padding:10px 15px;
+  border-radius:999px;
+  background:rgba(8,5,13,.82);
+  border:1px solid rgba(255,255,255,.13);
+  backdrop-filter:blur(15px);
+  font-size:11px;
+  transition:.2s;
 }
 
 #toast.show{
@@ -692,67 +675,51 @@ input[type=file]{
   transform:translate(-50%,0);
 }
 
-/* =========================================================
-   MOBILE
-========================================================= */
+/* Mobile landscape */
 
-@media(max-width:760px){
+@media(max-height:550px) and (orientation:landscape){
 
-  .header{
-    padding:14px;
+  .hero{
+    display:none;
   }
 
-  .home-inner{
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    gap:0;
-  }
-
-  .character-stage{
-    position:absolute;
-    inset:80px 0 auto;
-    height:40vh;
-    min-height:250px;
-    opacity:.62;
-    transform:scale(.7);
-    transform-origin:center top;
+  .home-content{
+    display:block;
+    height:auto;
+    width:min(620px,90vw);
   }
 
   .menu{
-    position:relative;
-    z-index:4;
-    margin-top:170px;
-    padding:0 5px;
+    margin:auto;
   }
 
-  h1{
-    font-size:48px;
+  .logo{
+    font-size:42px;
   }
 
-  .subtitle{
-    font-size:12px;
-    margin:12px 0 18px;
+  .description{
+    margin:10px 0 12px;
   }
 
-  .option{
-    min-height:62px;
-    margin:8px 0;
+  .menu-button{
+    min-height:51px;
+    margin:5px 0;
+    padding:10px 45px 10px 15px;
   }
 
-  .screen-wrap{
-    top:12%;
-    width:92vw;
+  .made{
+    margin-top:8px;
   }
 
-  .controls{
-    bottom:12px;
-    max-width:95vw;
-    overflow:auto;
+  #joystick{
+    display:block;
   }
+}
 
-  .control{
-    flex:0 0 auto;
+/* desktop does not need joystick */
+@media(min-width:801px){
+  #joystick{
+    display:none!important;
   }
 }
 </style>
@@ -760,870 +727,526 @@ input[type=file]{
 
 <body>
 
+<div id="rotate">
+  <div class="rotate-box">
+    <div class="rotate-icon">📱</div>
+    <h1>TURN YOUR PHONE</h1>
+    <p>WHO'S WATCHING? is designed for horizontal / landscape gameplay.</p>
+  </div>
+</div>
+
 <div id="app">
 
-  <div class="bg">
-    <div class="glow one"></div>
-    <div class="glow two"></div>
-    <div class="grid"></div>
+<!-- ======================================================
+     HOME
+====================================================== -->
+
+<section id="home">
+
+  <div class="home-grid"></div>
+
+  <div class="home-content">
+
+    <div class="hero">
+
+      <div class="hero-glow"></div>
+
+      <div class="hero-girl">
+
+        <div class="g-hair"></div>
+        <div class="g-head"></div>
+
+        <div class="g-eye a"></div>
+        <div class="g-eye b"></div>
+        <div class="g-mouth"></div>
+
+        <div class="g-arm a"></div>
+        <div class="g-arm b"></div>
+        <div class="g-hand"></div>
+
+        <div class="g-body"></div>
+        <div class="g-skirt"></div>
+
+        <div class="g-leg a"></div>
+        <div class="g-leg b"></div>
+
+        <div class="g-shoe a"></div>
+        <div class="g-shoe b"></div>
+
+      </div>
+
+    </div>
+
+    <div class="menu">
+
+      <div class="kicker">VIRTUAL CINEMA • V1.010</div>
+
+      <div class="logo">
+        WHO'S<br><span>WATCHING?</span>
+      </div>
+
+      <div class="description">
+        Walk into your own virtual cinema, move around freely,
+        choose a physical seat and watch together.
+      </div>
+
+      <button class="menu-button" onclick="startGame('solo')">
+        <div class="menu-title">
+          🎬 CREATE A VIRTUAL SOLO THEATRE
+        </div>
+        <div class="menu-desc">
+          Explore your private cinema
+        </div>
+        <div class="menu-arrow">›</div>
+      </button>
+
+      <button class="menu-button" onclick="startGame('pxl')">
+        <div class="menu-title">
+          👥 CREATE A VIRTUAL THEATRE [PX]L
+        </div>
+        <div class="menu-desc">
+          Multiplayer theatre for your gang
+        </div>
+        <div class="menu-arrow">›</div>
+      </button>
+
+      <button class="menu-button" onclick="startGame('join')">
+        <div class="menu-title">
+          🚪 JOIN A VIRTUAL THEATRE
+        </div>
+        <div class="menu-desc">
+          Enter a friend's theatre
+        </div>
+        <div class="menu-arrow">›</div>
+      </button>
+
+      <div class="made">
+        MADE BY KUSH KUMAR
+      </div>
+
+    </div>
+
   </div>
 
-  <header class="header">
-    <div>
-      <div class="logo">WHO'S <span>WATCHING?</span></div>
-      <div class="made">MADE BY KUSH KUMAR</div>
+</section>
+
+
+<!-- ======================================================
+     GAME
+====================================================== -->
+
+<section id="game">
+
+  <canvas id="world"></canvas>
+
+  <div id="touchLook"></div>
+
+  <div class="hud top-left">
+    <div class="brand glass">
+      WHO'S WATCHING? • V1.010
     </div>
-    <div class="badge">FAST EDITION</div>
-  </header>
+  </div>
 
-  <!-- =====================================================
-       HOME
-  ====================================================== -->
+  <div class="hud top-right">
 
-  <section id="home">
+    <button class="hud-button" onclick="toggleMoviePanel()">
+      🎬 MOVIE
+    </button>
 
-    <div class="home-inner">
+    <button class="hud-button" onclick="toggleRoomPanel()">
+      👥 PARTY
+    </button>
 
-      <div class="character-stage">
+    <button class="hud-button" onclick="toggleChat()">
+      💬 CHAT
+    </button>
 
-        <div class="pink-backlight"></div>
+    <button class="hud-button" onclick="exitGame()">
+      EXIT
+    </button>
 
-        <div class="girl">
-          <div class="hair"></div>
-          <div class="head"></div>
-
-          <div class="eye left"></div>
-          <div class="eye right"></div>
-          <div class="smile"></div>
-
-          <div class="arm left"></div>
-          <div class="arm right"></div>
-          <div class="hand"></div>
-
-          <div class="body"></div>
-          <div class="skirt"></div>
-
-          <div class="leg left"></div>
-          <div class="leg right"></div>
-
-          <div class="shoe left"></div>
-          <div class="shoe right"></div>
-        </div>
-
-        <div class="seats-mini">
-          <div class="seat-mini"></div>
-          <div class="seat-mini"></div>
-          <div class="seat-mini"></div>
-          <div class="seat-mini"></div>
-          <div class="seat-mini"></div>
-          <div class="seat-mini"></div>
-        </div>
-
-      </div>
-
-      <div class="menu">
-
-        <div class="eyebrow">WELCOME TO YOUR CINEMA</div>
-
-        <h1>WHO'S<br>WATCHING?</h1>
-
-        <div class="subtitle">
-          Your virtual theatre. Pick a room, choose your seat,
-          load your movie and watch together.
-        </div>
-
-        <button class="option" onclick="openTheatre('solo')">
-          <div class="option-title">
-            CREATE A VIRTUAL SOLO THEATRE
-          </div>
-          <div class="option-desc">
-            Your own private cinema
-          </div>
-          <div class="arrow">›</div>
-        </button>
-
-        <button class="option" onclick="openTheatre('pxl')">
-          <div class="option-title">
-            CREATE A VIRTUAL THEATRE [PX]L
-          </div>
-          <div class="option-desc">
-            Premium theatre for friends
-          </div>
-          <div class="arrow">›</div>
-        </button>
-
-        <button class="option" onclick="openTheatre('join')">
-          <div class="option-title">
-            JOIN A VIRTUAL THEATRE
-          </div>
-          <div class="option-desc">
-            Enter a friend's theatre
-          </div>
-          <div class="arrow">›</div>
-        </button>
-
-        <div class="footer">
-          MADE BY KUSH KUMAR • WHO'S WATCHING?
-        </div>
-
-      </div>
-
-    </div>
-  </section>
+  </div>
 
 
-  <!-- =====================================================
-       THEATRE
-  ====================================================== -->
+  <div id="interaction" class="interaction glass">
+    Press E / SIT
+  </div>
 
-  <section id="theatre">
 
-    <canvas id="three"></canvas>
+  <div id="joystick">
+    <div id="stick"></div>
+  </div>
 
-    <div class="theatre-bg"></div>
 
-    <div class="theatre-top">
+  <div class="controls glass">
 
-      <button class="small-btn glass" onclick="backHome()">
-        ← EXIT
-      </button>
+    <button class="game-btn" onclick="toggleMoviePanel()">
+      🎬 MOVIE
+    </button>
 
-      <div style="display:flex;gap:7px">
-        <button class="small-btn glass" onclick="togglePanel('moviePanel')">
-          🎬 MOVIE
-        </button>
+    <button class="game-btn" onclick="sitOrStand()">
+      🪑 SIT
+    </button>
 
-        <button class="small-btn glass" onclick="togglePanel('partyPanel')">
-          👥 PARTY
-        </button>
+    <button class="game-btn" onclick="toggleRoomPanel()">
+      👥 PARTY
+    </button>
 
-        <button class="small-btn glass" onclick="togglePanel('seatPanel')">
-          💺 SEATS
-        </button>
-      </div>
+    <button class="game-btn pink" onclick="toggleLights()">
+      💗 LIGHTS
+    </button>
 
+  </div>
+
+
+  <!-- MOVIE -->
+
+  <div id="moviePanel" class="glass">
+
+    <h3>🎬 Cinema Screen</h3>
+
+    <label class="file-label">
+      SELECT LOCAL MOVIE
+      <input id="movieFile" type="file" accept="video/*">
+    </label>
+
+    <button class="movie-action" onclick="playMovie()">
+      ▶ PLAY
+    </button>
+
+    <button class="movie-action" onclick="pauseMovie()">
+      ⏸ PAUSE
+    </button>
+
+    <div id="movieInfo" class="movie-info">
+      No movie selected.
     </div>
 
-    <div class="screen-wrap">
+  </div>
 
-      <video
-        id="movie"
-        playsinline
-        preload="metadata"
-        controls>
-      </video>
 
-      <div class="screen-placeholder" id="placeholder">
-        <strong>YOUR SCREEN</strong>
-        <small>Load a movie to begin</small>
-      </div>
+  <!-- PARTY -->
 
+  <div id="roomPanel" class="glass">
+
+    <h3>👥 Virtual Theatre</h3>
+
+    <input
+      id="roomCode"
+      class="room-input"
+      placeholder="ROOM CODE"
+      maxlength="12">
+
+    <button class="room-btn" onclick="createRoom()">
+      CREATE ROOM
+    </button>
+
+    <button class="room-btn" onclick="joinRoom()">
+      JOIN ROOM
+    </button>
+
+    <div id="roomStatus" class="room-status">
+      Solo theatre.
     </div>
 
-    <!-- MOVIE PANEL -->
+  </div>
 
-    <div id="moviePanel" class="panel glass">
 
-      <h2>🎬 Movie</h2>
+  <!-- CHAT -->
 
-      <label class="file">
-        SELECT LOCAL MOVIE
-        <input
-          id="movieFile"
-          type="file"
-          accept="video/*">
-      </label>
+  <div id="chatPanel" class="glass">
 
-      <button class="panel-btn" onclick="playMovie()">
-        ▶ PLAY
-      </button>
+    <h3>💬 Theatre Chat</h3>
 
-      <button class="panel-btn" onclick="pauseMovie()">
-        ⏸ PAUSE
-      </button>
+    <div id="chatMessages"></div>
 
-      <div id="movieStatus" class="status">
-        No movie selected.
-      </div>
+    <input
+      id="chatInput"
+      class="chat-input"
+      placeholder="Type message..."
+      maxlength="120">
 
-    </div>
+  </div>
 
-    <!-- PARTY PANEL -->
 
-    <div id="partyPanel" class="panel glass">
+  <div id="toast"></div>
 
-      <h2>👥 Party</h2>
-
-      <input
-        id="roomCode"
-        class="room-code"
-        placeholder="Room code">
-
-      <button class="panel-btn" onclick="createRoom()">
-        CREATE ROOM
-      </button>
-
-      <button class="panel-btn" onclick="joinRoom()">
-        JOIN ROOM
-      </button>
-
-      <div id="partyStatus" class="status">
-        Solo mode.
-      </div>
-
-    </div>
-
-    <!-- SEATS -->
-
-    <div id="seatPanel" class="panel glass">
-
-      <h2>💺 Choose your seat</h2>
-
-      <div class="seat-grid" id="seatGrid"></div>
-
-      <div class="status" id="seatStatus">
-        Choose a seat.
-      </div>
-
-    </div>
-
-    <div class="controls glass">
-
-      <button class="control primary" onclick="togglePanel('moviePanel')">
-        🎬 MOVIE
-      </button>
-
-      <button class="control" onclick="togglePanel('seatPanel')">
-        💺 SIT
-      </button>
-
-      <button class="control" onclick="togglePanel('partyPanel')">
-        👥 PARTY
-      </button>
-
-      <button class="control" onclick="toggleLights()">
-        💗 LIGHTS
-      </button>
-
-    </div>
-
-    <div id="toast"></div>
-
-  </section>
+</section>
 
 </div>
 
 
-<!-- =======================================================
-     THREE.JS
-     Loaded AFTER the actual page is usable.
-======================================================== -->
-
 <script>
 /* =========================================================
-   CORE UI — DOES NOT DEPEND ON THREE.JS
+   STATE
+========================================================= */
+
+let mode = "solo";
+
+let renderer = null;
+let scene = null;
+let camera = null;
+let clock = null;
+
+let player = null;
+let playerBody = null;
+
+let seats = [];
+let otherPlayers = {};
+
+let keys = {};
+
+let yaw = 0;
+let pitch = -0.12;
+
+let sitting = false;
+let currentSeat = null;
+
+let lightsOn = true;
+
+let movieURL = null;
+let movieVideo = null;
+let movieTexture = null;
+let screenMesh = null;
+
+let peer = null;
+let connections = [];
+
+let joystickActive = false;
+let joystickX = 0;
+let joystickY = 0;
+
+
+/* =========================================================
+   UI
 ========================================================= */
 
 const home = document.getElementById("home");
-const theatre = document.getElementById("theatre");
-const movie = document.getElementById("movie");
-const placeholder = document.getElementById("placeholder");
+const game = document.getElementById("game");
+const interaction = document.getElementById("interaction");
 
-let currentMode = "solo";
-let movieURL = null;
-let selectedSeat = null;
-let lightsOn = true;
-let threeStarted = false;
-let peer = null;
+function startGame(selectedMode){
 
-/* ---------------------------------------------------------
-   OPEN THEATRE
---------------------------------------------------------- */
-
-function openTheatre(mode){
-
-  currentMode = mode;
+  mode = selectedMode;
 
   home.style.display = "none";
-  theatre.style.display = "block";
+  game.style.display = "block";
 
-  if(mode === "join"){
-    document.getElementById("partyPanel").classList.add("open");
-    document.getElementById("partyStatus").textContent =
-      "Enter your friend's room code.";
+  toast(
+    selectedMode === "solo"
+      ? "Entering solo theatre..."
+      : selectedMode === "pxl"
+      ? "Creating PX L theatre..."
+      : "Entering theatre..."
+  );
+
+  if(selectedMode === "join"){
+    toggleRoomPanel();
   }
 
-  if(mode === "solo"){
-    toast("Solo theatre ready 🎬");
-  }
+  boot3D();
 
-  if(mode === "pxl"){
-    toast("PX L theatre ready ✨");
-    document.getElementById("partyPanel").classList.add("open");
-  }
-
-  buildSeats();
-
-  /*
-    Start 3D independently.
-    If it fails, the movie/UI still works.
-  */
-  startThree();
 }
 
-function backHome(){
+function exitGame(){
 
-  theatre.style.display = "none";
+  game.style.display = "none";
   home.style.display = "flex";
 
   closePanels();
 
-  if(movieURL){
-    URL.revokeObjectURL(movieURL);
-    movieURL = null;
-  }
-
-  movie.removeAttribute("src");
-  movie.load();
-
-  placeholder.style.display = "flex";
-}
-
-/* ---------------------------------------------------------
-   PANELS
---------------------------------------------------------- */
-
-function togglePanel(id){
-
-  const panel = document.getElementById(id);
-
-  const wasOpen = panel.classList.contains("open");
-
-  closePanels();
-
-  if(!wasOpen){
-    panel.classList.add("open");
-  }
 }
 
 function closePanels(){
 
   document
-    .querySelectorAll(".panel")
-    .forEach(p => p.classList.remove("open"));
+    .querySelectorAll("#moviePanel,#roomPanel,#chatPanel")
+    .forEach(x=>{
+      x.classList.remove("open");
+    });
+
 }
 
-/* ---------------------------------------------------------
-   TOAST
---------------------------------------------------------- */
+function toggleMoviePanel(){
+
+  closePanels();
+
+  document
+    .getElementById("moviePanel")
+    .classList.toggle("open");
+
+}
+
+function toggleRoomPanel(){
+
+  closePanels();
+
+  document
+    .getElementById("roomPanel")
+    .classList.toggle("open");
+
+}
+
+function toggleChat(){
+
+  closePanels();
+
+  document
+    .getElementById("chatPanel")
+    .classList.toggle("open");
+
+}
 
 let toastTimer;
 
-function toast(message){
+function toast(text){
 
-  const t = document.getElementById("toast");
+  const el =
+    document.getElementById("toast");
 
-  t.textContent = message;
-  t.classList.add("show");
+  el.textContent = text;
+  el.classList.add("show");
 
   clearTimeout(toastTimer);
 
-  toastTimer = setTimeout(()=>{
-    t.classList.remove("show");
-  },2200);
+  toastTimer =
+    setTimeout(()=>{
+      el.classList.remove("show");
+    },2000);
+
 }
 
+
 /* =========================================================
-   MOVIE PLAYER
+   KEYBOARD
 ========================================================= */
 
-document
-  .getElementById("movieFile")
-  .addEventListener("change",function(){
+window.addEventListener("keydown",e=>{
 
-    const file = this.files && this.files[0];
+  keys[e.key.toLowerCase()] = true;
 
-    if(!file) return;
+  if(e.key.toLowerCase() === "e"){
+    sitOrStand();
+  }
 
-    if(!file.type.startsWith("video/")){
-
-      toast("Please choose a video file.");
-
-      return;
-    }
-
-    if(movieURL){
-      URL.revokeObjectURL(movieURL);
-    }
-
-    movieURL = URL.createObjectURL(file);
-
-    movie.pause();
-
-    movie.src = movieURL;
-
-    movie.load();
-
-    placeholder.style.display = "none";
-
-    document.getElementById("movieStatus").textContent =
-      file.name;
-
-    movie.onloadedmetadata = ()=>{
-
-      toast("Movie loaded 🎬");
-
-    };
-
-    movie.onerror = ()=>{
-
-      placeholder.style.display = "flex";
-
-      document.getElementById("movieStatus").textContent =
-        "This browser couldn't play this video format.";
-
-      toast("Movie format not supported.");
-
-    };
+  if(e.key === "Escape"){
+    closePanels();
+  }
 
 });
 
-function playMovie(){
+window.addEventListener("keyup",e=>{
 
-  if(!movie.src){
+  keys[e.key.toLowerCase()] = false;
 
-    toast("Select a movie first.");
+});
+
+
+/* =========================================================
+   THREE.JS LOADING
+========================================================= */
+
+let threePromise = null;
+
+function boot3D(){
+
+  if(renderer){
+    return;
+  }
+
+  if(window.THREE){
+
+    initWorld();
 
     return;
   }
 
-  const p = movie.play();
-
-  if(p && p.catch){
-
-    p.catch(()=>{
-      toast("Tap PLAY again to start the movie.");
-    });
-
-  }
-}
-
-function pauseMovie(){
-
-  movie.pause();
-
-}
-
-/* =========================================================
-   SEATS — 20
-========================================================= */
-
-function buildSeats(){
-
-  const grid = document.getElementById("seatGrid");
-
-  grid.innerHTML = "";
-
-  for(let i=1;i<=20;i++){
-
-    const button = document.createElement("button");
-
-    button.className = "seat";
-
-    button.textContent = i;
-
-    button.onclick = ()=>selectSeat(i,button);
-
-    grid.appendChild(button);
-
+  if(threePromise){
+    return;
   }
 
-}
+  threePromise = new Promise((resolve,reject)=>{
 
-function selectSeat(number,button){
-
-  document
-    .querySelectorAll(".seat")
-    .forEach(x=>x.classList.remove("selected"));
-
-  button.classList.add("selected");
-
-  selectedSeat = number;
-
-  document.getElementById("seatStatus").textContent =
-    "You're sitting in seat " + number;
-
-  toast("Seat " + number + " selected 💺");
-}
-
-/* =========================================================
-   LIGHTS
-========================================================= */
-
-function toggleLights(){
-
-  lightsOn = !lightsOn;
-
-  document.getElementById("theatre").style.setProperty(
-    "--light-opacity",
-    lightsOn ? "1" : ".15"
-  );
-
-  if(window.theatreLight){
-    window.theatreLight.intensity =
-      lightsOn ? 1.3 : .25;
-  }
-
-  toast(lightsOn ? "Lights ON 💗" : "Cinema mode 🌑");
-}
-
-/* =========================================================
-   ROOM SYSTEM
-=========================================================
-
-   This is deliberately kept separate from the 3D engine.
-
-   NOTE:
-   PeerJS synchronizes room/control data.
-   It does NOT transmit the movie file itself.
-
-   Each friend needs their own local copy of the movie.
-========================================================= */
-
-function loadPeerJS(){
-
-  if(window.Peer){
-    return Promise.resolve(window.Peer);
-  }
-
-  if(window.peerLoading){
-    return window.peerLoading;
-  }
-
-  window.peerLoading = new Promise((resolve,reject)=>{
-
-    const script = document.createElement("script");
+    const script =
+      document.createElement("script");
 
     script.src =
-      "https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js";
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js";
 
-    script.onload = ()=>resolve(window.Peer);
+    script.onload = resolve;
 
-    script.onerror = ()=>{
-
-      window.peerLoading = null;
-
-      reject(new Error("PeerJS failed"));
-
-    };
+    script.onerror = reject;
 
     document.head.appendChild(script);
 
   });
 
-  return window.peerLoading;
-}
+  threePromise.then(()=>{
 
-async function createRoom(){
+    initWorld();
 
-  const code =
-    (document.getElementById("roomCode").value || "")
-      .trim()
-      .toUpperCase()
-      .replace(/[^A-Z0-9]/g,"")
-      .slice(0,12);
+  }).catch(()=>{
 
-  if(!code){
-
-    toast("Enter a room code.");
-
-    return;
-  }
-
-  const status =
-    document.getElementById("partyStatus");
-
-  status.textContent = "Connecting...";
-
-  try{
-
-    await loadPeerJS();
-
-    /*
-      Stable creator ID.
-      The old version used a random creator ID,
-      which meant joiners could not know where to connect.
-    */
-
-    const id = "ww-" + code.toLowerCase();
-
-    peer = new Peer(id);
-
-    peer.on("open",()=>{
-
-      status.textContent =
-        "Room created: " + code;
-
-      toast("Room created 👥");
-
-    });
-
-    peer.on("connection",connection=>{
-
-      connection.on("open",()=>{
-
-        connection.send({
-          type:"hello",
-          mode:currentMode
-        });
-
-      });
-
-      setupConnection(connection);
-
-    });
-
-    peer.on("error",err=>{
-
-      console.error(err);
-
-      status.textContent =
-        "Room error: " + err.type;
-
-    });
-
-  }catch(err){
-
-    status.textContent =
-      "Could not load multiplayer.";
-
-    toast("Multiplayer unavailable.");
-
-  }
-
-}
-
-async function joinRoom(){
-
-  const code =
-    (document.getElementById("roomCode").value || "")
-      .trim()
-      .toUpperCase()
-      .replace(/[^A-Z0-9]/g,"")
-      .slice(0,12);
-
-  if(!code){
-
-    toast("Enter a room code.");
-
-    return;
-  }
-
-  const status =
-    document.getElementById("partyStatus");
-
-  status.textContent = "Joining...";
-
-  try{
-
-    await loadPeerJS();
-
-    peer = new Peer();
-
-    peer.on("open",()=>{
-
-      const connection =
-        peer.connect("ww-" + code.toLowerCase());
-
-      setupConnection(connection);
-
-      connection.on("open",()=>{
-
-        status.textContent =
-          "Connected to " + code;
-
-        toast("Joined theatre 👥");
-
-      });
-
-    });
-
-    peer.on("error",err=>{
-
-      console.error(err);
-
-      status.textContent =
-        "Couldn't join room.";
-
-    });
-
-  }catch(err){
-
-    status.textContent =
-      "Multiplayer unavailable.";
-
-  }
-
-}
-
-function setupConnection(connection){
-
-  connection.on("data",data=>{
-
-    if(!data) return;
-
-    if(data.type === "play"){
-      movie.currentTime = data.time || 0;
-      movie.play().catch(()=>{});
-    }
-
-    if(data.type === "pause"){
-      movie.currentTime = data.time || 0;
-      movie.pause();
-    }
-
-    if(data.type === "seek"){
-      movie.currentTime = data.time || 0;
-    }
+    toast(
+      "3D engine couldn't load. Check your internet connection."
+    );
 
   });
 
 }
 
-/* =========================================================
-   VIDEO SYNC
-========================================================= */
-
-movie.addEventListener("play",()=>{
-
-  if(!peer || !peer.connections) return;
-
-  broadcast({
-    type:"play",
-    time:movie.currentTime
-  });
-
-});
-
-movie.addEventListener("pause",()=>{
-
-  if(!peer || !peer.connections) return;
-
-  broadcast({
-    type:"pause",
-    time:movie.currentTime
-  });
-
-});
-
-function broadcast(data){
-
-  try{
-
-    Object.values(peer.connections)
-      .flat()
-      .forEach(connection=>{
-
-        if(connection.open){
-          connection.send(data);
-        }
-
-      });
-
-  }catch(e){}
-
-}
 
 /* =========================================================
-   THREE.JS — OPTIONAL BACKGROUND ENGINE
+   3D WORLD
 ========================================================= */
 
-function startThree(){
+function initWorld(){
 
-  if(threeStarted) return;
-
-  threeStarted = true;
-
-  /*
-    Load Three.js AFTER the theatre is already visible.
-    Nothing in the UI waits for this.
-  */
-
-  if(window.THREE){
-
-    initThree();
-
+  if(renderer || !window.THREE){
     return;
   }
-
-  const script = document.createElement("script");
-
-  script.src =
-    "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js";
-
-  script.onload = ()=>{
-
-    initThree();
-
-  };
-
-  script.onerror = ()=>{
-
-    /*
-      IMPORTANT:
-      Do NOT blank the page.
-      Movie + UI remain functional.
-    */
-
-    console.warn("Three.js unavailable.");
-
-    toast("3D unavailable — cinema controls still work.");
-
-  };
-
-  document.head.appendChild(script);
-
-}
-
-/* =========================================================
-   3D SCENE
-========================================================= */
-
-function initThree(){
-
-  if(!window.THREE) return;
 
   const THREE = window.THREE;
 
   const canvas =
-    document.getElementById("three");
+    document.getElementById("world");
 
-  const scene =
+  scene =
     new THREE.Scene();
 
   scene.background =
-    new THREE.Color(0x030207);
+    new THREE.Color(0x020106);
 
-  const camera =
+  scene.fog =
+    new THREE.Fog(
+      0x020106,
+      18,
+      42
+    );
+
+  camera =
     new THREE.PerspectiveCamera(
-      55,
-      innerWidth / innerHeight,
+      60,
+      innerWidth/innerHeight,
       .1,
       100
     );
 
-  camera.position.set(0,4.5,12);
+  camera.position.set(
+    0,
+    2.8,
+    9
+  );
 
-  const renderer =
+  renderer =
     new THREE.WebGLRenderer({
       canvas,
       antialias:false,
-      alpha:true,
       powerPreference:"high-performance"
     });
 
   renderer.setPixelRatio(
-    Math.min(devicePixelRatio,1.25)
+    Math.min(devicePixelRatio,1.35)
   );
 
   renderer.setSize(
@@ -1632,30 +1255,49 @@ function initThree(){
     false
   );
 
+
   /* -------------------------------------------------------
-     LIGHTS
+     LIGHTING
   ------------------------------------------------------- */
 
   const ambient =
     new THREE.AmbientLight(
-      0xffffff,
-      1.3
+      0xffd9f2,
+      1.5
     );
 
   scene.add(ambient);
 
-  const pink =
+  window.pinkLight =
     new THREE.PointLight(
       0xff1493,
-      3,
-      30
+      5,
+      32
     );
 
-  pink.position.set(0,5,3);
+  pinkLight.position.set(
+    0,
+    7,
+    -2
+  );
 
-  scene.add(pink);
+  scene.add(pinkLight);
 
-  window.theatreLight = pink;
+  const frontLight =
+    new THREE.PointLight(
+      0xff44b5,
+      3,
+      22
+    );
+
+  frontLight.position.set(
+    0,
+    4,
+    -12
+  );
+
+  scene.add(frontLight);
+
 
   /* -------------------------------------------------------
      FLOOR
@@ -1663,194 +1305,1839 @@ function initThree(){
 
   const floorMat =
     new THREE.MeshBasicMaterial({
-      color:0x100912
+      color:0x100914
     });
 
   const floor =
     new THREE.Mesh(
-      new THREE.PlaneGeometry(30,30),
+      new THREE.PlaneGeometry(40,45),
       floorMat
     );
 
-  floor.rotation.x = -Math.PI/2;
+  floor.rotation.x =
+    -Math.PI/2;
 
-  floor.position.y = -1;
+  floor.position.y =
+    -1;
 
   scene.add(floor);
 
+
   /* -------------------------------------------------------
-     GIANT SCREEN FRAME
+     FLOOR NEON AISLES
   ------------------------------------------------------- */
 
-  const frameMat =
+  const neonMat =
     new THREE.MeshBasicMaterial({
-      color:0x271329
+      color:0xff168e
     });
 
-  const frame =
-    new THREE.Mesh(
-      new THREE.BoxGeometry(12,.3,.35),
-      frameMat
+  for(let i=-3;i<=3;i+=2){
+
+    const strip =
+      new THREE.Mesh(
+        new THREE.BoxGeometry(
+          .045,
+          .02,
+          28
+        ),
+        neonMat
+      );
+
+    strip.position.set(
+      i*1.4,
+      -.96,
+      -3
     );
 
-  frame.position.set(0,6,-4);
+    scene.add(strip);
 
-  scene.add(frame);
+  }
+
 
   /* -------------------------------------------------------
-     SCREEN GLOW
+     WALLS
   ------------------------------------------------------- */
 
-  const screenGlow =
+  createWall(
+    0,
+    5,
+    -16,
+    34,
+    12,
+    .5
+  );
+
+  createWall(
+    -17,
+    5,
+    -1,
+    .5,
+    12,
+    30
+  );
+
+  createWall(
+    17,
+    5,
+    -1,
+    .5,
+    12,
+    30
+  );
+
+
+  /* -------------------------------------------------------
+     CEILING
+  ------------------------------------------------------- */
+
+  const ceiling =
     new THREE.Mesh(
-      new THREE.PlaneGeometry(11.5,6.4),
+      new THREE.PlaneGeometry(34,30),
       new THREE.MeshBasicMaterial({
-        color:0x07050a
+        color:0x07040a
       })
     );
 
-  screenGlow.position.set(0,2.9,-4.15);
+  ceiling.rotation.x =
+    Math.PI/2;
 
-  scene.add(screenGlow);
+  ceiling.position.y =
+    9;
+
+  ceiling.position.z =
+    -1;
+
+  scene.add(ceiling);
+
+
+  /* -------------------------------------------------------
+     GIANT CINEMA SCREEN
+  ------------------------------------------------------- */
+
+  createScreen();
+
 
   /* -------------------------------------------------------
      X WALL DECOR
   ------------------------------------------------------- */
 
-  const xMat =
-    new THREE.MeshBasicMaterial({
-      color:0xff209f
-    });
+  createX(-14,-13);
+  createX(14,-13);
 
-  function makeX(x,z){
-
-    const group =
-      new THREE.Group();
-
-    const a =
-      new THREE.Mesh(
-        new THREE.BoxGeometry(.22,3,.15),
-        xMat
-      );
-
-    const b =
-      new THREE.Mesh(
-        new THREE.BoxGeometry(.22,3,.15),
-        xMat
-      );
-
-    a.rotation.z = Math.PI/4;
-    b.rotation.z = -Math.PI/4;
-
-    group.add(a,b);
-
-    group.position.set(x,3,z);
-
-    scene.add(group);
-
-  }
-
-  makeX(-7,-3);
-  makeX(7,-3);
 
   /* -------------------------------------------------------
-     CINEMA SEATS
+     20 PHYSICAL SEATS
   ------------------------------------------------------- */
 
-  const seatMat =
+  createAllSeats();
+
+
+  /* -------------------------------------------------------
+     PLAYER
+  ------------------------------------------------------- */
+
+  player =
+    createCharacter(
+      0,
+      0,
+      7,
+      true
+    );
+
+  scene.add(player.group);
+
+  playerBody =
+    player.group;
+
+
+  /* -------------------------------------------------------
+     START
+  ------------------------------------------------------- */
+
+  clock =
+    new THREE.Clock();
+
+  animate();
+
+}
+
+
+/* =========================================================
+   WALL
+========================================================= */
+
+function createWall(x,y,z,w,h,d){
+
+  const THREE = window.THREE;
+
+  const mesh =
+    new THREE.Mesh(
+      new THREE.BoxGeometry(w,h,d),
+      new THREE.MeshBasicMaterial({
+        color:0x09050d
+      })
+    );
+
+  mesh.position.set(x,y,z);
+
+  scene.add(mesh);
+
+}
+
+
+/* =========================================================
+   SCREEN
+========================================================= */
+
+function createScreen(){
+
+  const THREE = window.THREE;
+
+  const frameMat =
     new THREE.MeshBasicMaterial({
-      color:0x401536
+      color:0x35122d
     });
 
-  const seatBackMat =
+  const frame =
+    new THREE.Mesh(
+      new THREE.BoxGeometry(
+        17,
+        10,
+        .45
+      ),
+      frameMat
+    );
+
+  frame.position.set(
+    0,
+    4.2,
+    -14.3
+  );
+
+  scene.add(frame);
+
+
+  const screenMat =
     new THREE.MeshBasicMaterial({
-      color:0x571c49
+      color:0x030208
     });
 
-  function createSeat(x,z){
+  screenMesh =
+    new THREE.Mesh(
+      new THREE.PlaneGeometry(
+        15.8,
+        8.9
+      ),
+      screenMat
+    );
 
-    const group =
-      new THREE.Group();
+  screenMesh.position.set(
+    0,
+    4.2,
+    -14.55
+  );
 
-    const base =
-      new THREE.Mesh(
-        new THREE.BoxGeometry(1.25,.35,1),
-        seatMat
-      );
+  scene.add(screenMesh);
 
-    base.position.y = .1;
 
-    const back =
-      new THREE.Mesh(
-        new THREE.BoxGeometry(1.25,1.4,.3),
-        seatBackMat
-      );
+  /* pink glow border */
 
-    back.position.set(0,.8,.3);
+  const glowMat =
+    new THREE.MeshBasicMaterial({
+      color:0xff168f
+    });
 
-    group.add(base,back);
+  const top =
+    new THREE.Mesh(
+      new THREE.BoxGeometry(
+        16.3,.06,.08
+      ),
+      glowMat
+    );
 
-    group.position.set(x,-.7,z);
+  top.position.set(
+    0,
+    8.75,
+    -14.7
+  );
 
-    scene.add(group);
+  scene.add(top);
+
+
+  const bottom =
+    top.clone();
+
+  bottom.position.y =
+    -.35;
+
+  scene.add(bottom);
+
+}
+
+
+/* =========================================================
+   MOVIE
+========================================================= */
+
+document
+  .getElementById("movieFile")
+  .addEventListener("change",e=>{
+
+    const file =
+      e.target.files[0];
+
+    if(!file){
+      return;
+    }
+
+    if(movieURL){
+      URL.revokeObjectURL(movieURL);
+    }
+
+    movieURL =
+      URL.createObjectURL(file);
+
+    movieVideo =
+      document.createElement("video");
+
+    movieVideo.src =
+      movieURL;
+
+    movieVideo.loop = false;
+
+    movieVideo.muted = false;
+
+    movieVideo.playsInline = true;
+
+    movieVideo.preload = "auto";
+
+    movieVideo.addEventListener(
+      "loadedmetadata",
+      ()=>{
+        applyMovieTexture();
+      }
+    );
+
+    movieVideo.load();
+
+    document
+      .getElementById("movieInfo")
+      .textContent =
+      file.name +
+      " • " +
+      formatBytes(file.size);
+
+    toast("Movie loaded 🎬");
+
+  });
+
+
+function applyMovieTexture(){
+
+  if(!window.THREE || !screenMesh || !movieVideo){
+    return;
+  }
+
+  const THREE =
+    window.THREE;
+
+  if(movieTexture){
+    movieTexture.dispose();
+  }
+
+  movieTexture =
+    new THREE.VideoTexture(
+      movieVideo
+    );
+
+  movieTexture.minFilter =
+    THREE.LinearFilter;
+
+  movieTexture.magFilter =
+    THREE.LinearFilter;
+
+  movieTexture.format =
+    THREE.RGBAFormat;
+
+  screenMesh.material =
+    new THREE.MeshBasicMaterial({
+      map:movieTexture
+    });
+
+  screenMesh.material.needsUpdate =
+    true;
+
+}
+
+function playMovie(){
+
+  if(!movieVideo){
+
+    toast("Select a movie first.");
+
+    return;
+  }
+
+  movieVideo
+    .play()
+    .then(()=>{
+      broadcastMovie("play");
+    })
+    .catch(()=>{
+      toast("Tap PLAY again to allow playback.");
+    });
+
+}
+
+function pauseMovie(){
+
+  if(!movieVideo){
+    return;
+  }
+
+  movieVideo.pause();
+
+  broadcastMovie("pause");
+
+}
+
+function formatBytes(bytes){
+
+  if(!bytes){
+    return "";
+  }
+
+  const units =
+    ["B","KB","MB","GB"];
+
+  let i=0;
+  let n=bytes;
+
+  while(n>=1024 && i<units.length-1){
+
+    n/=1024;
+    i++;
 
   }
+
+  return n.toFixed(
+    i ? 1 : 0
+  ) + " " + units[i];
+
+}
+
+
+/* =========================================================
+   SEATS
+========================================================= */
+
+function createAllSeats(){
+
+  seats = [];
+
+  const startZ = 5.3;
 
   for(let row=0;row<4;row++){
 
     for(let col=0;col<5;col++){
 
-      createSeat(
-        (col-2)*1.55,
-        1.5 + row*1.55
-      );
+      const x =
+        (col-2)*2.4;
+
+      const z =
+        startZ +
+        row*2.45;
+
+      const seat =
+        createSeat(
+          x,
+          z,
+          seats.length+1
+        );
+
+      seats.push(seat);
 
     }
 
   }
 
-  /* -------------------------------------------------------
-     ANIMATION
-  ------------------------------------------------------- */
+}
 
-  let time = 0;
+function createSeat(x,z,id){
 
-  function animate(){
+  const THREE =
+    window.THREE;
 
-    if(theatre.style.display === "none"){
+  const group =
+    new THREE.Group();
 
-      requestAnimationFrame(animate);
+  group.position.set(
+    x,
+    -1,
+    z
+  );
 
+  const material =
+    new THREE.MeshBasicMaterial({
+      color:0x4d1643
+    });
+
+  const dark =
+    new THREE.MeshBasicMaterial({
+      color:0x251126
+    });
+
+
+  const base =
+    new THREE.Mesh(
+      new THREE.BoxGeometry(
+        1.65,.45,1.35
+      ),
+      dark
+    );
+
+  base.position.y=.25;
+
+  group.add(base);
+
+
+  const back =
+    new THREE.Mesh(
+      new THREE.BoxGeometry(
+        1.65,1.8,.38
+      ),
+      material
+    );
+
+  back.position.set(
+    0,
+    1.1,
+    .48
+  );
+
+  group.add(back);
+
+
+  /* armrests */
+
+  for(const sx of [-.78,.78]){
+
+    const arm =
+      new THREE.Mesh(
+        new THREE.BoxGeometry(
+          .14,.55,1.25
+        ),
+        material
+      );
+
+    arm.position.set(
+      sx,
+      .55,
+      0
+    );
+
+    group.add(arm);
+
+  }
+
+
+  scene.add(group);
+
+  return {
+    id,
+    group,
+    occupied:false
+  };
+
+}
+
+
+/* =========================================================
+   CHARACTER
+========================================================= */
+
+function createCharacter(
+  x,
+  y,
+  z,
+  local=false
+){
+
+  const THREE =
+    window.THREE;
+
+  const group =
+    new THREE.Group();
+
+  group.position.set(
+    x,y,z
+  );
+
+
+  const bodyMat =
+    new THREE.MeshBasicMaterial({
+      color:0xd35a9d
+    });
+
+  const skinMat =
+    new THREE.MeshBasicMaterial({
+      color:0xffd3c5
+    });
+
+  const hairMat =
+    new THREE.MeshBasicMaterial({
+      color:0x160d1a
+    });
+
+
+  /* body */
+
+  const body =
+    new THREE.Mesh(
+      new THREE.CapsuleGeometry(
+        .55,
+        1.15,
+        4,
+        8
+      ),
+      bodyMat
+    );
+
+  body.position.y =
+    1.25;
+
+  group.add(body);
+
+
+  /* head */
+
+  const head =
+    new THREE.Mesh(
+      new THREE.SphereGeometry(
+        .62,
+        12,
+        8
+      ),
+      skinMat
+    );
+
+  head.position.y =
+    2.55;
+
+  group.add(head);
+
+
+  /* hair */
+
+  const hair =
+    new THREE.Mesh(
+      new THREE.SphereGeometry(
+        .68,
+        12,
+        8
+      ),
+      hairMat
+    );
+
+  hair.position.set(
+    0,
+    2.72,
+    -.12
+  );
+
+  hair.scale.set(
+    1,
+    1.1,
+    .75
+  );
+
+  group.add(hair);
+
+
+  /* eyes */
+
+  for(const sx of [-.2,.2]){
+
+    const eye =
+      new THREE.Mesh(
+        new THREE.SphereGeometry(
+          .065,
+          8,
+          6
+        ),
+        new THREE.MeshBasicMaterial({
+          color:0xff73bb
+        })
+      );
+
+    eye.position.set(
+      sx,
+      2.6,
+      -.58
+    );
+
+    group.add(eye);
+
+  }
+
+
+  /* arms */
+
+  for(const sx of [-.75,.75]){
+
+    const arm =
+      new THREE.Mesh(
+        new THREE.CapsuleGeometry(
+          .16,
+          .75,
+          4,
+          6
+        ),
+        skinMat
+      );
+
+    arm.position.set(
+      sx,
+      1.55,
+      0
+    );
+
+    arm.rotation.z =
+      sx * -.25;
+
+    group.add(arm);
+
+  }
+
+
+  /* legs */
+
+  for(const sx of [-.28,.28]){
+
+    const leg =
+      new THREE.Mesh(
+        new THREE.CapsuleGeometry(
+          .19,
+          .8,
+          4,
+          6
+        ),
+        skinMat
+      );
+
+    leg.position.set(
+      sx,
+      .25,
+      0
+    );
+
+    group.add(leg);
+
+  }
+
+
+  return {
+    group,
+    local,
+    velocity:{
+      x:0,
+      z:0
+    },
+    walkTime:0
+  };
+
+}
+
+
+/* =========================================================
+   MOVEMENT
+========================================================= */
+
+function updatePlayer(dt){
+
+  if(!player){
+    return;
+  }
+
+  if(sitting){
+    return;
+  }
+
+  let forward=0;
+  let side=0;
+
+  if(keys["w"] || keys["arrowup"]){
+    forward += 1;
+  }
+
+  if(keys["s"] || keys["arrowdown"]){
+    forward -= 1;
+  }
+
+  if(keys["a"] || keys["arrowleft"]){
+    side -= 1;
+  }
+
+  if(keys["d"] || keys["arrowright"]){
+    side += 1;
+  }
+
+  forward += joystickY;
+  side += joystickX;
+
+
+  const length =
+    Math.hypot(
+      forward,
+      side
+    );
+
+  if(length>1){
+
+    forward/=length;
+    side/=length;
+
+  }
+
+
+  const speed =
+    keys["shift"]
+      ? 7
+      : 4.2;
+
+
+  /* direction relative to camera */
+
+  const sin =
+    Math.sin(yaw);
+
+  const cos =
+    Math.cos(yaw);
+
+
+  const dx =
+    side*cos +
+    forward*sin;
+
+  const dz =
+    side*(-sin) +
+    forward*cos;
+
+
+  player.group.position.x +=
+    dx * speed * dt;
+
+  player.group.position.z +=
+    dz * speed * dt;
+
+
+  /* boundaries */
+
+  player.group.position.x =
+    Math.max(
+      -14.5,
+      Math.min(
+        14.5,
+        player.group.position.x
+      )
+    );
+
+  player.group.position.z =
+    Math.max(
+      -12,
+      Math.min(
+        13.5,
+        player.group.position.z
+      )
+    );
+
+
+  if(length>.05){
+
+    player.group.rotation.y =
+      Math.atan2(
+        dx,
+        dz
+      );
+
+    player.walkTime +=
+      dt * 12;
+
+  }
+
+  checkSeatInteraction();
+
+  broadcastPosition();
+
+}
+
+
+/* =========================================================
+   CAMERA
+========================================================= */
+
+function updateCamera(){
+
+  if(!player || !camera){
+    return;
+  }
+
+  const target =
+    player.group.position.clone();
+
+  target.y += 1.6;
+
+
+  const distance =
+    sitting ? 4.8 : 6.5;
+
+  const height =
+    sitting ? 2.4 : 3.2;
+
+
+  const desired =
+    new THREE.Vector3(
+      target.x -
+        Math.sin(yaw)*distance,
+
+      target.y +
+        Math.sin(pitch)*distance +
+        height*.15,
+
+      target.z -
+        Math.cos(yaw)*distance
+    );
+
+
+  camera.position.lerp(
+    desired,
+    .12
+  );
+
+  camera.lookAt(target);
+
+}
+
+
+/* =========================================================
+   SEAT INTERACTION
+========================================================= */
+
+function checkSeatInteraction(){
+
+  if(sitting){
+
+    interaction.classList.remove(
+      "show"
+    );
+
+    return;
+  }
+
+  let closest=null;
+  let distance=999;
+
+  for(const seat of seats){
+
+    const dx =
+      seat.group.position.x -
+      player.group.position.x;
+
+    const dz =
+      seat.group.position.z -
+      player.group.position.z;
+
+    const d =
+      Math.hypot(dx,dz);
+
+    if(d<distance){
+
+      distance=d;
+      closest=seat;
+
+    }
+
+  }
+
+  if(closest && distance<2.2){
+
+    currentSeat=closest;
+
+    interaction.textContent =
+      "E / SIT • Seat " +
+      closest.id;
+
+    interaction.classList.add(
+      "show"
+    );
+
+  }else{
+
+    currentSeat=null;
+
+    interaction.classList.remove(
+      "show"
+    );
+
+  }
+
+}
+
+
+function sitOrStand(){
+
+  if(!player){
+    return;
+  }
+
+  if(sitting){
+
+    standUp();
+
+    return;
+  }
+
+  if(!currentSeat){
+
+    toast("Walk closer to a seat.");
+
+    return;
+  }
+
+  sitDown(
+    currentSeat
+  );
+
+}
+
+
+function sitDown(seat){
+
+  sitting=true;
+
+  currentSeat=seat;
+
+  player.group.position.x =
+    seat.group.position.x;
+
+  player.group.position.z =
+    seat.group.position.z +
+    .75;
+
+  player.group.rotation.y =
+    Math.PI;
+
+  seat.occupied=true;
+
+  interaction.classList.remove(
+    "show"
+  );
+
+  toast(
+    "Sitting in seat " +
+    seat.id +
+    " 💺"
+  );
+
+  broadcastPosition();
+
+}
+
+
+function standUp(){
+
+  if(currentSeat){
+
+    currentSeat.occupied=false;
+
+    player.group.position.z +=
+      1.2;
+
+  }
+
+  sitting=false;
+  currentSeat=null;
+
+  toast("Standing up.");
+
+  broadcastPosition();
+
+}
+
+
+/* =========================================================
+   MOUSE CAMERA
+========================================================= */
+
+let mouseDown=false;
+let lastX=0;
+let lastY=0;
+
+window.addEventListener("mousedown",e=>{
+
+  if(e.target.closest("button,input")){
+    return;
+  }
+
+  mouseDown=true;
+
+  lastX=e.clientX;
+  lastY=e.clientY;
+
+});
+
+window.addEventListener("mouseup",()=>{
+
+  mouseDown=false;
+
+});
+
+window.addEventListener("mousemove",e=>{
+
+  if(!mouseDown){
+    return;
+  }
+
+  const dx =
+    e.clientX-lastX;
+
+  const dy =
+    e.clientY-lastY;
+
+  lastX=e.clientX;
+  lastY=e.clientY;
+
+  yaw -= dx*.004;
+
+  pitch -= dy*.003;
+
+  pitch =
+    Math.max(
+      -.5,
+      Math.min(
+        .45,
+        pitch
+      )
+    );
+
+});
+
+
+/* =========================================================
+   TOUCH CAMERA
+========================================================= */
+
+const touchLook =
+  document.getElementById(
+    "touchLook"
+  );
+
+let touchX=0;
+let touchY=0;
+
+touchLook.addEventListener(
+  "touchstart",
+  e=>{
+
+    if(!e.touches[0]){
       return;
     }
 
-    time += .008;
+    touchX =
+      e.touches[0].clientX;
 
-    pink.intensity =
-      lightsOn
-        ? 2.6 + Math.sin(time*2)*.25
-        : .2;
+    touchY =
+      e.touches[0].clientY;
 
-    camera.position.x =
-      Math.sin(time*.35)*.12;
+  },
+  {passive:true}
+);
 
-    camera.lookAt(0,2.4,-3);
+touchLook.addEventListener(
+  "touchmove",
+  e=>{
 
-    renderer.render(
-      scene,
-      camera
-    );
+    if(!e.touches[0]){
+      return;
+    }
 
-    requestAnimationFrame(animate);
+    const x =
+      e.touches[0].clientX;
+
+    const y =
+      e.touches[0].clientY;
+
+    yaw -=
+      (x-touchX)*.006;
+
+    pitch -=
+      (y-touchY)*.004;
+
+    pitch =
+      Math.max(
+        -.5,
+        Math.min(
+          .45,
+          pitch
+        )
+      );
+
+    touchX=x;
+    touchY=y;
+
+  },
+  {passive:true}
+);
+
+
+/* =========================================================
+   MOBILE JOYSTICK
+========================================================= */
+
+const joystick =
+  document.getElementById(
+    "joystick"
+  );
+
+const stick =
+  document.getElementById(
+    "stick"
+  );
+
+function joystickMove(e){
+
+  const rect =
+    joystick.getBoundingClientRect();
+
+  const point =
+    e.touches
+      ? e.touches[0]
+      : e;
+
+  let x =
+    point.clientX -
+    (rect.left+rect.width/2);
+
+  let y =
+    point.clientY -
+    (rect.top+rect.height/2);
+
+  const max =
+    rect.width*.32;
+
+  const dist =
+    Math.hypot(x,y);
+
+  if(dist>max){
+
+    x =
+      x/dist*max;
+
+    y =
+      y/dist*max;
 
   }
 
-  animate();
+  stick.style.transform =
+    `translate(${x}px,${y}px)`;
 
-  window.addEventListener("resize",()=>{
+  joystickX =
+    x/max;
+
+  joystickY =
+    -y/max;
+
+}
+
+function joystickReset(){
+
+  joystickX=0;
+  joystickY=0;
+
+  stick.style.transform =
+    "translate(0,0)";
+
+}
+
+joystick.addEventListener(
+  "touchstart",
+  e=>{
+    joystickActive=true;
+    joystickMove(e);
+    e.preventDefault();
+  },
+  {passive:false}
+);
+
+joystick.addEventListener(
+  "touchmove",
+  e=>{
+    joystickMove(e);
+    e.preventDefault();
+  },
+  {passive:false}
+);
+
+joystick.addEventListener(
+  "touchend",
+  joystickReset
+);
+
+joystick.addEventListener(
+  "touchcancel",
+  joystickReset
+);
+
+
+/* =========================================================
+   LIGHTS
+========================================================= */
+
+function toggleLights(){
+
+  lightsOn =
+    !lightsOn;
+
+  if(window.pinkLight){
+
+    window.pinkLight.intensity =
+      lightsOn ? 5 : .35;
+
+  }
+
+  toast(
+    lightsOn
+      ? "Cinema lights ON 💗"
+      : "Cinema mode 🌑"
+  );
+
+}
+
+
+/* =========================================================
+   ROOM / MULTIPLAYER
+========================================================= */
+
+function loadPeer(){
+
+  if(window.Peer){
+    return Promise.resolve();
+  }
+
+  return new Promise(
+    (resolve,reject)=>{
+
+      const script =
+        document.createElement("script");
+
+      script.src =
+        "https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js";
+
+      script.onload=resolve;
+
+      script.onerror=reject;
+
+      document.head.appendChild(
+        script
+      );
+
+    }
+  );
+
+}
+
+
+async function createRoom(){
+
+  const code =
+    getRoomCode();
+
+  if(!code){
+    toast("Enter a room code.");
+    return;
+  }
+
+  const status =
+    document.getElementById(
+      "roomStatus"
+    );
+
+  status.textContent =
+    "Creating room...";
+
+  try{
+
+    await loadPeer();
+
+    if(peer){
+      peer.destroy();
+    }
+
+    peer =
+      new Peer(
+        "ww-v1010-" +
+        code.toLowerCase()
+      );
+
+    peer.on("open",()=>{
+
+      status.textContent =
+        "ROOM LIVE • " +
+        code;
+
+      toast(
+        "Room created 👥"
+      );
+
+    });
+
+    peer.on(
+      "connection",
+      connection=>{
+
+        connections.push(
+          connection
+        );
+
+        setupConnection(
+          connection
+        );
+
+      }
+    );
+
+    peer.on(
+      "error",
+      err=>{
+
+        console.error(err);
+
+        status.textContent =
+          "Room error.";
+
+      }
+    );
+
+  }catch(e){
+
+    status.textContent =
+      "Multiplayer unavailable.";
+
+    toast(
+      "Couldn't load multiplayer."
+    );
+
+  }
+
+}
+
+
+async function joinRoom(){
+
+  const code =
+    getRoomCode();
+
+  if(!code){
+    toast("Enter a room code.");
+    return;
+  }
+
+  const status =
+    document.getElementById(
+      "roomStatus"
+    );
+
+  status.textContent =
+    "Joining...";
+
+  try{
+
+    await loadPeer();
+
+    if(peer){
+      peer.destroy();
+    }
+
+    peer =
+      new Peer();
+
+    peer.on("open",()=>{
+
+      const connection =
+        peer.connect(
+          "ww-v1010-" +
+          code.toLowerCase()
+        );
+
+      connection.on(
+        "open",
+        ()=>{
+
+          connections.push(
+            connection
+          );
+
+          setupConnection(
+            connection
+          );
+
+          status.textContent =
+            "CONNECTED • " +
+            code;
+
+          toast(
+            "Joined theatre 👥"
+          );
+
+        }
+      );
+
+    });
+
+  }catch(e){
+
+    status.textContent =
+      "Couldn't connect.";
+
+  }
+
+}
+
+
+function getRoomCode(){
+
+  return (
+    document
+      .getElementById(
+        "roomCode"
+      )
+      .value
+      .trim()
+      .toUpperCase()
+      .replace(
+        /[^A-Z0-9]/g,
+        ""
+      )
+      .slice(0,12)
+  );
+
+}
+
+
+function setupConnection(connection){
+
+  connection.on(
+    "data",
+    data=>{
+
+      if(!data){
+        return;
+      }
+
+      if(
+        data.type ===
+        "position"
+      ){
+
+        updateRemotePlayer(
+          data
+        );
+
+      }
+
+      if(
+        data.type ===
+        "movie"
+      ){
+
+        if(!movieVideo){
+          return;
+        }
+
+        if(
+          typeof data.time ===
+          "number"
+        ){
+
+          movieVideo.currentTime =
+            data.time;
+
+        }
+
+        if(data.action === "play"){
+
+          movieVideo
+            .play()
+            .catch(()=>{});
+
+        }
+
+        if(data.action === "pause"){
+
+          movieVideo.pause();
+
+        }
+
+      }
+
+      if(
+        data.type ===
+        "chat"
+      ){
+
+        addChat(
+          "Friend",
+          data.text
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+function broadcast(data){
+
+  connections =
+    connections.filter(
+      c=>c && c.open
+    );
+
+  connections.forEach(
+    connection=>{
+
+      try{
+        connection.send(data);
+      }catch(e){}
+
+    }
+  );
+
+}
+
+
+let lastBroadcast=0;
+
+function broadcastPosition(){
+
+  const now =
+    performance.now();
+
+  if(
+    now-lastBroadcast <
+    80
+  ){
+    return;
+  }
+
+  lastBroadcast=now;
+
+  if(!player){
+    return;
+  }
+
+  broadcast({
+    type:"position",
+    x:player.group.position.x,
+    y:player.group.position.y,
+    z:player.group.position.z,
+    rotation:player.group.rotation.y,
+    sitting:sitting
+  });
+
+}
+
+
+function broadcastMovie(action){
+
+  if(!movieVideo){
+    return;
+  }
+
+  broadcast({
+    type:"movie",
+    action,
+    time:movieVideo.currentTime
+  });
+
+}
+
+
+/* =========================================================
+   REMOTE PLAYERS
+========================================================= */
+
+function updateRemotePlayer(data){
+
+  if(!window.THREE || !scene){
+    return;
+  }
+
+  const id =
+    data.id || "remote";
+
+  let remote =
+    otherPlayers[id];
+
+  if(!remote){
+
+    remote =
+      createCharacter(
+        data.x,
+        data.y,
+        data.z,
+        false
+      );
+
+    scene.add(
+      remote.group
+    );
+
+    otherPlayers[id]=remote;
+
+  }
+
+  remote.group.position.set(
+    data.x,
+    data.y,
+    data.z
+  );
+
+  remote.group.rotation.y =
+    data.rotation || 0;
+
+}
+
+
+/* =========================================================
+   CHAT
+========================================================= */
+
+const chatInput =
+  document.getElementById(
+    "chatInput"
+  );
+
+chatInput.addEventListener(
+  "keydown",
+  e=>{
+
+    if(
+      e.key !== "Enter"
+    ){
+      return;
+    }
+
+    const text =
+      chatInput.value.trim();
+
+    if(!text){
+      return;
+    }
+
+    addChat(
+      "You",
+      text
+    );
+
+    broadcast({
+      type:"chat",
+      text
+    });
+
+    chatInput.value="";
+
+  }
+);
+
+
+function addChat(name,text){
+
+  const messages =
+    document.getElementById(
+      "chatMessages"
+    );
+
+  const line =
+    document.createElement(
+      "div"
+    );
+
+  line.className =
+    "chat-line";
+
+  line.textContent =
+    name +
+    ": " +
+    text;
+
+  messages.appendChild(
+    line
+  );
+
+  messages.scrollTop =
+    messages.scrollHeight;
+
+}
+
+
+/* =========================================================
+   MAIN LOOP
+========================================================= */
+
+function animate(){
+
+  requestAnimationFrame(
+    animate
+  );
+
+  if(!renderer){
+    return;
+  }
+
+  if(
+    game.style.display ===
+    "none"
+  ){
+    return;
+  }
+
+  const dt =
+    Math.min(
+      clock.getDelta(),
+      .05
+    );
+
+  updatePlayer(dt);
+
+  updateCamera();
+
+  renderer.render(
+    scene,
+    camera
+  );
+
+}
+
+
+/* =========================================================
+   RESIZE
+========================================================= */
+
+window.addEventListener(
+  "resize",
+  ()=>{
+
+    if(!renderer || !camera){
+      return;
+    }
 
     camera.aspect =
-      innerWidth / innerHeight;
+      innerWidth /
+      innerHeight;
 
     camera.updateProjectionMatrix();
 
@@ -1860,22 +3147,10 @@ function initThree(){
       false
     );
 
-  });
-
-}
-
-/* =========================================================
-   STARTUP
-========================================================= */
-
-/*
-  NO LOADING SCREEN.
-  Nothing blocks the page.
-*/
-
-buildSeats();
+  }
+);
 
 </script>
 
 </body>
-</html>
+      </html>
