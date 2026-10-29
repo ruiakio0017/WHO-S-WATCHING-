@@ -2,4203 +2,1682 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#030304">
-<meta name="description" content="WHO'S WATCHING? — Virtual Cinema. Made by Kush Kumar.">
-<title>WHO'S WATCHING? • MADE BY KUSH KUMAR</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07050b">
+<meta name="description" content="WHO'S WATCHING? — A virtual theatre made by KUSH KUMAR.">
+<title>WHO'S WATCHING? — V9.1</title>
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
 <style>
-/* =========================================================
-   WHO'S WATCHING?
-   FAST V7
-   V1 → V6 FEATURES + PERFORMANCE OPTIMIZATION
-   MADE BY KUSH KUMAR
-========================================================= */
-
 *{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
 
 html,body{
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    background:#030304;
-    color:#fff;
-    font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#050408;
+  color:#fff;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
 
 button,input{
-    font:inherit;
+  font:inherit;
 }
 
 button{
-    color:#fff;
+  color:inherit;
+  border:0;
+  cursor:pointer;
 }
 
-button:focus-visible,
-input:focus-visible{
-    outline:2px solid #ff6fae;
-    outline-offset:2px;
+#app{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 35%,rgba(255,55,180,.09),transparent 35%),
+    linear-gradient(135deg,#050408,#0c0710 50%,#030306);
 }
 
-.hidden{
-    display:none!important;
+#three{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
 }
 
-/* =========================================================
-   FAST LOADER
-========================================================= */
+#ui{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+
+.glass{
+  background:rgba(18,15,24,.58);
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:0 15px 50px rgba(0,0,0,.35);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+}
 
 #loading{
-    position:fixed;
-    inset:0;
-    z-index:9999;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-
-    background:#030304;
-
-    transition:
-        opacity .3s ease,
-        visibility .3s ease;
+  position:fixed;
+  z-index:9999;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#050408;
+  transition:opacity .22s ease,visibility .22s ease;
 }
 
 #loading.hide{
-    opacity:0;
-    visibility:hidden;
-    pointer-events:none;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
 }
 
-.loading-logo{
-    font-size:clamp(34px,8vw,72px);
-    font-weight:1000;
-    line-height:.88;
-    letter-spacing:-4px;
-    text-align:center;
+.loadbox{
+  width:min(420px,86vw);
+  text-align:center;
 }
 
-.loading-logo span{
-    color:#ff70b0;
+.logo{
+  font-weight:1000;
+  letter-spacing:-2px;
+  font-size:clamp(32px,8vw,58px);
+  line-height:.9;
 }
 
-.loading-made{
-    margin-top:20px;
-    color:#85808c;
-    font-size:11px;
-    letter-spacing:2px;
-    text-transform:uppercase;
+.logo span{
+  color:#ff62c6;
 }
 
-.loading-line{
-    width:170px;
-    height:3px;
-    margin-top:22px;
-    overflow:hidden;
-    border-radius:99px;
-    background:#17151a;
+.loadsub{
+  margin-top:14px;
+  color:#aaa2b1;
+  font-size:12px;
+  letter-spacing:3px;
+  text-transform:uppercase;
 }
 
-.loading-line::after{
-    content:"";
-    display:block;
-    width:60%;
-    height:100%;
-    background:#ff70b0;
-    animation:loading 1s infinite ease-in-out;
+.creator{
+  margin-top:16px;
+  color:#ff70cb;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:2px;
 }
 
-@keyframes loading{
-    0%{transform:translateX(-120%)}
-    100%{transform:translateX(300%)}
+.loaderline{
+  height:3px;
+  margin-top:25px;
+  overflow:hidden;
+  border-radius:10px;
+  background:rgba(255,255,255,.08);
 }
 
-/* =========================================================
-   WORLD
-========================================================= */
-
-#world{
-    position:fixed;
-    inset:0;
-    z-index:1;
-    display:block;
+.loaderline i{
+  display:block;
+  height:100%;
+  width:35%;
+  border-radius:10px;
+  background:linear-gradient(90deg,#ff3faf,#fff,#ff3faf);
+  animation:load 1s linear infinite;
 }
 
-/* =========================================================
-   TOP HUD
-========================================================= */
-
-#hud{
-    position:fixed;
-    inset:0 0 auto 0;
-    z-index:100;
-    pointer-events:none;
-    padding:max(12px,env(safe-area-inset-top)) 14px 0;
+@keyframes load{
+  from{transform:translateX(-120%)}
+  to{transform:translateX(320%)}
 }
 
-.hud-row{
-    display:flex;
-    align-items:center;
-    gap:8px;
+#topbar{
+  position:absolute;
+  z-index:20;
+  top:max(14px,env(safe-area-inset-top));
+  left:14px;
+  right:14px;
+  height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  pointer-events:auto;
 }
 
 .brand{
-    pointer-events:auto;
-    padding:10px 14px;
-    border-radius:17px;
-
-    background:rgba(10,9,13,.56);
-    border:1px solid rgba(255,255,255,.12);
-
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
-
-    box-shadow:0 10px 35px rgba(0,0,0,.3);
+  padding:10px 14px;
+  border-radius:18px;
 }
 
-.brand b{
-    font-size:14px;
-    letter-spacing:-.4px;
+.brand-title{
+  font-weight:1000;
+  letter-spacing:-.8px;
+  font-size:16px;
 }
 
-.brand span{
-    color:#ff72b2;
+.brand-title span{
+  color:#ff62c6;
 }
 
-.made-mini{
-    display:block;
-    margin-top:3px;
-    color:#77727e;
-    font-size:7px;
-    letter-spacing:1.5px;
+.brand-small{
+  margin-top:2px;
+  font-size:8px;
+  color:#9d96a4;
+  letter-spacing:1.5px;
 }
 
 .room-pill{
-    pointer-events:auto;
-    padding:9px 13px;
-    border-radius:15px;
-
-    background:rgba(10,9,13,.52);
-    border:1px solid rgba(255,255,255,.1);
-
-    color:#aaa5b0;
-    font-size:11px;
-
-    backdrop-filter:blur(16px);
+  padding:10px 14px;
+  border-radius:16px;
+  font-size:11px;
+  color:#c9c2ce;
 }
 
-.room-pill strong{
-    color:#fff;
+.top-actions{
+  display:flex;
+  gap:7px;
 }
 
-.hud-spacer{
-    flex:1;
+.iconbtn,
+.softbtn{
+  border-radius:16px;
+  padding:11px 14px;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.10);
+  transition:.18s ease;
 }
 
-.hud-button{
-    pointer-events:auto;
-
-    width:42px;
-    height:42px;
-
-    border-radius:15px;
-    border:1px solid rgba(255,255,255,.12);
-
-    background:rgba(10,9,13,.52);
-
-    cursor:pointer;
-
-    backdrop-filter:blur(16px);
-
-    transition:transform .15s,background .15s;
+.iconbtn:hover,
+.softbtn:hover{
+  background:rgba(255,91,193,.14);
+  border-color:rgba(255,100,200,.35);
+  transform:translateY(-1px);
 }
-
-.hud-button:hover{
-    transform:translateY(-2px);
-    background:rgba(255,255,255,.1);
-}
-
-/* =========================================================
-   BOTTOM HUD
-========================================================= */
-
-#bottomHUD{
-    position:fixed;
-    inset:auto 0 0 0;
-    z-index:100;
-    pointer-events:none;
-
-    padding:
-        0
-        14px
-        max(14px,env(safe-area-inset-bottom));
-}
-
-.bottom-row{
-    display:flex;
-    align-items:end;
-    gap:12px;
-}
-
-/* =========================================================
-   JOYSTICK
-========================================================= */
-
-#joystick{
-    width:110px;
-    height:110px;
-
-    pointer-events:auto;
-
-    border-radius:50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(255,255,255,.07),
-            rgba(255,255,255,.02)
-        );
-
-    border:1px solid rgba(255,255,255,.1);
-
-    position:relative;
-
-    touch-action:none;
-
-    backdrop-filter:blur(10px);
-}
-
-#stick{
-    position:absolute;
-
-    left:50%;
-    top:50%;
-
-    width:45px;
-    height:45px;
-
-    transform:translate(-50%,-50%);
-
-    border-radius:50%;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.2),
-            rgba(255,255,255,.05)
-        );
-
-    border:1px solid rgba(255,255,255,.18);
-
-    box-shadow:0 8px 25px rgba(0,0,0,.3);
-}
-
-/* =========================================================
-   ACTION BUTTONS
-========================================================= */
-
-.actions{
-    margin-left:auto;
-
-    display:flex;
-    gap:7px;
-
-    pointer-events:auto;
-}
-
-.action{
-    min-width:57px;
-    height:51px;
-
-    padding:0 12px;
-
-    border-radius:17px;
-
-    border:1px solid rgba(255,255,255,.12);
-
-    background:rgba(10,9,13,.58);
-
-    cursor:pointer;
-
-    backdrop-filter:blur(16px);
-
-    transition:
-        transform .15s,
-        background .15s;
-}
-
-.action:hover{
-    transform:translateY(-2px);
-    background:rgba(255,255,255,.1);
-}
-
-.action.main{
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,93,166,.85),
-            rgba(128,91,255,.85)
-        );
-
-    border-color:rgba(255,255,255,.2);
-
-    box-shadow:
-        0 10px 30px rgba(255,80,160,.18);
-}
-
-/* =========================================================
-   INTERACTION
-========================================================= */
 
 #interaction{
-    position:fixed;
-
-    left:50%;
-    bottom:140px;
-
-    z-index:120;
-
-    transform:translateX(-50%) translateY(15px);
-
-    opacity:0;
-
-    pointer-events:none;
-
-    padding:11px 17px;
-
-    border-radius:16px;
-
-    background:rgba(10,9,13,.72);
-
-    border:1px solid rgba(255,255,255,.13);
-
-    backdrop-filter:blur(18px);
-
-    transition:.2s;
-
-    text-align:center;
-
-    white-space:nowrap;
+  position:absolute;
+  z-index:18;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  padding:12px 18px;
+  border-radius:18px;
+  opacity:0;
+  transition:.2s;
+  font-size:12px;
+  pointer-events:none;
 }
 
 #interaction.show{
-    opacity:1;
-    transform:translateX(-50%) translateY(0);
+  opacity:1;
 }
 
-#interaction b{
-    color:#ff78b5;
+#side{
+  position:absolute;
+  z-index:30;
+  top:84px;
+  right:14px;
+  bottom:104px;
+  width:min(350px,calc(100vw - 28px));
+  border-radius:24px;
+  padding:14px;
+  pointer-events:auto;
+  transform:translateX(calc(100% + 30px));
+  transition:transform .25s ease;
+  overflow:auto;
 }
 
-/* =========================================================
-   SIDE PANEL
-========================================================= */
-
-#panel{
-    position:fixed;
-
-    top:0;
-    right:0;
-    bottom:0;
-
-    z-index:500;
-
-    width:min(390px,94vw);
-
-    padding:20px;
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(14,12,18,.97),
-            rgba(7,7,10,.97)
-        );
-
-    border-left:1px solid rgba(255,255,255,.1);
-
-    box-shadow:-30px 0 80px rgba(0,0,0,.45);
-
-    transform:translateX(105%);
-
-    transition:
-        transform .3s cubic-bezier(.2,.8,.2,1);
-
-    overflow:auto;
-
-    -webkit-overflow-scrolling:touch;
+#side.open{
+  transform:translateX(0);
 }
 
-#panel.open{
-    transform:translateX(0);
+.tabs{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:5px;
+  margin-bottom:12px;
 }
 
-.panel-header{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    margin-bottom:18px;
+.tab{
+  padding:9px 3px;
+  border-radius:12px;
+  background:rgba(255,255,255,.05);
+  color:#aaa2ae;
+  font-size:9px;
 }
 
-.panel-header h2{
-    font-size:22px;
+.tab.active{
+  color:#fff;
+  background:rgba(255,75,186,.17);
+  border:1px solid rgba(255,91,193,.22);
 }
 
-.panel-close{
-    margin-left:auto;
-
-    width:40px;
-    height:40px;
-
-    border-radius:14px;
-
-    border:1px solid rgba(255,255,255,.1);
-
-    background:rgba(255,255,255,.06);
-
-    cursor:pointer;
+.panel{
+  display:none;
 }
 
-.panel-section{
-    margin-top:18px;
+.panel.active{
+  display:block;
 }
 
-.panel-section h3{
-    margin-bottom:9px;
-    font-size:14px;
+.panel h2{
+  margin:4px 0 5px;
+  font-size:21px;
 }
 
-.panel-text{
-    color:#918d99;
-    font-size:13px;
-    line-height:1.55;
+.panel p{
+  color:#9f98a5;
+  font-size:12px;
+  line-height:1.5;
 }
 
-.made-panel{
-    margin-top:25px;
-    padding-top:15px;
-
-    border-top:1px solid rgba(255,255,255,.07);
-
-    color:#5f5a65;
-    text-align:center;
-
-    font-size:9px;
-    letter-spacing:2px;
+.creatorline{
+  margin:18px 0 3px;
+  text-align:center;
+  color:#ff69c7;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:2px;
 }
 
 .field{
-    width:100%;
-
-    padding:13px 14px;
-
-    border-radius:14px;
-
-    border:1px solid rgba(255,255,255,.12);
-
-    background:rgba(255,255,255,.05);
-
-    color:#fff;
-
-    outline:none;
+  width:100%;
+  padding:13px;
+  margin:8px 0;
+  border-radius:14px;
+  outline:none;
+  color:#fff;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.09);
 }
 
-.field::placeholder{
-    color:#68646e;
+.row{
+  display:flex;
+  gap:7px;
 }
 
-.panel-button{
-    width:100%;
-
-    margin-top:9px;
-
-    padding:13px;
-
-    border-radius:15px;
-
-    border:1px solid rgba(255,255,255,.12);
-
-    background:rgba(255,255,255,.07);
-
-    cursor:pointer;
-
-    transition:.15s;
+.row>*{
+  flex:1;
 }
 
-.panel-button:hover{
-    background:rgba(255,255,255,.12);
+.primary{
+  width:100%;
+  padding:13px;
+  border-radius:15px;
+  font-weight:900;
+  background:linear-gradient(135deg,#ff4db8,#9f55ff);
+  box-shadow:0 8px 25px rgba(255,60,180,.2);
 }
 
-.panel-button.primary{
-    background:
-        linear-gradient(
-            135deg,
-            #ff579f,
-            #805bff
-        );
+.movie{
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;
+  padding:12px;
+  background:rgba(255,255,255,.045);
 }
 
-/* =========================================================
-   CHAT
-========================================================= */
+.movie-title{
+  font-size:13px;
+  font-weight:800;
+}
 
-.chat{
-    height:250px;
+.movie-info{
+  margin-top:4px;
+  color:#99919f;
+  font-size:10px;
+}
 
-    overflow:auto;
-
-    padding:10px;
-
-    border-radius:17px;
-
-    background:rgba(0,0,0,.18);
-
-    border:1px solid rgba(255,255,255,.07);
+#chatMessages{
+  height:230px;
+  overflow:auto;
+  padding:8px;
+  border-radius:16px;
+  background:rgba(0,0,0,.16);
 }
 
 .msg{
-    padding:8px 5px;
-
-    border-bottom:1px solid rgba(255,255,255,.05);
-
-    font-size:13px;
+  margin:5px 0;
+  padding:8px 10px;
+  border-radius:12px;
+  background:rgba(255,255,255,.055);
+  font-size:11px;
 }
 
-.msg b{
-    color:#ff86bd;
+#seatGrid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin-top:12px;
 }
 
-.msg small{
-    color:#66636c;
-    margin-left:6px;
+.seat{
+  min-height:55px;
+  border-radius:14px;
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.08);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:3px;
+  font-size:9px;
 }
 
-.msg div{
-    margin-top:3px;
-    color:#ddd;
+.seat.free{
+  border-color:rgba(99,255,185,.18);
 }
 
-.chat-row{
-    display:flex;
-    gap:7px;
-    margin-top:8px;
+.seat.mine{
+  background:rgba(255,76,188,.16);
+  border-color:rgba(255,76,188,.5);
 }
 
-.chat-row .field{
-    flex:1;
+.seat.taken{
+  opacity:.42;
 }
 
-/* =========================================================
-   MOVIE
-========================================================= */
-
-.movie-preview{
-    width:100%;
-    aspect-ratio:16/9;
-
-    border-radius:17px;
-
-    background:#000;
-
-    overflow:hidden;
-
-    border:1px solid rgba(255,255,255,.1);
+.seat-icon{
+  font-size:17px;
 }
 
-.movie-preview video{
-    width:100%;
-    height:100%;
-    object-fit:contain;
+#bottom{
+  position:absolute;
+  z-index:20;
+  left:14px;
+  right:14px;
+  bottom:max(14px,env(safe-area-inset-bottom));
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  pointer-events:none;
 }
 
-/* =========================================================
-   SEATS
-========================================================= */
-
-.seat-grid{
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:7px;
+.hudgroup{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  pointer-events:auto;
 }
 
-.seat-ui{
-    aspect-ratio:1;
-
-    border-radius:10px;
-
-    border:1px solid rgba(255,255,255,.1);
-
-    background:#26232b;
-
-    color:#aaa;
-
-    cursor:pointer;
+.hud{
+  min-width:48px;
+  min-height:44px;
+  padding:10px 13px;
+  border-radius:15px;
+  background:rgba(12,10,16,.66);
+  border:1px solid rgba(255,255,255,.10);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  font-size:11px;
 }
 
-.seat-ui.me{
-    background:#ff65aa;
-    color:#fff;
+.hud.active{
+  border-color:rgba(255,86,190,.5);
+  background:rgba(255,70,180,.12);
 }
 
-.seat-ui.taken{
-    opacity:.35;
-    cursor:not-allowed;
+.joystick{
+  width:76px;
+  height:76px;
+  border-radius:50%;
+  position:relative;
+  background:rgba(10,8,14,.6);
+  border:1px solid rgba(255,255,255,.1);
+  pointer-events:auto;
 }
 
-.seat-ui.accessible{
-    box-shadow:
-        inset 0 0 0 1px #62aaff;
+.stick{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:29px;
+  height:29px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:rgba(255,100,200,.25);
+  border:1px solid rgba(255,100,200,.4);
 }
 
-.accessible-label{
-    margin-top:10px;
-    color:#7d7884;
-    font-size:11px;
+.watermark{
+  position:absolute;
+  z-index:10;
+  right:18px;
+  bottom:100px;
+  color:rgba(255,255,255,.32);
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:1.5px;
+  pointer-events:none;
 }
 
-/* =========================================================
-   ROOM OVERLAY
-========================================================= */
-
-#roomOverlay{
-    position:fixed;
-    inset:0;
-
-    z-index:700;
-
-    display:none;
-    align-items:center;
-    justify-content:center;
-
-    padding:20px;
-
-    background:rgba(2,2,4,.72);
-
-    backdrop-filter:blur(18px);
+#movieOverlay{
+  position:absolute;
+  z-index:12;
+  left:50%;
+  top:46%;
+  transform:translate(-50%,-50%);
+  width:min(780px,82vw);
+  display:none;
+  border-radius:20px;
+  overflow:hidden;
+  background:#000;
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow:0 30px 100px rgba(0,0,0,.6);
 }
 
-.room-card{
-    width:min(440px,100%);
-
-    padding:28px;
-
-    border-radius:30px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(30,24,35,.96),
-            rgba(10,9,13,.96)
-        );
-
-    border:1px solid rgba(255,255,255,.12);
-
-    box-shadow:0 40px 100px rgba(0,0,0,.55);
+#movieOverlay video{
+  display:block;
+  width:100%;
+  max-height:58vh;
+  background:#000;
 }
 
-.room-card h1{
-    font-size:34px;
-    letter-spacing:-2px;
+#movieClose{
+  position:absolute;
+  z-index:3;
+  top:10px;
+  right:10px;
 }
-
-.room-card h1 span{
-    color:#ff70b0;
-}
-
-.room-card p{
-    margin-top:9px;
-    color:#8e8995;
-    line-height:1.5;
-}
-
-.room-actions{
-    display:grid;
-    gap:9px;
-    margin-top:20px;
-}
-
-.room-code{
-    margin-top:14px;
-
-    padding:15px;
-
-    text-align:center;
-
-    letter-spacing:6px;
-
-    font-size:28px;
-    font-weight:950;
-
-    border-radius:17px;
-
-    background:rgba(255,255,255,.05);
-
-    border:1px solid rgba(255,255,255,.1);
-}
-
-/* =========================================================
-   TOAST
-========================================================= */
 
 #toast{
-    position:fixed;
-
-    left:50%;
-    bottom:30px;
-
-    z-index:1000;
-
-    transform:translate(-50%,20px);
-
-    opacity:0;
-
-    pointer-events:none;
-
-    padding:12px 17px;
-
-    border-radius:15px;
-
-    background:rgba(15,13,19,.92);
-
-    border:1px solid rgba(255,255,255,.12);
-
-    backdrop-filter:blur(16px);
-
-    transition:.2s;
+  position:absolute;
+  z-index:100;
+  left:50%;
+  bottom:120px;
+  transform:translateX(-50%) translateY(15px);
+  padding:11px 15px;
+  border-radius:14px;
+  opacity:0;
+  pointer-events:none;
+  transition:.2s;
+  white-space:nowrap;
+  font-size:11px;
 }
 
 #toast.show{
-    opacity:1;
-    transform:translate(-50%,0);
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
 }
-
-/* =========================================================
-   REACTIONS
-========================================================= */
-
-#reactions{
-    position:fixed;
-    inset:0;
-    z-index:900;
-    pointer-events:none;
-}
-
-.reaction{
-    position:absolute;
-    bottom:20%;
-    font-size:38px;
-
-    animation:
-        reactionUp
-        1.8s
-        ease
-        forwards;
-}
-
-@keyframes reactionUp{
-    0%{
-        transform:translateY(0) scale(.6) rotate(-5deg);
-        opacity:1;
-    }
-
-    100%{
-        transform:translateY(-65vh) scale(1.35) rotate(15deg);
-        opacity:0;
-    }
-}
-
-/* =========================================================
-   MOBILE
-========================================================= */
 
 @media(max-width:700px){
+  #topbar{
+    height:52px;
+  }
 
-    .brand{
-        padding:8px 10px;
-    }
+  .room-pill{
+    display:none;
+  }
 
-    .brand b{
-        font-size:12px;
-    }
+  .brand-title{
+    font-size:14px;
+  }
 
-    .room-pill{
-        display:none;
-    }
+  #side{
+    top:74px;
+    bottom:96px;
+  }
 
-    .made-mini{
-        display:none;
-    }
+  .joystick{
+    width:68px;
+    height:68px;
+  }
 
-    #joystick{
-        width:100px;
-        height:100px;
-    }
+  .hud{
+    min-width:43px;
+    padding:9px 10px;
+    font-size:10px;
+  }
 
-    .action{
-        min-width:49px;
-        height:47px;
-        padding:0 9px;
-    }
-
-    .action span.label{
-        display:none;
-    }
-
-    #interaction{
-        bottom:130px;
-    }
-}
-
-@media(max-width:430px){
-
-    .actions{
-        gap:5px;
-    }
-
-    .action{
-        min-width:45px;
-    }
-
-    #joystick{
-        width:90px;
-        height:90px;
-    }
-
-    #stick{
-        width:39px;
-        height:39px;
-    }
-
-    #bottomHUD{
-        padding-left:9px;
-        padding-right:9px;
-    }
+  .watermark{
+    bottom:91px;
+  }
 }
 </style>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.min.js" defer></script>
 </head>
 
 <body>
 
-<!-- =======================================================
-     FAST LOADING SCREEN
-======================================================= -->
-
 <div id="loading">
-
-    <div class="loading-logo">
-        WHO'S<br>
-        <span>WATCHING?</span>
-    </div>
-
-    <div class="loading-made">
-        MADE BY KUSH KUMAR
-    </div>
-
-    <div class="loading-line"></div>
-
+  <div class="loadbox">
+    <div class="logo">WHO’S <span>WATCHING?</span></div>
+    <div class="loadsub">V9.1 • FASTEST MODE</div>
+    <div class="creator">MADE BY KUSH KUMAR</div>
+    <div class="loaderline"><i></i></div>
+  </div>
 </div>
 
+<div id="app">
 
-<!-- =======================================================
-     3D WORLD
-======================================================= -->
+  <canvas id="three"></canvas>
 
-<canvas id="world"></canvas>
+  <div id="ui">
 
+    <header id="topbar">
+      <div class="brand glass">
+        <div class="brand-title">WHO’S <span>WATCHING?</span></div>
+        <div class="brand-small">MADE BY KUSH KUMAR • V9.1</div>
+      </div>
 
-<!-- =======================================================
-     HUD
-======================================================= -->
+      <div id="roomPill" class="room-pill glass">
+        SOLO THEATRE
+      </div>
 
-<div id="hud">
+      <div class="top-actions">
+        <button class="iconbtn glass" onclick="toggleSide()">☰</button>
+        <button class="iconbtn glass" onclick="fullscreenApp()">⛶</button>
+      </div>
+    </header>
 
-    <div class="hud-row">
+    <div id="interaction" class="glass">
+      Press <b>SIT</b> to choose a seat
+    </div>
 
-        <div class="brand">
-            🍿 <b>WHO'S <span>WATCHING?</span></b>
-            <small class="made-mini">MADE BY KUSH KUMAR</small>
+    <aside id="side" class="glass">
+
+      <div class="tabs">
+        <button class="tab active" data-panel="party">👥 Party</button>
+        <button class="tab" data-panel="movie">🎬 Movie</button>
+        <button class="tab" data-panel="chat">💬 Chat</button>
+        <button class="tab" data-panel="settings">⚙️ Settings</button>
+        <button class="tab" data-panel="seats">💺 Seats</button>
+      </div>
+
+      <section id="party" class="panel active">
+        <h2>Your Theatre</h2>
+        <p>Create a room for your friends or join an existing room.</p>
+
+        <input id="roomInput" class="field" maxlength="16"
+               placeholder="Room code">
+
+        <div class="row">
+          <button class="primary" onclick="createRoom()">Create</button>
+          <button class="softbtn" onclick="joinRoom()">Join</button>
         </div>
 
-        <div class="room-pill">
-            ROOM:
-            <strong id="roomCodeHUD">OFFLINE</strong>
+        <div class="movie" style="margin-top:12px">
+          <div class="movie-title">⚡ FAST MODE</div>
+          <div class="movie-info">
+            Room networking is loaded only when you need it.
+          </div>
         </div>
 
-        <div class="hud-spacer"></div>
+        <div class="creatorline">MADE BY KUSH KUMAR</div>
+      </section>
 
-        <button
-            class="hud-button"
-            onclick="togglePanel('partyPanel')"
-            title="Party">
-            👥
+      <section id="movie" class="panel">
+        <h2>Pick Movie</h2>
+        <p>Use a movie/video file already stored on your device.</p>
+
+        <input id="movieFile" class="field"
+               type="file"
+               accept="video/*">
+
+        <div class="movie">
+          <div id="movieName" class="movie-title">No movie selected</div>
+          <div id="movieInfo" class="movie-info">
+            Your friends need their own copy of the same movie file.
+          </div>
+        </div>
+
+        <button class="primary" style="margin-top:10px"
+                onclick="openMovie()">
+          ▶ PLAY MOVIE
         </button>
 
-        <button
-            class="hud-button"
-            onclick="togglePanel('settingsPanel')"
-            title="Settings">
-            ⚙️
-        </button>
+        <div class="creatorline">MADE BY KUSH KUMAR</div>
+      </section>
 
-    </div>
+      <section id="chat" class="panel">
+        <h2>Chat</h2>
 
-</div>
+        <div id="chatMessages"></div>
 
-
-<!-- =======================================================
-     BOTTOM HUD
-======================================================= -->
-
-<div id="bottomHUD">
-
-    <div class="bottom-row">
-
-        <div id="joystick">
-            <div id="stick"></div>
+        <div class="row" style="margin-top:8px">
+          <input id="chatInput" class="field"
+                 placeholder="Say something..."
+                 onkeydown="if(event.key==='Enter')sendChat()">
+          <button class="softbtn" onclick="sendChat()">➤</button>
         </div>
 
-        <div class="actions">
-
-            <button
-                class="action main"
-                id="sitButton"
-                onclick="toggleSit()">
-                🪑
-                <span class="label">SIT</span>
-            </button>
-
-            <button
-                class="action"
-                onclick="openMoviePanel()">
-                🎬
-                <span class="label">MOVIE</span>
-            </button>
-
-            <button
-                class="action"
-                onclick="togglePanel('chatPanel')">
-                💬
-            </button>
-
-            <button
-                class="action"
-                onclick="toggleFullscreen()">
-                ⛶
-            </button>
-
+        <div class="row" style="margin-top:8px">
+          <button class="softbtn" onclick="reaction('😂')">😂</button>
+          <button class="softbtn" onclick="reaction('🔥')">🔥</button>
+          <button class="softbtn" onclick="reaction('❤️')">❤️</button>
+          <button class="softbtn" onclick="reaction('🍿')">🍿</button>
         </div>
 
-    </div>
+        <div class="creatorline">MADE BY KUSH KUMAR</div>
+      </section>
 
-</div>
+      <section id="settings" class="panel">
+        <h2>Settings</h2>
 
-
-<!-- =======================================================
-     INTERACTION
-======================================================= -->
-
-<div id="interaction">
-    <b>SEAT AVAILABLE</b><br>
-    Tap SIT to take this seat.
-</div>
-
-
-<!-- =======================================================
-     SIDE PANEL
-======================================================= -->
-
-<aside id="panel">
-
-    <div class="panel-header">
-
-        <h2 id="panelTitle">
-            WHO'S WATCHING?
-        </h2>
-
-        <button
-            class="panel-close"
-            onclick="closePanel()">
-            ✕
-        </button>
-
-    </div>
-
-
-    <!-- PARTY -->
-
-    <div id="partyPanel" class="panel-view">
-
-        <div class="panel-section">
-
-            <h3>👥 Theatre Party</h3>
-
-            <p class="panel-text">
-                Create a private theatre room
-                and invite your friends with
-                the room code.
-            </p>
-
-        </div>
-
-        <div class="panel-section">
-
-            <input
-                id="playerName"
-                class="field"
-                maxlength="18"
-                placeholder="Your name"
-                value="Kush">
-
-            <button
-                class="panel-button primary"
-                onclick="createRoom()">
-                ＋ Create Theatre
-            </button>
-
-        </div>
-
-        <div class="panel-section">
-
-            <input
-                id="joinCode"
-                class="field"
-                maxlength="6"
-                placeholder="Room code">
-
-            <button
-                class="panel-button"
-                onclick="joinRoom()">
-                👥 Join Theatre
-            </button>
-
-        </div>
-
-        <div
-            id="roomInfo"
-            class="panel-section hidden">
-
-            <div class="panel-text">
-                Your room code
-            </div>
-
-            <div
-                class="room-code"
-                id="roomCode">
-                ------
-            </div>
-
-            <button
-                class="panel-button"
-                onclick="copyRoomCode()">
-                Copy Room Code
-            </button>
-
-        </div>
-
-        <div class="panel-section">
-
-            <h3>Players</h3>
-
-            <div
-                id="playerList"
-                class="panel-text">
-                Just you 🎬
-            </div>
-
-        </div>
-
-        <div class="made-panel">
-            MADE BY KUSH KUMAR
-        </div>
-
-    </div>
-
-
-    <!-- MOVIE -->
-
-    <div
-        id="moviePanel"
-        class="panel-view hidden">
-
-        <div class="panel-section">
-
-            <h3>🎬 Your Movie</h3>
-
-            <p class="panel-text">
-                Choose a video stored on your
-                device. The video file is not
-                uploaded by this page.
-            </p>
-
-        </div>
-
-        <div class="panel-section">
-
-            <label
-                class="panel-button primary"
-                style="display:block;text-align:center">
-
-                Select Video
-
-                <input
-                    id="movieInput"
-                    type="file"
-                    accept="video/*"
-                    style="display:none">
-
-            </label>
-
-        </div>
-
-        <div
-            id="movieInfo"
-            class="panel-section panel-text">
-            No movie selected.
-        </div>
-
-        <div class="panel-section">
-
-            <button
-                class="panel-button"
-                onclick="playMovie()">
-                ▶ Play
-            </button>
-
-            <button
-                class="panel-button"
-                onclick="pauseMovie()">
-                ⏸ Pause
-            </button>
-
-        </div>
-
-        <div class="panel-section">
-
-            <button
-                class="panel-button"
-                onclick="stopMovie()">
-                ⏹ Stop
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <!-- CHAT -->
-
-    <div
-        id="chatPanel"
-        class="panel-view hidden">
-
-        <div class="panel-section">
-
-            <h3>💬 Theatre Chat</h3>
-
-        </div>
-
-        <div
-            id="chatLog"
-            class="chat">
-        </div>
-
-        <div class="chat-row">
-
-            <input
-                id="chatInput"
-                class="field"
-                maxlength="150"
-                placeholder="Say something...">
-
-            <button
-                class="panel-button"
-                style="margin:0;width:auto"
-                onclick="sendChat()">
-                Send
-            </button>
-
-        </div>
-
-        <div
-            class="panel-section"
-            style="display:flex;gap:6px;flex-wrap:wrap">
-
-            <button class="panel-button" onclick="sendReaction('😂')">😂</button>
-            <button class="panel-button" onclick="sendReaction('🍿')">🍿</button>
-            <button class="panel-button" onclick="sendReaction('🔥')">🔥</button>
-            <button class="panel-button" onclick="sendReaction('😭')">😭</button>
-            <button class="panel-button" onclick="sendReaction('❤️')">❤️</button>
-
-        </div>
-
-    </div>
-
-
-    <!-- SETTINGS -->
-
-    <div
-        id="settingsPanel"
-        class="panel-view hidden">
-
-        <div class="panel-section">
-
-            <h3>🔦 Cinema</h3>
-
-            <button
-                class="panel-button"
+        <button class="softbtn" style="width:100%;margin-bottom:8px"
                 onclick="toggleLights()">
-                Toggle Cinema Lights
-            </button>
+          💡 Cinema Lights
+        </button>
 
-            <button
-                class="panel-button"
-                onclick="changeTheme()">
-                Change Theatre Theme
-            </button>
+        <button class="softbtn" style="width:100%;margin-bottom:8px"
+                onclick="toggleGlow()">
+          ✨ Screen Glow
+        </button>
 
+        <button class="softbtn" style="width:100%;margin-bottom:8px"
+                onclick="resetView()">
+          🎥 Reset Theatre
+        </button>
+
+        <button class="softbtn" style="width:100%"
+                onclick="togglePerformance()">
+          ⚡ Performance Mode
+        </button>
+
+        <div class="movie" style="margin-top:12px">
+          <div class="movie-title">WHO’S WATCHING? V9.1</div>
+          <div class="movie-info">
+            Lightweight virtual theatre edition.
+          </div>
         </div>
 
-        <div class="panel-section">
+        <div class="creatorline">MADE BY KUSH KUMAR</div>
+      </section>
 
-            <h3>🎥 Screen</h3>
+      <section id="seats" class="panel">
+        <h2>Choose Your Seat</h2>
+        <p>20 seats • 4 rows × 5 seats</p>
 
-            <button
-                class="panel-button"
-                onclick="screenGlow()">
-                Toggle Screen Glow
-            </button>
+        <div id="seatGrid"></div>
 
-        </div>
+        <div class="creatorline">MADE BY KUSH KUMAR</div>
+      </section>
 
-        <div class="panel-section">
+    </aside>
 
-            <h3>🪑 Seats</h3>
-
-            <button
-                class="panel-button"
-                onclick="openSeatPanel()">
-                View Seat Map
-            </button>
-
-        </div>
-
-        <div class="panel-section">
-
-            <p class="panel-text">
-                WHO'S WATCHING? FAST V7<br><br>
-
-                V1 • Theatre<br>
-                V2 • Party<br>
-                V3 • Sync<br>
-                V4 • Social<br>
-                V5 • Luxury<br>
-                V6 • Virtual Cinema<br>
-                V7 • Performance Edition
-            </p>
-
-        </div>
-
-        <div class="made-panel">
-            MADE BY KUSH KUMAR
-        </div>
-
+    <div id="movieOverlay">
+      <button id="movieClose" class="iconbtn glass"
+              onclick="closeMovie()">✕</button>
+      <video id="video" controls playsinline></video>
     </div>
 
+    <div id="toast" class="glass"></div>
 
-    <!-- SEATS -->
-
-    <div
-        id="seatPanel"
-        class="panel-view hidden">
-
-        <div class="panel-section">
-
-            <h3>💺 Choose Your Seat</h3>
-
-            <p class="panel-text">
-                20 seats • 4 rows × 5
-            </p>
-
-            <div class="accessible-label">
-                ♿ Blue outline = accessible-designated seat
-            </div>
-
-        </div>
-
-        <div
-            id="seatGrid"
-            class="seat-grid">
-        </div>
-
+    <div class="watermark">
+      MADE BY KUSH KUMAR
     </div>
 
-</aside>
+    <footer id="bottom">
 
+      <div class="hudgroup">
+        <div id="joystick" class="joystick">
+          <div id="stick" class="stick"></div>
+        </div>
+      </div>
 
-<!-- =======================================================
-     REACTIONS
-======================================================= -->
+      <div class="hudgroup">
+        <button class="hud" onclick="sitMode()">💺 SIT</button>
+        <button class="hud" onclick="openMovie()">🎬 MOVIE</button>
+        <button class="hud" onclick="showPanel('chat')">💬 CHAT</button>
+        <button class="hud" onclick="showPanel('party')">👥 PARTY</button>
+      </div>
 
-<div id="reactions"></div>
+    </footer>
 
-
-<!-- =======================================================
-     TOAST
-======================================================= -->
-
-<div id="toast"></div>
-
-
-<!-- =======================================================
-     THREE.JS ONLY
-     OrbitControls removed because it wasn't used.
-======================================================= -->
-
-<script
-    src="https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.min.js"
-    defer>
-</script>
-
+  </div>
+</div>
 
 <script>
-"use strict";
-
 /* =========================================================
-   PERFORMANCE NOTE
-   PeerJS is NOT downloaded on startup.
-   It loads only when Create/Join Theatre is pressed.
-========================================================= */
+   WHO'S WATCHING? V9.1
+   FASTEST EDITION
+   MADE BY KUSH KUMAR
+   ========================================================= */
 
 const APP = {
-
-    version:"V7",
-
-    playerName:"Kush",
-
-    room:"",
-
-    host:false,
-
-    peer:null,
-
-    connections:new Map(),
-
-    players:new Map(),
-
-    seat:null,
-
-    sitting:false,
-
-    movieURL:null,
-
-    movieName:"",
-
-    lights:true,
-
-    theme:0,
-
-    screenGlow:true,
-
-    clock:null,
-
-    move:{
-        x:0,
-        z:0
-    },
-
-    keys:{
-        forward:false,
-        backward:false,
-        left:false,
-        right:false
-    },
-
-    nearbySeat:null,
-
-    peerLoading:null
+  version:"9.1",
+  renderer:null,
+  scene:null,
+  camera:null,
+  player:null,
+  clock:null,
+  lights:[],
+  glow:true,
+  cinemaLights:true,
+  performance:false,
+  moving:false,
+  speed:0.055,
+  room:"SOLO",
+  peer:null,
+  connections:[],
+  localSeat:null,
+  selectedSeat:null,
+  videoURL:null
 };
-
-
-let renderer;
-let scene;
-let camera;
-let player;
-let playerGroup;
-
-let screenMesh;
-let screenGlowMesh;
-
-let seatObjects=[];
-
-let roomLights=[];
-let aisleLights=[];
-
-let wallX;
-
-let movieTexture;
-let movieVideo;
 
 const $ = id => document.getElementById(id);
 
+/* ---------- LOADING SAFETY ---------- */
 
-/* =========================================================
-   TOAST
-========================================================= */
+function hideLoading(){
+  const l = $("loading");
+  if(l) l.classList.add("hide");
+}
 
-function toast(text){
+/* Never leave the user trapped on the loading screen. */
+setTimeout(hideLoading,2500);
 
-    const element=$("toast");
 
-    element.textContent=text;
+/* ---------- UI ---------- */
 
-    element.classList.add("show");
+function toast(message){
+  const t=$("toast");
+  t.textContent=message;
+  t.classList.add("show");
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer=setTimeout(()=>t.classList.remove("show"),1800);
+}
 
-    clearTimeout(window.__toast);
+function toggleSide(){
+  $("side").classList.toggle("open");
+}
 
-    window.__toast=setTimeout(()=>{
-        element.classList.remove("show");
-    },2200);
+function showPanel(name){
+  $("side").classList.add("open");
+
+  document.querySelectorAll(".tab").forEach(x=>{
+    x.classList.toggle("active",x.dataset.panel===name);
+  });
+
+  document.querySelectorAll(".panel").forEach(x=>{
+    x.classList.toggle("active",x.id===name);
+  });
+}
+
+document.querySelectorAll(".tab").forEach(tab=>{
+  tab.addEventListener("click",()=>{
+    showPanel(tab.dataset.panel);
+  });
+});
+
+function fullscreenApp(){
+  const el=document.documentElement;
+
+  if(!document.fullscreenElement){
+    el.requestFullscreen?.().catch(()=>{});
+  }else{
+    document.exitFullscreen?.().catch(()=>{});
+  }
 }
 
 
-/* =========================================================
-   PANEL
-========================================================= */
-
-function togglePanel(id){
-
-    const panel=$("panel");
-
-    panel.classList.add("open");
-
-    document
-        .querySelectorAll(".panel-view")
-        .forEach(view=>view.classList.add("hidden"));
-
-    const target=$(id);
-
-    if(target){
-        target.classList.remove("hidden");
-    }
-
-    const titles={
-        partyPanel:"THE PARTY",
-        moviePanel:"YOUR MOVIE",
-        chatPanel:"THEATRE CHAT",
-        settingsPanel:"SETTINGS",
-        seatPanel:"SEAT MAP"
-    };
-
-    $("panelTitle").textContent=
-        titles[id]||"WHO'S WATCHING?";
-}
-
-
-function closePanel(){
-    $("panel").classList.remove("open");
-}
-
-
-function openMoviePanel(){
-    togglePanel("moviePanel");
-}
-
-
-function openSeatPanel(){
-    renderSeatUI();
-    togglePanel("seatPanel");
-}
-
-
-/* =========================================================
-   THREE INITIALIZATION
-========================================================= */
+/* ---------- THREE.JS ---------- */
 
 function initThree(){
 
-    if(typeof THREE==="undefined"){
-        toast("3D engine is still loading...");
-        setTimeout(initThree,100);
-        return;
-    }
+  if(!window.THREE){
+    toast("3D engine failed — refreshing...");
+    setTimeout(()=>location.reload(),1000);
+    return;
+  }
 
-    APP.clock=new THREE.Clock();
+  APP.clock=new THREE.Clock();
 
-    scene=new THREE.Scene();
+  APP.scene=new THREE.Scene();
 
-    scene.background=new THREE.Color(0x030304);
+  APP.scene.background=new THREE.Color(0x050408);
 
-    scene.fog=new THREE.FogExp2(
-        0x030304,
-        0.019
-    );
+  APP.scene.fog=new THREE.FogExp2(0x050408,.045);
 
+  APP.camera=new THREE.PerspectiveCamera(
+    55,
+    innerWidth/innerHeight,
+    .1,
+    100
+  );
 
-    camera=new THREE.PerspectiveCamera(
-        65,
-        innerWidth/innerHeight,
-        .1,
-        500
-    );
+  APP.camera.position.set(0,3.4,9.5);
 
-    camera.position.set(
-        0,
-        4.3,
-        29
-    );
+  APP.renderer=new THREE.WebGLRenderer({
+    canvas:$("three"),
+    antialias:false,
+    alpha:false,
+    powerPreference:"high-performance"
+  });
 
+  APP.renderer.setPixelRatio(
+    Math.min(window.devicePixelRatio || 1,1.35)
+  );
 
-    renderer=new THREE.WebGLRenderer({
+  APP.renderer.setSize(innerWidth,innerHeight,false);
 
-        canvas:$("world"),
+  /* Shadows intentionally OFF for speed. */
+  APP.renderer.shadowMap.enabled=false;
 
-        antialias:false,
+  createTheatre();
+  createPlayer();
+  setupMovement();
+  animate();
 
-        powerPreference:"high-performance"
-
-    });
-
-
-    /* IMPORTANT SPEED OPTIMIZATION */
-
-    renderer.setPixelRatio(
-        Math.min(
-            window.devicePixelRatio || 1,
-            1.35
-        )
-    );
-
-    renderer.setSize(
-        innerWidth,
-        innerHeight,
-        false
-    );
-
-
-    /* Shadows disabled for faster mobile performance */
-
-    renderer.shadowMap.enabled=false;
-
-    renderer.outputColorSpace=
-        THREE.SRGBColorSpace;
-
-    renderer.toneMapping=
-        THREE.ACESFilmicToneMapping;
-
-    renderer.toneMappingExposure=1;
-
-
-    createTheatre();
-    createPlayer();
-    setupInput();
-    animate();
-
-    renderSeatUI();
-
-    requestAnimationFrame(()=>{
-        $("loading").classList.add("hide");
-    });
-
+  requestAnimationFrame(hideLoading);
 }
 
-
-/* =========================================================
-   MATERIALS
-========================================================= */
-
-function mat(
+function mat(color,rough=.7,emissive=0x000000){
+  return new THREE.MeshBasicMaterial({
     color,
-    roughness=.6,
-    metalness=.1
-){
-
-    return new THREE.MeshStandardMaterial({
-
-        color,
-        roughness,
-        metalness
-
-    });
+    transparent:false,
+    ...(emissive ? {
+      color:color
+    }:{})
+  });
 }
 
-
-function emissiveMat(
-    color,
-    intensity=1
-){
-
-    return new THREE.MeshStandardMaterial({
-
-        color,
-        emissive:color,
-        emissiveIntensity:intensity,
-        roughness:.45,
-        metalness:.15
-
-    });
+function box(w,h,d,color){
+  return new THREE.Mesh(
+    new THREE.BoxGeometry(w,h,d),
+    mat(color)
+  );
 }
-
-
-/* =========================================================
-   THEATRE
-========================================================= */
 
 function createTheatre(){
 
-    const floor=new THREE.Mesh(
+  /* FLOOR */
 
-        new THREE.PlaneGeometry(42,62),
+  const floor=box(22,.3,30,0x09080d);
+  floor.position.set(0,-.2,0);
+  APP.scene.add(floor);
 
-        mat(0x111014,.9,.02)
+  /* BACK WALL */
 
-    );
+  const back=box(22,12,.4,0x08060c);
+  back.position.set(0,5,-11);
+  APP.scene.add(back);
 
-    floor.rotation.x=-Math.PI/2;
+  /* GIANT IMAX SCREEN */
 
-    scene.add(floor);
+  const screenFrame=box(15.8,7.7,.3,0x18121d);
+  screenFrame.position.set(0,5.7,-10.65);
+  APP.scene.add(screenFrame);
 
+  const screen=box(15.2,7.1,.15,0x020204);
+  screen.position.set(0,5.7,-10.46);
+  APP.scene.add(screen);
 
-    /* FIVE FLOOR STEPS */
+  /* Screen glow panels */
 
-    for(let i=0;i<5;i++){
+  const glow=box(15.5,7.4,.08,0x35132d);
+  glow.position.set(0,5.7,-10.56);
+  glow.visible=true;
+  APP.screenGlow=glow;
+  APP.scene.add(glow);
 
-        const step=new THREE.Mesh(
+  /* SCREEN TOP LABEL */
 
-            new THREE.BoxGeometry(
-                35,
-                .35,
-                3
-            ),
+  const topLight=box(16.4,.16,.15,0xff4ebd);
+  topLight.position.set(0,9.65,-10.35);
+  APP.scene.add(topLight);
 
-            mat(0x19151b,.9)
+  /* SIDE WALLS */
 
-        );
+  const leftWall=box(.35,12,30,0x07060b);
+  leftWall.position.set(-11,5,0);
+  APP.scene.add(leftWall);
 
-        step.position.set(
-            0,
-            .18+i*.28,
-            9-i*4
-        );
+  const rightWall=box(.35,12,30,0x07060b);
+  rightWall.position.set(11,5,0);
+  APP.scene.add(rightWall);
 
-        scene.add(step);
-    }
+  /* STAGE */
 
+  const stage=box(17,.5,2.5,0x111018);
+  stage.position.set(0,.05,-8.7);
+  APP.scene.add(stage);
 
-    createWalls();
-    createCeiling();
-    createScreen();
-    createSeats();
-    createLights();
-    createLuxuryX();
+  /* X WALL DECORATION */
+
+  createX(-9.8,5.4,-10.15);
+  createX(9.8,5.4,-10.15);
+
+  /* AISLE LIGHTS */
+
+  for(let i=-2;i<=2;i++){
+    const lamp=box(.12,.12,1.2,0xff4cae);
+    lamp.position.set(i*3.2,.08,-1.5);
+    APP.scene.add(lamp);
+  }
+
+  /* SEATS */
+
+  createSeats();
+}
+
+function createX(x,y,z){
+
+  const a=box(1.8,.15,.15,0xff4db9);
+  const b=box(1.8,.15,.15,0xff4db9);
+
+  a.rotation.z=Math.PI/4;
+  b.rotation.z=-Math.PI/4;
+
+  a.position.set(x,y,z);
+  b.position.set(x,y,z);
+
+  APP.scene.add(a,b);
 }
 
 
-/* =========================================================
-   WALLS
-========================================================= */
+/* ---------- 20 SEATS ---------- */
 
-function createWalls(){
-
-    const wallMaterial=mat(
-        0x0d0b10,
-        .8,
-        .08
-    );
-
-
-    const left=new THREE.Mesh(
-
-        new THREE.BoxGeometry(
-            1,15,62
-        ),
-
-        wallMaterial
-
-    );
-
-    left.position.set(
-        -21,
-        7,
-        -3
-    );
-
-    scene.add(left);
-
-
-    const right=left.clone();
-
-    right.position.x=21;
-
-    scene.add(right);
-
-
-    const back=new THREE.Mesh(
-
-        new THREE.BoxGeometry(
-            42,15,1
-        ),
-
-        wallMaterial
-
-    );
-
-    back.position.set(
-        0,7,28
-    );
-
-    scene.add(back);
-
-
-    /* WALL PANELS */
-
-    for(const side of [-1,1]){
-
-        for(
-            let z=-23;
-            z<25;
-            z+=7
-        ){
-
-            const panel=new THREE.Mesh(
-
-                new THREE.BoxGeometry(
-                    .15,
-                    6,
-                    5.5
-                ),
-
-                mat(
-                    0x211923,
-                    .58,
-                    .1
-                )
-
-            );
-
-            panel.position.set(
-                side*20.45,
-                4,
-                z
-            );
-
-            scene.add(panel);
-        }
-    }
-}
-
-
-/* =========================================================
-   CEILING
-========================================================= */
-
-function createCeiling(){
-
-    const ceiling=new THREE.Mesh(
-
-        new THREE.PlaneGeometry(
-            42,62
-        ),
-
-        mat(
-            0x08070a,
-            1
-        )
-
-    );
-
-    ceiling.rotation.x=Math.PI/2;
-
-    ceiling.position.y=14;
-
-    scene.add(ceiling);
-
-
-    for(
-        let x=-15;
-        x<=15;
-        x+=7.5
-    ){
-
-        const strip=new THREE.Mesh(
-
-            new THREE.BoxGeometry(
-                .35,
-                .08,
-                48
-            ),
-
-            emissiveMat(
-                0x34152a,
-                .7
-            )
-
-        );
-
-        strip.position.set(
-            x,
-            13.8,
-            -3
-        );
-
-        scene.add(strip);
-    }
-}
-
-
-/* =========================================================
-   GIANT IMAX / PXL SCREEN
-========================================================= */
-
-function createScreen(){
-
-    const frame=new THREE.Mesh(
-
-        new THREE.BoxGeometry(
-            31,
-            15,
-            .65
-        ),
-
-        mat(
-            0x17151a,
-            .35,
-            .45
-        )
-
-    );
-
-    frame.position.set(
-        0,
-        8,
-        -27
-    );
-
-    scene.add(frame);
-
-
-    screenMesh=new THREE.Mesh(
-
-        new THREE.PlaneGeometry(
-            29,
-            13
-        ),
-
-        new THREE.MeshBasicMaterial({
-            color:0x111116
-        })
-
-    );
-
-    screenMesh.position.set(
-        0,
-        8,
-        -27.38
-    );
-
-    screenMesh.rotation.y=Math.PI;
-
-    scene.add(screenMesh);
-
-
-    screenGlowMesh=new THREE.Mesh(
-
-        new THREE.PlaneGeometry(
-            32,
-            16
-        ),
-
-        new THREE.MeshBasicMaterial({
-
-            color:0xff5b9e,
-
-            transparent:true,
-
-            opacity:.065
-
-        })
-
-    );
-
-    screenGlowMesh.position.set(
-        0,
-        8,
-        -27.7
-    );
-
-    screenGlowMesh.rotation.y=Math.PI;
-
-    scene.add(screenGlowMesh);
-
-
-    const border=emissiveMat(
-        0x8f2f65,
-        1.15
-    );
-
-
-    const top=new THREE.Mesh(
-
-        new THREE.BoxGeometry(
-            31,
-            .22,
-            .25
-        ),
-
-        border
-
-    );
-
-    top.position.set(
-        0,
-        15.5,
-        -27.3
-    );
-
-    scene.add(top);
-
-
-    const bottom=top.clone();
-
-    bottom.position.y=.5;
-
-    scene.add(bottom);
-}
-
-
-/* =========================================================
-   20 SEATS
-========================================================= */
+const seatObjects=[];
 
 function createSeats(){
 
-    const seatMaterial=mat(
-        0x6d173e,
-        .75,
-        .03
-    );
+  const rows=4;
+  const cols=5;
 
-    const seatBackMaterial=mat(
-        0x48132f,
-        .78,
-        .03
-    );
+  for(let r=0;r<rows;r++){
 
+    for(let c=0;c<cols;c++){
 
-    let number=1;
+      const x=(c-2)*2.55;
+      const z=5-r*2.25;
 
+      const group=new THREE.Group();
 
-    for(let row=0;row<4;row++){
+      const base=box(1.75,.45,1.55,0x17121c);
+      base.position.y=.45;
 
-        for(let col=0;col<5;col++){
+      const back=box(1.65,1.7,.35,0x211522);
+      back.position.set(0,1.25,.48);
 
-            const group=new THREE.Group();
+      const cushion=box(1.55,.28,1.25,0x35162d);
+      cushion.position.set(0,.76,-.05);
 
+      group.add(base,back,cushion);
 
-            const base=new THREE.Mesh(
+      group.position.set(x,0,z);
 
-                new THREE.BoxGeometry(
-                    2.35,
-                    .45,
-                    2.15
-                ),
+      APP.scene.add(group);
 
-                seatMaterial
-
-            );
-
-            base.position.y=.45;
-
-            group.add(base);
-
-
-            const back=new THREE.Mesh(
-
-                new THREE.BoxGeometry(
-                    2.35,
-                    2.5,
-                    .42
-                ),
-
-                seatBackMaterial
-
-            );
-
-            back.position.set(
-                0,
-                1.65,
-                .75
-            );
-
-            group.add(back);
-
-
-            for(const side of [-1,1]){
-
-                const arm=new THREE.Mesh(
-
-                    new THREE.BoxGeometry(
-                        .25,
-                        .65,
-                        1.5
-                    ),
-
-                    mat(
-                        0x211b23,
-                        .55,
-                        .4
-                    )
-
-                );
-
-                arm.position.set(
-                    side*1.1,
-                    .75,
-                    .05
-                );
-
-                group.add(arm);
-            }
-
-
-            const x=(col-2)*3.1;
-
-            const z=14-row*5.5;
-
-
-            group.position.set(
-                x,
-                0,
-                z
-            );
-
-
-            group.userData={
-
-                seat:number,
-
-                row:String.fromCharCode(65+row),
-
-                col:col+1,
-
-                accessible:
-                    row===3 &&
-                    (col===0 || col===4)
-
-            };
-
-
-            scene.add(group);
-
-            seatObjects.push(group);
-
-            number++;
-        }
+      seatObjects.push({
+        index:r*cols+c+1,
+        object:group,
+        taken:false
+      });
     }
+  }
+}
+
+function renderSeats(){
+
+  const grid=$("seatGrid");
+  grid.innerHTML="";
+
+  seatObjects.forEach(seat=>{
+
+    const b=document.createElement("button");
+
+    b.className="seat "+(
+      seat.taken ? "taken " : "free "
+    )+(
+      APP.localSeat===seat.index ? "mine" : ""
+    );
+
+    b.innerHTML=
+      `<div class="seat-icon">${seat.taken?"🔒":"💺"}</div>
+       <div>SEAT ${seat.index}</div>`;
+
+    b.onclick=()=>{
+      selectSeat(seat.index);
+    };
+
+    grid.appendChild(b);
+  });
+}
+
+function selectSeat(index){
+
+  const seat=seatObjects.find(x=>x.index===index);
+
+  if(!seat || seat.taken){
+    toast("That seat is occupied");
+    return;
+  }
+
+  if(APP.localSeat){
+    const old=seatObjects.find(x=>x.index===APP.localSeat);
+    if(old) old.taken=false;
+  }
+
+  seat.taken=true;
+  APP.localSeat=index;
+
+  if(APP.player){
+    const row=Math.floor((index-1)/5);
+    const col=(index-1)%5;
+
+    APP.player.position.set(
+      (col-2)*2.55,
+      0,
+      5-row*2.25
+    );
+  }
+
+  renderSeats();
+  toast("You selected Seat "+index);
+
+  broadcast({
+    type:"seat",
+    seat:index
+  });
+}
+
+function sitMode(){
+  showPanel("seats");
 }
 
 
-/* =========================================================
-   LUXURY X WALL
-========================================================= */
-
-function createLuxuryX(){
-
-    wallX=new THREE.Group();
-
-
-    const gold=emissiveMat(
-        0xffb45c,
-        1.6
-    );
-
-
-    const darkGold=mat(
-        0x8f5527,
-        .38,
-        .75
-    );
-
-
-    function bar(rotation){
-
-        const mesh=new THREE.Mesh(
-
-            new THREE.BoxGeometry(
-                1.1,
-                9,
-                .55
-            ),
-
-            gold
-
-        );
-
-        mesh.rotation.z=rotation;
-
-        wallX.add(mesh);
-    }
-
-
-    bar(-Math.PI/4);
-    bar(Math.PI/4);
-
-
-    const frame=new THREE.Mesh(
-
-        new THREE.BoxGeometry(
-            10,
-            10,
-            .35
-        ),
-
-        darkGold
-
-    );
-
-    wallX.add(frame);
-
-
-    wallX.position.set(
-        0,
-        7,
-        27.35
-    );
-
-    scene.add(wallX);
-}
-
-
-/* =========================================================
-   LIGHTS
-========================================================= */
-
-function createLights(){
-
-    const ambient=new THREE.AmbientLight(
-        0x443846,
-        .72
-    );
-
-    scene.add(ambient);
-
-
-    const key=new THREE.DirectionalLight(
-        0xffe8df,
-        .85
-    );
-
-    key.position.set(
-        0,
-        13,
-        5
-    );
-
-    scene.add(key);
-
-    roomLights.push(key);
-
-
-    const screenLight=new THREE.PointLight(
-        0xff4e9a,
-        13,
-        30
-    );
-
-    screenLight.position.set(
-        0,
-        7,
-        -22
-    );
-
-    scene.add(screenLight);
-
-    roomLights.push(screenLight);
-
-
-    for(
-        const x of [-10,-5,0,5,10]
-    ){
-
-        const light=new THREE.PointLight(
-            0xff477f,
-            2.2,
-            7
-        );
-
-        light.position.set(
-            x,
-            .35,
-            24
-        );
-
-        scene.add(light);
-
-        aisleLights.push(light);
-
-
-        const orb=new THREE.Mesh(
-
-            new THREE.SphereGeometry(
-                .12,
-                8,
-                8
-            ),
-
-            emissiveMat(
-                0xff3f80,
-                1.8
-            )
-
-        );
-
-        orb.position.copy(light.position);
-
-        scene.add(orb);
-    }
-}
-
-
-/* =========================================================
-   PLAYER CHARACTER
-========================================================= */
+/* ---------- PLAYER ---------- */
 
 function createPlayer(){
 
-    playerGroup=new THREE.Group();
+  const group=new THREE.Group();
+
+  const body=box(.75,1.25,.55,0x563050);
+  body.position.y=1;
+
+  const head=new THREE.Mesh(
+    new THREE.SphereGeometry(.45,12,10),
+    mat(0xffc7b9)
+  );
+  head.position.y=2;
+
+  const hair=new THREE.Mesh(
+    new THREE.SphereGeometry(.49,12,10),
+    mat(0x17121b)
+  );
+  hair.scale.set(1.02,1.1,.7);
+  hair.position.set(0,2.08,.02);
+
+  const leg1=box(.25,.8,.3,0x15131a);
+  const leg2=box(.25,.8,.3,0x15131a);
+
+  leg1.position.set(-.2,.25,0);
+  leg2.position.set(.2,.25,0);
+
+  group.add(body,head,hair,leg1,leg2);
+
+  group.position.set(0,0,7);
+
+  APP.scene.add(group);
+  APP.player=group;
+}
 
 
-    const body=new THREE.Mesh(
+/* ---------- MOVEMENT ---------- */
 
-        new THREE.CapsuleGeometry(
-            .55,
-            1.2,
-            5,
-            8
-        ),
+const keys={
+  up:false,
+  down:false,
+  left:false,
+  right:false
+};
 
-        mat(
-            0x8f3970,
-            .72,
-            .03
-        )
+function setupMovement(){
 
-    );
+  addEventListener("keydown",e=>{
+    if(e.key==="w"||e.key==="ArrowUp")keys.up=true;
+    if(e.key==="s"||e.key==="ArrowDown")keys.down=true;
+    if(e.key==="a"||e.key==="ArrowLeft")keys.left=true;
+    if(e.key==="d"||e.key==="ArrowRight")keys.right=true;
+  });
 
-    body.position.y=1.15;
+  addEventListener("keyup",e=>{
+    if(e.key==="w"||e.key==="ArrowUp")keys.up=false;
+    if(e.key==="s"||e.key==="ArrowDown")keys.down=false;
+    if(e.key==="a"||e.key==="ArrowLeft")keys.left=false;
+    if(e.key==="d"||e.key==="ArrowRight")keys.right=false;
+  });
 
-    playerGroup.add(body);
+  const joystick=$("joystick");
+  const stick=$("stick");
 
+  let active=false;
 
-    const head=new THREE.Mesh(
+  function moveStick(e){
 
-        new THREE.SphereGeometry(
-            .46,
-            12,
-            12
-        ),
+    if(!active)return;
 
-        mat(
-            0xffd4c5,
-            .72
-        )
+    const rect=joystick.getBoundingClientRect();
 
-    );
+    const px=(e.clientX||e.touches?.[0]?.clientX)-rect.left;
+    const py=(e.clientY||e.touches?.[0]?.clientY)-rect.top;
 
-    head.position.y=2.25;
+    let dx=px-rect.width/2;
+    let dy=py-rect.height/2;
 
-    playerGroup.add(head);
+    const max=25;
+    const dist=Math.hypot(dx,dy);
 
-
-    const hair=new THREE.Mesh(
-
-        new THREE.SphereGeometry(
-            .52,
-            12,
-            12
-        ),
-
-        mat(
-            0x3b163f,
-            .68
-        )
-
-    );
-
-    hair.scale.set(
-        1.03,
-        1.05,
-        .95
-    );
-
-    hair.position.set(
-        0,
-        2.42,
-        -.02
-    );
-
-    playerGroup.add(hair);
-
-
-    const faceGlow=new THREE.Mesh(
-
-        new THREE.SphereGeometry(
-            .035,
-            6,
-            6
-        ),
-
-        emissiveMat(
-            0xff7bb8,
-            1
-        )
-
-    );
-
-    faceGlow.position.set(
-        -.17,
-        2.3,
-        -.44
-    );
-
-    playerGroup.add(faceGlow);
-
-
-    for(const side of [-1,1]){
-
-        const leg=new THREE.Mesh(
-
-            new THREE.CapsuleGeometry(
-                .18,
-                .75,
-                3,
-                6
-            ),
-
-            mat(
-                0x15131b,
-                .72
-            )
-
-        );
-
-        leg.position.set(
-            side*.22,
-            .42,
-            0
-        );
-
-        playerGroup.add(leg);
+    if(dist>max){
+      dx=dx/dist*max;
+      dy=dy/dist*max;
     }
 
+    stick.style.transform=
+      `translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px))`;
 
-    playerGroup.position.set(
-        0,
-        0,
-        21
-    );
+    keys.left=dx<-8;
+    keys.right=dx>8;
+    keys.up=dy<-8;
+    keys.down=dy>8;
+  }
 
+  joystick.addEventListener("pointerdown",e=>{
+    active=true;
+    joystick.setPointerCapture(e.pointerId);
+    moveStick(e);
+  });
 
-    scene.add(playerGroup);
+  joystick.addEventListener("pointermove",moveStick);
 
-    player=playerGroup;
+  joystick.addEventListener("pointerup",()=>{
+    active=false;
+    keys.up=keys.down=keys.left=keys.right=false;
+    stick.style.transform="translate(-50%,-50%)";
+  });
 }
 
 
-/* =========================================================
-   INPUT
-========================================================= */
-
-function setupInput(){
-
-    addEventListener("keydown",event=>{
-
-        if(
-            event.code==="KeyW" ||
-            event.code==="ArrowUp"
-        ){
-            APP.keys.forward=true;
-        }
-
-        if(
-            event.code==="KeyS" ||
-            event.code==="ArrowDown"
-        ){
-            APP.keys.backward=true;
-        }
-
-        if(
-            event.code==="KeyA" ||
-            event.code==="ArrowLeft"
-        ){
-            APP.keys.left=true;
-        }
-
-        if(
-            event.code==="KeyD" ||
-            event.code==="ArrowRight"
-        ){
-            APP.keys.right=true;
-        }
-
-        if(event.code==="KeyE"){
-            toggleSit();
-        }
-
-    });
-
-
-    addEventListener("keyup",event=>{
-
-        if(
-            event.code==="KeyW" ||
-            event.code==="ArrowUp"
-        ){
-            APP.keys.forward=false;
-        }
-
-        if(
-            event.code==="KeyS" ||
-            event.code==="ArrowDown"
-        ){
-            APP.keys.backward=false;
-        }
-
-        if(
-            event.code==="KeyA" ||
-            event.code==="ArrowLeft"
-        ){
-            APP.keys.left=false;
-        }
-
-        if(
-            event.code==="KeyD" ||
-            event.code==="ArrowRight"
-        ){
-            APP.keys.right=false;
-        }
-
-    });
-
-
-    setupJoystick();
-}
-
-
-/* =========================================================
-   JOYSTICK
-========================================================= */
-
-function setupJoystick(){
-
-    const joystick=$("joystick");
-    const stick=$("stick");
-
-    let active=false;
-
-
-    function move(clientX,clientY){
-
-        const rect=joystick.getBoundingClientRect();
-
-        const centerX=rect.left+rect.width/2;
-        const centerY=rect.top+rect.height/2;
-
-        let dx=clientX-centerX;
-        let dy=clientY-centerY;
-
-        const max=rect.width*.32;
-
-        const distance=Math.sqrt(
-            dx*dx+dy*dy
-        );
-
-
-        if(distance>max){
-
-            dx=dx/distance*max;
-            dy=dy/distance*max;
-
-        }
-
-
-        stick.style.transform=
-            `translate(${dx}px,${dy}px) translate(-50%,-50%)`;
-
-
-        APP.move.x=dx/max;
-        APP.move.z=dy/max;
-    }
-
-
-    function reset(){
-
-        active=false;
-
-        APP.move.x=0;
-        APP.move.z=0;
-
-        stick.style.transform=
-            "translate(-50%,-50%)";
-    }
-
-
-    joystick.addEventListener(
-        "pointerdown",
-        event=>{
-
-            active=true;
-
-            joystick.setPointerCapture(
-                event.pointerId
-            );
-
-            move(
-                event.clientX,
-                event.clientY
-            );
-
-        }
-    );
-
-
-    joystick.addEventListener(
-        "pointermove",
-        event=>{
-
-            if(!active)return;
-
-            move(
-                event.clientX,
-                event.clientY
-            );
-
-        }
-    );
-
-
-    joystick.addEventListener(
-        "pointerup",
-        reset
-    );
-
-
-    joystick.addEventListener(
-        "pointercancel",
-        reset
-    );
-}
-
-
-/* =========================================================
-   MOVEMENT
-========================================================= */
-
-function updateMovement(delta){
-
-    if(!player || APP.sitting)return;
-
-
-    let x=APP.move.x;
-    let z=APP.move.z;
-
-
-    if(APP.keys.left)x-=1;
-    if(APP.keys.right)x+=1;
-
-    if(APP.keys.forward)z-=1;
-    if(APP.keys.backward)z+=1;
-
-
-    const length=Math.sqrt(
-        x*x+z*z
-    );
-
-
-    if(length>1){
-
-        x/=length;
-        z/=length;
-
-    }
-
-
-    const speed=8*delta;
-
-
-    player.position.x+=x*speed;
-    player.position.z+=z*speed;
-
-
-    player.position.x=
-        THREE.MathUtils.clamp(
-            player.position.x,
-            -17,
-            17
-        );
-
-
-    player.position.z=
-        THREE.MathUtils.clamp(
-            player.position.z,
-            -21,
-            25
-        );
-
-
-    if(
-        Math.abs(x)+Math.abs(z)>.05
-    ){
-
-        player.rotation.y=
-            Math.atan2(x,z);
-
-    }
-
-
-    updateCamera();
-    findNearbySeat();
-}
-
-
-/* =========================================================
-   CAMERA
-========================================================= */
-
-function updateCamera(){
-
-    if(!player)return;
-
-
-    const target=new THREE.Vector3(
-        player.position.x,
-        player.position.y+2.8,
-        player.position.z+7
-    );
-
-
-    const desired=new THREE.Vector3(
-        player.position.x,
-        player.position.y+4.3,
-        player.position.z+8
-    );
-
-
-    camera.position.lerp(
-        desired,
-        .1
-    );
-
-
-    camera.lookAt(target);
-}
-
-
-/* =========================================================
-   NEARBY SEAT
-========================================================= */
-
-function findNearbySeat(){
-
-    if(!player)return;
-
-
-    let closest=null;
-    let distance=Infinity;
-
-
-    for(const seat of seatObjects){
-
-        const d=player.position.distanceTo(
-            seat.position
-        );
-
-
-        if(
-            d<3 &&
-            d<distance
-        ){
-
-            closest=seat;
-            distance=d;
-
-        }
-    }
-
-
-    APP.nearbySeat=closest;
-
-
-    const interaction=$("interaction");
-
-
-    if(
-        closest &&
-        !APP.sitting &&
-        !isSeatOccupied(
-            closest.userData.seat
-        )
-    ){
-
-        interaction.innerHTML=
-            `
-            <b>
-            ${closest.userData.row}
-            • SEAT
-            ${closest.userData.col}
-            </b>
-            <br>
-            Tap SIT to take this seat.
-            `;
-
-        interaction.classList.add("show");
-
-        return;
-    }
-
-
-    interaction.classList.remove("show");
-}
-
-
-/* =========================================================
-   SEAT OCCUPANCY
-========================================================= */
-
-function isSeatOccupied(number){
-
-    if(APP.seat===number)return true;
-
-
-    for(
-        const person of APP.players.values()
-    ){
-
-        if(person.seat===number){
-            return true;
-        }
-
-    }
-
-    return false;
-}
-
-
-/* =========================================================
-   SIT
-========================================================= */
-
-function toggleSit(){
-
-    if(APP.sitting){
-
-        standUp();
-        return;
-
-    }
-
-
-    if(!APP.nearbySeat){
-
-        toast("Walk closer to a seat.");
-        return;
-
-    }
-
-
-    const seat=APP.nearbySeat;
-
-
-    if(
-        isSeatOccupied(
-            seat.userData.seat
-        )
-    ){
-
-        toast("That seat is occupied.");
-        return;
-
-    }
-
-
-    APP.seat=seat.userData.seat;
-    APP.sitting=true;
-
-
-    player.position.copy(
-        seat.position
-    );
-
-    player.position.y=.02;
-
-    player.rotation.y=Math.PI;
-
-
-    $("sitButton").innerHTML=
-        "🚶 <span class='label'>STAND</span>";
-
-
-    $("interaction").classList.remove("show");
-
-
-    broadcast({
-
-        type:"seat",
-
-        name:APP.playerName,
-
-        seat:APP.seat
-
-    });
-
-
-    renderSeatUI();
-
-
-    toast(
-        "You took "+
-        seat.userData.row+
-        " • Seat "+
-        seat.userData.col
-    );
-}
-
-
-function standUp(){
-
-    APP.sitting=false;
-    APP.seat=null;
-
-    player.position.y=0;
-
-
-    $("sitButton").innerHTML=
-        "🪑 <span class='label'>SIT</span>";
-
-
-    broadcast({
-
-        type:"seat",
-
-        name:APP.playerName,
-
-        seat:null
-
-    });
-
-
-    renderSeatUI();
-}
-
-
-/* =========================================================
-   SEAT MAP
-========================================================= */
-
-function renderSeatUI(){
-
-    const grid=$("seatGrid");
-
-    if(!grid)return;
-
-
-    grid.innerHTML="";
-
-
-    seatObjects.forEach(seat=>{
-
-        const button=document.createElement("button");
-
-        button.className="seat-ui";
-
-
-        const number=seat.userData.seat;
-
-
-        button.textContent=
-            seat.userData.row+
-            seat.userData.col;
-
-
-        if(seat.userData.accessible){
-            button.classList.add("accessible");
-            button.title="Accessible-designated seat";
-        }
-
-
-        if(APP.seat===number){
-
-            button.classList.add("me");
-
-        }
-
-        else if(
-            isSeatOccupied(number)
-        ){
-
-            button.classList.add("taken");
-            button.disabled=true;
-
-        }
-
-
-        button.onclick=()=>{
-
-            if(
-                !isSeatOccupied(number)
-            ){
-
-                player.position.copy(
-                    seat.position
-                );
-
-                APP.nearbySeat=seat;
-
-                toggleSit();
-
-            }
-
-        };
-
-
-        grid.appendChild(button);
-
-    });
-}
-
-
-/* =========================================================
-   MOVIE FILE
-   Only created AFTER user selects a file.
-========================================================= */
-
-$("movieInput").addEventListener(
-    "change",
-    event=>{
-
-        const file=event.target.files?.[0];
-
-        if(!file)return;
-
-
-        if(APP.movieURL){
-
-            URL.revokeObjectURL(
-                APP.movieURL
-            );
-
-        }
-
-
-        APP.movieURL=
-            URL.createObjectURL(file);
-
-
-        APP.movieName=file.name;
-
-
-        if(movieVideo){
-
-            movieVideo.pause();
-
-            movieVideo.src="";
-        }
-
-
-        movieVideo=document.createElement("video");
-
-        movieVideo.src=APP.movieURL;
-
-        movieVideo.loop=false;
-
-        movieVideo.muted=true;
-
-        movieVideo.playsInline=true;
-
-        movieVideo.preload="metadata";
-
-
-        movieTexture=new THREE.VideoTexture(
-            movieVideo
-        );
-
-
-        movieTexture.colorSpace=
-            THREE.SRGBColorSpace;
-
-
-        screenMesh.material=
-            new THREE.MeshBasicMaterial({
-                map:movieTexture
-            });
-
-
-        screenMesh.material.needsUpdate=true;
-
-
-        $("movieInfo").textContent=
-            APP.movieName;
-
-
-        toast("Movie loaded 🎬");
-    }
-);
-
-
-/* =========================================================
-   MOVIE CONTROLS
-========================================================= */
-
-function playMovie(){
-
-    if(!movieVideo){
-
-        toast("Select a movie first.");
-        return;
-
-    }
-
-
-    movieVideo.play().catch(()=>{});
-
-
-    broadcast({
-
-        type:"play",
-
-        time:movieVideo.currentTime
-
-    });
-}
-
-
-function pauseMovie(){
-
-    if(!movieVideo)return;
-
-
-    movieVideo.pause();
-
-
-    broadcast({
-
-        type:"pause",
-
-        time:movieVideo.currentTime
-
-    });
-}
-
-
-function stopMovie(){
-
-    if(!movieVideo)return;
-
-
-    movieVideo.pause();
-
-    movieVideo.currentTime=0;
-
-
-    broadcast({
-
-        type:"pause",
-
-        time:0
-
-    });
-
-
-    toast("Movie stopped.");
-}
-
-
-/* =========================================================
-   PEERJS LAZY LOADER
-========================================================= */
-
-function loadPeerJS(){
-
-    if(typeof Peer!=="undefined"){
-        return Promise.resolve();
-    }
-
-
-    if(APP.peerLoading){
-        return APP.peerLoading;
-    }
-
-
-    APP.peerLoading=new Promise(
-        (resolve,reject)=>{
-
-            const script=
-                document.createElement("script");
-
-            script.src=
-                "https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js";
-
-            script.onload=resolve;
-
-            script.onerror=reject;
-
-            document.head.appendChild(script);
-
-        }
-    );
-
-
-    return APP.peerLoading;
-}
-
-
-/* =========================================================
-   ROOM
-========================================================= */
-
-function roomId(code){
-
-    return(
-        "whos-watching-"+
-        code.toLowerCase()
-    );
-}
-
-
-function generateCode(){
-
-    const chars=
-        "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-
-    let code="";
-
-
-    for(let i=0;i<6;i++){
-
-        code+=
-            chars[
-                Math.floor(
-                    Math.random()*chars.length
-                )
-            ];
-
-    }
-
-
-    return code;
-}
-
-
-/* =========================================================
-   CREATE ROOM
-========================================================= */
-
-async function createRoom(){
-
-    toast("Starting room service...");
-
-    try{
-
-        await loadPeerJS();
-
-    }catch(error){
-
-        toast("Could not load room service.");
-        return;
-
-    }
-
-
-    APP.playerName=
-        $("playerName")
-        .value
-        .trim()
-        .slice(0,18) ||
-        "Kush";
-
-
-    APP.room=generateCode();
-    APP.host=true;
-
-
-    if(APP.peer){
-
-        try{
-            APP.peer.destroy();
-        }catch(e){}
-
-    }
-
-
-    APP.peer=new Peer(
-        roomId(APP.room)
-    );
-
-
-    APP.peer.on(
-        "open",
-        ()=>{
-
-            $("roomCode").textContent=
-                APP.room;
-
-            $("roomCodeHUD").textContent=
-                APP.room;
-
-            $("roomInfo")
-                .classList
-                .remove("hidden");
-
-
-            toast("Theatre created 🍿");
-
-            togglePanel("partyPanel");
-
-            addLocalPlayer();
-
-        }
-    );
-
-
-    APP.peer.on(
-        "connection",
-        connection=>{
-            setupConnection(connection);
-        }
-    );
-
-
-    APP.peer.on(
-        "error",
-        error=>{
-
-            console.error(error);
-
-            toast("Room creation failed.");
-
-        }
-    );
-}
-
-
-/* =========================================================
-   JOIN ROOM
-========================================================= */
-
-async function joinRoom(){
-
-    const code=
-        $("joinCode")
-        .value
-        .trim()
-        .toUpperCase();
-
-
-    if(
-        !/^[A-Z0-9]{6}$/.test(code)
-    ){
-
-        toast(
-            "Enter a 6-character room code."
-        );
-
-        return;
-
-    }
-
-
-    toast("Loading room service...");
-
-
-    try{
-
-        await loadPeerJS();
-
-    }catch(error){
-
-        toast("Could not load room service.");
-        return;
-
-    }
-
-
-    APP.playerName=
-        $("playerName")
-        .value
-        .trim()
-        .slice(0,18) ||
-        "Kush";
-
-
-    APP.room=code;
-    APP.host=false;
-
-
-    if(APP.peer){
-
-        try{
-            APP.peer.destroy();
-        }catch(e){}
-
-    }
-
-
-    APP.peer=new Peer();
-
-
-    APP.peer.on(
-        "open",
-        ()=>{
-
-            const connection=
-                APP.peer.connect(
-                    roomId(code),
-                    {
-                        reliable:true
-                    }
-                );
-
-
-            setupConnection(connection);
-
-
-            $("roomCodeHUD").textContent=
-                APP.room;
-
-
-            toast(
-                "Joining theatre..."
-            );
-
-        }
-    );
-
-
-    APP.peer.on(
-        "error",
-        error=>{
-
-            console.error(error);
-
-            toast(
-                "Could not join theatre."
-            );
-
-        }
-    );
-}
-
-
-/* =========================================================
-   CONNECTION
-========================================================= */
-
-function setupConnection(connection){
-
-    connection.on(
-        "open",
-        ()=>{
-
-            APP.connections.set(
-                connection.peer,
-                connection
-            );
-
-
-            sendTo(
-                connection,
-                {
-
-                    type:"hello",
-
-                    name:APP.playerName,
-
-                    seat:APP.seat
-
-                }
-            );
-
-
-            if(APP.host){
-                syncMovieTo(connection);
-            }
-
-
-            updatePlayerList();
-
-            toast("Player connected 👋");
-
-        }
-    );
-
-
-    connection.on(
-        "data",
-        data=>{
-            receiveData(
-                data,
-                connection
-            );
-        }
-    );
-
-
-    connection.on(
-        "close",
-        ()=>{
-
-            APP.connections.delete(
-                connection.peer
-            );
-
-            APP.players.delete(
-                connection.peer
-            );
-
-            updatePlayerList();
-
-            renderSeatUI();
-
-        }
-    );
-}
-
-
-/* =========================================================
-   SEND
-========================================================= */
-
-function sendTo(
-    connection,
-    data
-){
-
-    if(
-        connection &&
-        connection.open
-    ){
-
-        try{
-            connection.send(data);
-        }catch(error){
-            console.error(error);
-        }
-
-    }
-}
-
-
-function broadcast(data){
-
-    APP.connections.forEach(
-        connection=>{
-            sendTo(
-                connection,
-                data
-            );
-        }
-    );
-}
-
-
-/* =========================================================
-   MOVIE SYNC
-========================================================= */
-
-function syncMovieTo(connection){
-
-    if(!movieVideo)return;
-
-
-    sendTo(
-        connection,
-        {
-
-            type:"sync",
-
-            time:movieVideo.currentTime,
-
-            paused:movieVideo.paused,
-
-            movieName:APP.movieName
-
-        }
-    );
-}
-
-
-/* =========================================================
-   RECEIVE
-========================================================= */
-
-function receiveData(
-    data,
-    connection
-){
-
-    if(!data || !data.type)return;
-
-
-    if(data.type==="hello"){
-
-        APP.players.set(
-            connection.peer,
-            {
-
-                peer:connection.peer,
-
-                name:data.name || "Guest",
-
-                seat:data.seat || null
-
-            }
-        );
-
-
-        updatePlayerList();
-        renderSeatUI();
-
-
-        if(APP.host){
-            syncMovieTo(connection);
-        }
-
-
-        return;
-    }
-
-
-    if(data.type==="seat"){
-
-        APP.players.set(
-            connection.peer,
-            {
-
-                peer:connection.peer,
-
-                name:data.name || "Guest",
-
-                seat:data.seat || null
-
-            }
-        );
-
-
-        updatePlayerList();
-        renderSeatUI();
-
-        return;
-    }
-
-
-    if(data.type==="play"){
-
-        if(movieVideo){
-
-            movieVideo.currentTime=
-                Number(data.time || 0);
-
-            movieVideo.play().catch(()=>{});
-
-        }
-
-        return;
-    }
-
-
-    if(data.type==="pause"){
-
-        if(movieVideo){
-
-            movieVideo.currentTime=
-                Number(data.time || 0);
-
-            movieVideo.pause();
-
-        }
-
-        return;
-    }
-
-
-    if(data.type==="sync"){
-
-        if(movieVideo){
-
-            movieVideo.currentTime=
-                Number(data.time || 0);
-
-
-            if(data.paused){
-
-                movieVideo.pause();
-
-            }else{
-
-                movieVideo.play().catch(()=>{});
-
-            }
-
-        }
-
-        return;
-    }
-
-
-    if(data.type==="chat"){
-
-        addChatMessage(
-            data.name || "Guest",
-            data.text || ""
-        );
-
-        return;
-    }
-
-
-    if(data.type==="reaction"){
-
-        showReaction(
-            data.emoji || "✨"
-        );
-
-    }
-}
-
-
-/* =========================================================
-   PLAYERS
-========================================================= */
-
-function addLocalPlayer(){
-    updatePlayerList();
-}
-
-
-function updatePlayerList(){
-
-    const list=$("playerList");
-
-
-    let html=
-        `
-        🟢
-        <b>
-        ${escapeHTML(APP.playerName)}
-        </b>
-        ${
-            APP.seat
-            ?
-            " • Seat "+APP.seat
-            :
-            ""
-        }
-        `;
-
-
-    APP.players.forEach(person=>{
-
-        html+=
-            `
-            <br>
-            🔵
-            ${escapeHTML(person.name)}
-            ${
-                person.seat
-                ?
-                " • Seat "+person.seat
-                :
-                ""
-            }
-            `;
-
-    });
-
-
-    list.innerHTML=html;
-}
-
-
-/* =========================================================
-   COPY
-========================================================= */
-
-function copyRoomCode(){
-
-    if(!APP.room)return;
-
-
-    if(navigator.clipboard){
-
-        navigator.clipboard
-            .writeText(APP.room)
-            .then(()=>{
-                toast("Room code copied!");
-            });
-
-    }else{
-
-        toast("Room: "+APP.room);
-
-    }
-}
-
-
-/* =========================================================
-   CHAT
-========================================================= */
-
-function sendChat(){
-
-    const input=$("chatInput");
-
-    const text=input.value.trim();
-
-    if(!text)return;
-
-
-    addChatMessage(
-        APP.playerName,
-        text
-    );
-
-
-    broadcast({
-
-        type:"chat",
-
-        name:APP.playerName,
-
-        text
-
-    });
-
-
-    input.value="";
-}
-
-
-function addChatMessage(
-    name,
-    text
-){
-
-    const row=
-        document.createElement("div");
-
-
-    row.className="msg";
-
-
-    row.innerHTML=
-        `
-        <b>${escapeHTML(name)}</b>
-        <small>
-        ${new Date().toLocaleTimeString(
-            [],
-            {
-                hour:"2-digit",
-                minute:"2-digit"
-            }
-        )}
-        </small>
-        <div>${escapeHTML(text)}</div>
-        `;
-
-
-    $("chatLog").appendChild(row);
-
-    $("chatLog").scrollTop=
-        $("chatLog").scrollHeight;
-}
-
-
-/* =========================================================
-   REACTIONS
-========================================================= */
-
-function sendReaction(emoji){
-
-    showReaction(emoji);
-
-    broadcast({
-
-        type:"reaction",
-
-        emoji
-
-    });
-}
-
-
-function showReaction(emoji){
-
-    const element=
-        document.createElement("div");
-
-
-    element.className="reaction";
-
-    element.textContent=emoji;
-
-
-    element.style.left=
-        (10+Math.random()*80)+"%";
-
-
-    $("reactions")
-        .appendChild(element);
-
-
-    setTimeout(
-        ()=>element.remove(),
-        1800
-    );
-}
-
-
-/* =========================================================
-   LIGHTS
-========================================================= */
-
-function toggleLights(){
-
-    APP.lights=!APP.lights;
-
-
-    roomLights.forEach(light=>{
-
-        if(light===undefined)return;
-
-        light.intensity=
-            APP.lights
-            ?
-            (
-                light.isDirectionalLight
-                ?
-                .85
-                :
-                13
-            )
-            :
-            .04;
-
-    });
-
-
-    aisleLights.forEach(light=>{
-
-        light.intensity=
-            APP.lights
-            ?
-            2.2
-            :
-            .08;
-
-    });
-
-
-    toast(
-        APP.lights
-        ?
-        "Cinema lights ON"
-        :
-        "Cinema lights OFF"
-    );
-}
-
-
-/* =========================================================
-   SCREEN GLOW
-========================================================= */
-
-function screenGlow(){
-
-    APP.screenGlow=!APP.screenGlow;
-
-
-    screenGlowMesh.material.opacity=
-        APP.screenGlow
-        ?
-        .065
-        :
-        0;
-
-
-    toast(
-        APP.screenGlow
-        ?
-        "Screen glow ON"
-        :
-        "Screen glow OFF"
-    );
-}
-
-
-/* =========================================================
-   THEMES
-========================================================= */
-
-const THEMES=[
-
-    {
-        glow:0xff5b9e
-    },
-
-    {
-        glow:0x4fa9ff
-    },
-
-    {
-        glow:0xffbd62
-    },
-
-    {
-        glow:0x9b6cff
-    }
-
-];
-
-
-function changeTheme(){
-
-    APP.theme++;
-
-    if(
-        APP.theme>=THEMES.length
-    ){
-        APP.theme=0;
-    }
-
-
-    const theme=
-        THEMES[APP.theme];
-
-
-    screenGlowMesh.material.color
-        .setHex(theme.glow);
-
-
-    aisleLights.forEach(light=>{
-        light.color.setHex(theme.glow);
-    });
-
-
-    toast(
-        "Theatre theme changed ✨"
-    );
-}
-
-
-/* =========================================================
-   FULLSCREEN
-========================================================= */
-
-function toggleFullscreen(){
-
-    if(document.fullscreenElement){
-
-        document.exitFullscreen?.();
-
-        return;
-    }
-
-
-    document.documentElement
-        .requestFullscreen?.();
-}
-
-
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function escapeHTML(value){
-
-    return String(value)
-        .replace(
-            /[&<>"']/g,
-            char=>{
-
-                const map={
-
-                    "&":"&amp;",
-                    "<":"&lt;",
-                    ">":"&gt;",
-                    '"':"&quot;",
-                    "'":"&#039;"
-
-                };
-
-                return map[char];
-
-            }
-        );
-}
-
-
-/* =========================================================
-   ANIMATION
-========================================================= */
+/* ---------- FAST ANIMATION ---------- */
 
 function animate(){
 
-    requestAnimationFrame(animate);
+  requestAnimationFrame(animate);
 
+  if(!APP.renderer || !APP.scene || !APP.camera)return;
 
-    const delta=
-        Math.min(
-            APP.clock.getDelta(),
-            .05
-        );
+  const delta=Math.min(APP.clock.getDelta(),.05);
 
+  if(APP.player){
 
-    updateMovement(delta);
+    let dx=0;
+    let dz=0;
 
+    if(keys.left)dx-=1;
+    if(keys.right)dx+=1;
+    if(keys.up)dz-=1;
+    if(keys.down)dz+=1;
 
-    const now=
-        performance.now();
+    if(dx||dz){
 
+      const len=Math.hypot(dx,dz);
 
-    /* CHEAP LIGHT PULSE */
+      dx/=len;
+      dz/=len;
 
-    const pulse=
-        1+
-        Math.sin(now*.0015)*.07;
+      APP.player.position.x+=dx*APP.speed;
+      APP.player.position.z+=dz*APP.speed;
 
+      APP.player.position.x=
+        Math.max(-9,Math.min(9,APP.player.position.x));
 
-    aisleLights.forEach(light=>{
+      APP.player.position.z=
+        Math.max(-1,Math.min(9,APP.player.position.z));
 
-        light.intensity=
-            APP.lights
-            ?
-            2.2*pulse
-            :
-            .08;
-
-    });
-
-
-    if(
-        screenGlowMesh &&
-        APP.screenGlow
-    ){
-
-        screenGlowMesh.material.opacity=
-            .055+
-            Math.sin(now*.001)*.01;
-
+      APP.moving=true;
+    }else{
+      APP.moving=false;
     }
+  }
 
-
-    renderer.render(
-        scene,
-        camera
-    );
+  APP.renderer.render(APP.scene,APP.camera);
 }
 
 
-/* =========================================================
-   RESIZE
-========================================================= */
+/* ---------- RESIZE ---------- */
 
-addEventListener(
-    "resize",
-    ()=>{
+addEventListener("resize",()=>{
+  if(!APP.camera||!APP.renderer)return;
 
-        if(!camera || !renderer)return;
+  APP.camera.aspect=innerWidth/innerHeight;
+  APP.camera.updateProjectionMatrix();
 
-
-        camera.aspect=
-            innerWidth/innerHeight;
+  APP.renderer.setSize(innerWidth,innerHeight,false);
+});
 
 
-        camera.updateProjectionMatrix();
+/* ---------- LIGHT / EFFECTS ---------- */
+
+function toggleLights(){
+
+  APP.cinemaLights=!APP.cinemaLights;
+
+  APP.scene.background.set(
+    APP.cinemaLights ? 0x050408 : 0x000000
+  );
+
+  toast(
+    APP.cinemaLights
+      ? "Cinema lights ON"
+      : "Cinema lights OFF"
+  );
+}
+
+function toggleGlow(){
+
+  APP.glow=!APP.glow;
+
+  if(APP.screenGlow){
+    APP.screenGlow.visible=APP.glow;
+  }
+
+  toast(
+    APP.glow
+      ? "Screen glow ON"
+      : "Screen glow OFF"
+  );
+}
+
+function resetView(){
+
+  if(APP.camera){
+    APP.camera.position.set(0,3.4,9.5);
+    APP.camera.rotation.set(0,0,0);
+  }
+
+  if(APP.player){
+    APP.player.position.set(0,0,7);
+  }
+
+  toast("Theatre reset");
+}
+
+function togglePerformance(){
+
+  APP.performance=!APP.performance;
+
+  if(APP.performance){
+    APP.renderer.setPixelRatio(.85);
+    toast("⚡ Performance Mode ON");
+  }else{
+    APP.renderer.setPixelRatio(
+      Math.min(devicePixelRatio||1,1.35)
+    );
+    toast("Performance Mode OFF");
+  }
+}
 
 
-        renderer.setSize(
-            innerWidth,
-            innerHeight,
-            false
-        );
+/* ---------- MOVIE ---------- */
 
+$("movieFile").addEventListener("change",e=>{
+
+  const file=e.target.files?.[0];
+
+  if(!file)return;
+
+  $("movieName").textContent=file.name;
+
+  $("movieInfo").textContent=
+    `${(file.size/1024/1024).toFixed(1)} MB • Local movie`;
+
+  if(APP.videoURL){
+    URL.revokeObjectURL(APP.videoURL);
+  }
+
+  APP.videoURL=URL.createObjectURL(file);
+
+  $("video").src=APP.videoURL;
+
+  toast("Movie ready");
+});
+
+function openMovie(){
+
+  showPanel("movie");
+
+  const video=$("video");
+
+  if(video.src){
+    $("movieOverlay").style.display="block";
+  }else{
+    toast("Choose a movie first");
+  }
+}
+
+function closeMovie(){
+
+  $("movieOverlay").style.display="none";
+
+  $("video").pause();
+}
+
+
+/* ---------- CHAT ---------- */
+
+function addMessage(name,text){
+
+  const box=$("chatMessages");
+
+  const div=document.createElement("div");
+  div.className="msg";
+
+  div.textContent=name+": "+text;
+
+  box.appendChild(div);
+  box.scrollTop=box.scrollHeight;
+}
+
+function sendChat(){
+
+  const input=$("chatInput");
+  const text=input.value.trim();
+
+  if(!text)return;
+
+  addMessage("You",text);
+
+  broadcast({
+    type:"chat",
+    name:"Friend",
+    text
+  });
+
+  input.value="";
+}
+
+function reaction(emoji){
+
+  addMessage("You",emoji);
+
+  broadcast({
+    type:"chat",
+    name:"Friend",
+    text:emoji
+  });
+}
+
+
+/* ---------- PEERJS LAZY LOADING ---------- */
+
+function loadPeerJS(){
+
+  if(window.Peer){
+    return Promise.resolve();
+  }
+
+  if(window.__peerPromise){
+    return window.__peerPromise;
+  }
+
+  window.__peerPromise=new Promise((resolve,reject)=>{
+
+    const script=document.createElement("script");
+
+    script.src=
+      "https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js";
+
+    script.onload=resolve;
+
+    script.onerror=()=>{
+      window.__peerPromise=null;
+      reject(new Error("PeerJS failed"));
+    };
+
+    document.head.appendChild(script);
+  });
+
+  return window.__peerPromise;
+}
+
+function cleanRoom(value){
+
+  return value
+    .toUpperCase()
+    .replace(/[^A-Z0-9]/g,"")
+    .slice(0,12);
+}
+
+async function createRoom(){
+
+  const room=cleanRoom(
+    $("roomInput").value ||
+    Math.random().toString(36).slice(2,8)
+  );
+
+  $("roomInput").value=room;
+
+  toast("Loading room system...");
+
+  try{
+
+    await loadPeerJS();
+
+    APP.room=room;
+
+    APP.peer=new Peer(
+      "ww-"+room+"-"+Math.random().toString(36).slice(2,6)
+    );
+
+    APP.peer.on("open",id=>{
+
+      $("roomPill").textContent="ROOM • "+room;
+
+      toast("Room created: "+room);
+
+      APP.peer.on("connection",connection=>{
+        setupConnection(connection);
+      });
+
+    });
+
+    APP.peer.on("error",err=>{
+      console.error(err);
+      toast("Room error — try another code");
+    });
+
+  }catch(err){
+
+    console.error(err);
+    toast("Room system could not load");
+  }
+}
+
+async function joinRoom(){
+
+  const room=cleanRoom($("roomInput").value);
+
+  if(!room){
+    toast("Enter a room code");
+    return;
+  }
+
+  toast("Loading room system...");
+
+  try{
+
+    await loadPeerJS();
+
+    APP.room=room;
+
+    APP.peer=new Peer();
+
+    APP.peer.on("open",id=>{
+
+      const connection=APP.peer.connect(
+        "ww-"+room,
+        {reliable:true}
+      );
+
+      setupConnection(connection);
+
+      $("roomPill").textContent="ROOM • "+room;
+
+      toast("Joining "+room+"...");
+    });
+
+  }catch(err){
+
+    console.error(err);
+    toast("Could not load room system");
+  }
+}
+
+function setupConnection(connection){
+
+  APP.connections.push(connection);
+
+  connection.on("open",()=>{
+    toast("Friend connected");
+
+    connection.send({
+      type:"hello",
+      seat:APP.localSeat
+    });
+  });
+
+  connection.on("data",data=>{
+
+    if(!data)return;
+
+    if(data.type==="chat"){
+      addMessage(data.name||"Friend",data.text||"");
     }
-);
 
+    if(data.type==="seat"){
+      const seat=seatObjects.find(
+        x=>x.index===data.seat
+      );
 
-/* =========================================================
-   CHAT ENTER
-========================================================= */
-
-$("chatInput").addEventListener(
-    "keydown",
-    event=>{
-
-        if(event.key==="Enter"){
-            sendChat();
-        }
-
+      if(seat){
+        seat.taken=true;
+        renderSeats();
+      }
     }
-);
+
+    if(data.type==="play"){
+      const video=$("video");
+
+      if(Math.abs(video.currentTime-data.time)>.8){
+        video.currentTime=data.time;
+      }
+
+      video.play().catch(()=>{});
+    }
+
+    if(data.type==="pause"){
+      $("video").pause();
+    }
+
+    if(data.type==="time"){
+      const video=$("video");
+
+      if(Math.abs(video.currentTime-data.time)>1){
+        video.currentTime=data.time;
+      }
+    }
+  });
+}
+
+function broadcast(data){
+
+  APP.connections.forEach(connection=>{
+
+    try{
+      if(connection.open){
+        connection.send(data);
+      }
+    }catch(e){}
+  });
+}
 
 
-/* =========================================================
-   START
-========================================================= */
+/* ---------- VIDEO SYNC ---------- */
 
-window.addEventListener(
-    "load",
-    ()=>{
+$("video").addEventListener("play",()=>{
+  broadcast({
+    type:"play",
+    time:$("video").currentTime
+  });
+});
 
-        /* Start immediately */
+$("video").addEventListener("pause",()=>{
+  broadcast({
+    type:"pause"
+  });
+});
 
+setInterval(()=>{
+
+  if(!$("video").paused){
+
+    broadcast({
+      type:"time",
+      time:$("video").currentTime
+    });
+  }
+
+},3000);
+
+
+/* ---------- START ---------- */
+
+window.addEventListener("load",()=>{
+
+  /*
+    Three.js is deferred.
+    This means the browser can build the UI first.
+  */
+
+  if(window.THREE){
+
+    initThree();
+
+  }else{
+
+    const start=performance.now();
+
+    const wait=()=>{
+
+      if(window.THREE){
         initThree();
+        return;
+      }
 
+      if(performance.now()-start>2200){
+        hideLoading();
+        toast("3D engine unavailable");
+        return;
+      }
 
-        addChatMessage(
-            "System",
-            "Welcome to WHO'S WATCHING? 🍿"
-        );
+      requestAnimationFrame(wait);
+    };
 
+    wait();
+  }
 
-        $("playerName").value="Kush";
+  renderSeats();
 
-    }
-);
+  addMessage(
+    "System",
+    "Welcome to WHO’S WATCHING? V9.1 🍿"
+  );
 
-
-/* =========================================================
-   CLEANUP
-========================================================= */
-
-addEventListener(
-    "beforeunload",
-    ()=>{
-
-        if(APP.movieURL){
-
-            URL.revokeObjectURL(
-                APP.movieURL
-            );
-
-        }
-
-
-        if(APP.peer){
-
-            try{
-                APP.peer.destroy();
-            }catch(error){}
-
-        }
-
-    }
-);
-
+  addMessage(
+    "System",
+    "MADE BY KUSH KUMAR"
+  );
+});
 </script>
 
 </body>
-      </html>
+</html>
